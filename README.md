@@ -226,6 +226,26 @@ See the [Implementation Guide](./docs/GUIDE.md) for step-by-step instructions on
 
 ---
 
+## Why MCP Prevents the AI Black Box
+
+As AI coding agents generate, modify, and orchestrate production systems, traditional developer visibility erodes. AI writes code that calls other AI-generated code, which integrates black-box models, which invoke external tools in ways that even the original developer can't fully trace. The result: systems become **opaque to the very teams responsible for them** — making debugging, compliance, bias detection, and security audits exponentially harder.
+
+Trellis MCP directly counters this by enforcing a **structured, auditable interface** between AI agents and the outside world:
+
+**Standardized tool contracts.** MCP isn't loose prompt-based tool calling. It's a client-server protocol with explicit schemas, parameter definitions, and constraints. Agents discover tools dynamically, request them in structured JSON-RPC format, and receive predictable responses. Developers and auditors can inspect exact tool interfaces, inputs/outputs, and invocation logs without diving into a model's internal weights.
+
+**Built-in traceability.** Every MCP interaction is inherently loggable: tool discovery, calls, parameters, results, errors. This creates a machine-readable chain of actions that's far easier to audit than opaque neural activations or scattered custom integrations.
+
+**Ledger-grounded trust.** In vanilla setups, agents call tools and blindly trust responses. Trellis MCP flips this by grounding high-stakes actions in **on-ledger proofs**: every write, issuance, and verification traces to a Hiero transaction with consensus timestamp and cryptographic signature. Even if the AI agent hallucinates or its generated code has flaws, the final outcome is verifiable against the immutable ledger.
+
+**Independently attestable layers.** The 5-layer design avoids monolithic black boxes. Each layer has deterministic behavior, bounded responsibility, and can be audited independently — PwC verifies L1 hashgraph calls separately from L5 agent tool calls. Transparency compounds: you don't need to understand the entire AI brain to verify a specific action.
+
+**Preventing agentic drift.** Over successive autonomous iterations, AI agents can gradually move system behavior away from intended parameters in ways that are individually small but collectively significant and untraceable. Trellis MCP's fixed-contract tool interfaces and per-action ledger attestation make drift *detectable by design*, not just in retrospect.
+
+With regulations like the EU AI Act demanding transparency, traceability, and contestability for high-risk systems, platforms without enforced structure face real friction — slower adoption, higher compliance costs, or outright deployment bans. MCP-based approaches like Trellis turn agentic AI from a liability into an asset: faster development **without** sacrificing governance.
+
+---
+
 ## Roadmap
 
 - [x] Layer 1: Core Hiero tool coverage (19 tools)
