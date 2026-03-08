@@ -1,0 +1,51 @@
+{
+  "name": "trellis-mcp",
+  "version": "0.1.0",
+  "description": "Intelligent Access to Hiero and Guardian",
+  "author": "bulKrete Technologies",
+  "license": "Apache-2.0",
+  "private": true,
+  "workspaces": [
+    "core/*",
+    "examples/domains/*",
+    "examples/apps/*",
+    "examples/servers/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "build": "bun run --filter '*' build",
+    "dev": "bun run --filter '*' dev",
+    "test": "bun test",
+    "lint": "bunx eslint . --ext .ts",
+    "clean": "rm -rf dist/ core/*/dist/ examples/domains/*/dist/ examples/apps/*/dist/ examples/servers/*/dist/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/trellis-mcp/trellis-mcp.git"
+  },
+  "keywords": [
+    "mcp",
+    "hiero",
+    "hedera",
+    "hashgraph",
+    "lfdecentralizedtrust",
+    "guardian",
+    "dmrv",
+    "carbon-credits",
+    "governance",
+    "verification",
+    "distributed-ledger",
+    "model-context-protocol"
+  ],
+  "homepage": "https://trellis-mcp.dev",
+  "bugs": {
+    "url": "https://github.com/trellis-mcp/trellis-mcp/issues"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.0.3",
+    "globals": "^17.4.0",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.56.1"
+  }
+}

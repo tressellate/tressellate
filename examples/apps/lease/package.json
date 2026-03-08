@@ -1,0 +1,32 @@
+{
+  "name": "@trellis-mcp/lease",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./config": {
+      "types": "./dist/config.d.ts",
+      "import": "./dist/config.js"
+    },
+    "./tools": {
+      "types": "./dist/tools/index.d.ts",
+      "import": "./dist/tools/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch"
+  },
+  "dependencies": {
+    "@trellis-mcp/core": "workspace:*",
+    "@trellis-mcp/asset-types": "workspace:*",
+    "@trellis-mcp/domain-real-estate": "workspace:*",
+    "@hashgraph/sdk": "^2.50.0"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "crop-cert-mcp-server",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "bun src/index.ts"
+  },
+  "dependencies": {
+    "@trellis-mcp/core": "workspace:*",
+    "@trellis-mcp/crop-cert": "workspace:*",
+    "@modelcontextprotocol/sdk": "^1.0.0"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "name": "@trellis-mcp/asset-types",
+  "version": "0.1.0",
+  "description": "Layer 3 — Reusable asset type schemas and operation factories (Hiero ecosystem)",
+  "author": "bulKrete Technologies",
+  "license": "Apache-2.0",
+  "private": true,
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./schemas": {
+      "types": "./dist/schemas/index.d.ts",
+      "import": "./dist/schemas/index.js"
+    },
+    "./operations": {
+      "types": "./dist/operations/index.d.ts",
+      "import": "./dist/operations/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch"
+  },
+  "dependencies": {
+    "@trellis-mcp/core": "workspace:*"
+  }
+}

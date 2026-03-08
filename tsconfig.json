@@ -1,0 +1,13 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": "."
+  },
+  "exclude": [
+    "node_modules",
+    "packages/*/dist",
+    "servers/*/dist",
+    "apps/*/.svelte-kit",
+    "apps/*/node_modules"
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "name": "@trellis-mcp/core",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./config": {
+      "types": "./dist/config.d.ts",
+      "import": "./dist/config.js"
+    },
+    "./tools": {
+      "types": "./dist/tools/index.d.ts",
+      "import": "./dist/tools/index.js"
+    },
+    "./tools/token": {
+      "types": "./dist/tools/token.d.ts",
+      "import": "./dist/tools/token.js"
+    },
+    "./tools/account": {
+      "types": "./dist/tools/account.d.ts",
+      "import": "./dist/tools/account.js"
+    },
+    "./tools/consensus": {
+      "types": "./dist/tools/consensus.d.ts",
+      "import": "./dist/tools/consensus.js"
+    },
+    "./tools/nft": {
+      "types": "./dist/tools/nft.d.ts",
+      "import": "./dist/tools/nft.js"
+    },
+    "./tools/query": {
+      "types": "./dist/tools/query.d.ts",
+      "import": "./dist/tools/query.js"
+    },
+    "./helpers": {
+      "types": "./dist/helpers/index.d.ts",
+      "import": "./dist/helpers/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch"
+  },
+  "dependencies": {
+    "@hashgraph/sdk": "^2.50.0"
+  }
+}

@@ -1,0 +1,1373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trellis MCP — Verifiable AI Infrastructure on Hashgraph</title>
+    <meta name="description" content="The only AI infrastructure worth building on is infrastructure you can verify. Trellis MCP provides five auditable layers giving AI agents structured access to Hiero distributed ledger technology and Guardian governance through the Model Context Protocol.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #0a0e0d;
+            --bg-surface: #0f1412;
+            --bg-elevated: #151c19;
+            --bg-hover: #1a2320;
+            --border: #1e2b26;
+            --border-light: #2a3d35;
+            --text-primary: #e8ede9;
+            --text-secondary: #8a9e92;
+            --text-muted: #5a7068;
+            --accent: #4ade80;
+            --accent-dim: #22c55e;
+            --accent-glow: rgba(74, 222, 128, 0.08);
+            --accent-glow-strong: rgba(74, 222, 128, 0.15);
+            --amber: #fbbf24;
+            --blue: #60a5fa;
+            --rose: #fb7185;
+            --violet: #a78bfa;
+            --cyan: #22d3ee;
+            --font-display: 'Instrument Serif', Georgia, serif;
+            --font-body: 'DM Sans', -apple-system, sans-serif;
+            --font-mono: 'DM Mono', 'SF Mono', Consolas, monospace;
+        }
+
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-deep);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Trellis grid background */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(var(--border) 1px, transparent 1px),
+                linear-gradient(90deg, var(--border) 1px, transparent 1px);
+            background-size: 80px 80px;
+            opacity: 0.25;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at 30% 20%, var(--accent-glow) 0%, transparent 50%),
+                        radial-gradient(ellipse at 70% 80%, rgba(34, 211, 238, 0.03) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ---- NAV ---- */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 1rem 0;
+            background: rgba(10, 14, 13, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        nav .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+        }
+
+        .nav-logo {
+            width: 28px;
+            height: 28px;
+            position: relative;
+        }
+
+        .nav-logo svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .nav-name {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            letter-spacing: 0.02em;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            letter-spacing: 0.03em;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .nav-github {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-light);
+            border-radius: 6px;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--text-primary) !important;
+            text-decoration: none !important;
+            transition: all 0.2s;
+        }
+
+        .nav-github:hover {
+            border-color: var(--accent);
+            background: var(--accent-glow);
+            color: var(--accent) !important;
+        }
+
+        .nav-github svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+
+        /* ---- HERO ---- */
+        .hero {
+            padding: 10rem 0 6rem;
+            position: relative;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 1rem;
+            background: var(--accent-glow);
+            border: 1px solid rgba(74, 222, 128, 0.2);
+            border-radius: 100px;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--accent);
+            letter-spacing: 0.05em;
+            margin-bottom: 2rem;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .hero-badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(3rem, 7vw, 5.5rem);
+            font-weight: 400;
+            line-height: 1.05;
+            letter-spacing: -0.02em;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.6s ease-out 0.1s both;
+        }
+
+        .hero h1 em {
+            font-style: italic;
+            color: var(--accent);
+        }
+
+        .hero-sub {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            line-height: 1.7;
+            margin-bottom: 3rem;
+            animation: fadeInUp 0.6s ease-out 0.2s both;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.6s ease-out 0.3s both;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            background: var(--accent);
+            color: var(--bg-deep);
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.2s;
+            letter-spacing: 0.02em;
+        }
+
+        .btn-primary:hover {
+            background: #6ee7a0;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 20px rgba(74, 222, 128, 0.3);
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            background: transparent;
+            color: var(--text-primary);
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            font-weight: 400;
+            text-decoration: none;
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            transition: all 0.2s;
+            letter-spacing: 0.02em;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--text-muted);
+            background: var(--bg-elevated);
+        }
+
+        .hero-install {
+            margin-top: 3rem;
+            animation: fadeInUp 0.6s ease-out 0.4s both;
+        }
+
+        .install-block {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.8rem 1.2rem;
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+
+        .install-block:hover {
+            border-color: var(--border-light);
+        }
+
+        .install-block .prompt {
+            color: var(--text-muted);
+            user-select: none;
+        }
+
+        .install-block code {
+            color: var(--text-primary);
+        }
+
+        .install-block .copy-hint {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .install-block:hover .copy-hint {
+            opacity: 1;
+        }
+
+        /* ---- TRUST PILLARS ---- */
+        .trust-pillars {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            margin-bottom: 3rem;
+            padding: 2rem 0;
+            animation: fadeInUp 0.6s ease-out 0.25s both;
+        }
+
+        .trust-pillar {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .trust-icon {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            background: var(--accent-glow);
+            border: 1px solid rgba(74, 222, 128, 0.12);
+            border-radius: 8px;
+            flex-shrink: 0;
+        }
+
+        .trust-text {
+            display: flex;
+            flex-direction: column;
+            gap: 0.15rem;
+        }
+
+        .trust-text strong {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            letter-spacing: 0.01em;
+        }
+
+        .trust-text span {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* ---- SECTION STYLES ---- */
+        section {
+            padding: 6rem 0;
+        }
+
+        .section-label {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--accent);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 400;
+            line-height: 1.15;
+            margin-bottom: 1rem;
+        }
+
+        .section-desc {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            max-width: 560px;
+            line-height: 1.7;
+            margin-bottom: 3.5rem;
+        }
+
+        /* ---- ARCHITECTURE ---- */
+        .arch-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            margin-bottom: 3rem;
+        }
+
+        .arch-layer {
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            align-items: stretch;
+            border-radius: 4px;
+            overflow: hidden;
+            transition: all 0.3s;
+            cursor: default;
+        }
+
+        .arch-layer:hover {
+            transform: translateX(4px);
+        }
+
+        .arch-layer:hover .arch-layer-body {
+            border-color: var(--border-light);
+            background: var(--bg-hover);
+        }
+
+        .arch-layer-num {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--bg-deep);
+            letter-spacing: 0.05em;
+        }
+
+        .arch-layer:nth-child(1) .arch-layer-num { background: var(--accent); }
+        .arch-layer:nth-child(2) .arch-layer-num { background: var(--cyan); }
+        .arch-layer:nth-child(4) .arch-layer-num { background: var(--blue); }
+        .arch-layer:nth-child(5) .arch-layer-num { background: var(--violet); }
+        .arch-layer:nth-child(6) .arch-layer-num { background: var(--amber); }
+
+        .arch-layer-body {
+            padding: 1.25rem 1.5rem;
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-left: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            transition: all 0.3s;
+        }
+
+        .arch-layer-title {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .arch-layer-desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .arch-layer-tag {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            padding: 0.25rem 0.6rem;
+            border-radius: 4px;
+            white-space: nowrap;
+            letter-spacing: 0.05em;
+            flex-shrink: 0;
+        }
+
+        .tag-open {
+            color: var(--accent);
+            background: var(--accent-glow);
+            border: 1px solid rgba(74, 222, 128, 0.15);
+        }
+
+        .tag-domain {
+            color: var(--amber);
+            background: rgba(251, 191, 36, 0.08);
+            border: 1px solid rgba(251, 191, 36, 0.15);
+        }
+
+        .arch-divider {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem 0;
+            margin-left: 80px;
+        }
+
+        .arch-divider::before,
+        .arch-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border-light);
+            opacity: 0.5;
+        }
+
+        .arch-divider span {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        /* ---- PRIMITIVES ---- */
+        .primitives-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 3rem;
+        }
+
+        .primitive-card {
+            padding: 1.5rem;
+            background: var(--bg-surface);
+            transition: background 0.2s;
+        }
+
+        .primitive-card:hover {
+            background: var(--bg-elevated);
+        }
+
+        .primitive-name {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 0.4rem;
+        }
+
+        .primitive-use {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* ---- TRUST NETWORK ---- */
+        .trust-network-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .trust-network-card {
+            padding: 2.5rem 2rem;
+            background: var(--bg-surface);
+            transition: background 0.3s;
+        }
+
+        .trust-network-card:hover {
+            background: var(--bg-elevated);
+        }
+
+        .trust-network-num {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--accent);
+            letter-spacing: 0.05em;
+            margin-bottom: 1.25rem;
+        }
+
+        .trust-network-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.35rem;
+            font-weight: 400;
+            line-height: 1.25;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .trust-network-card p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        @media (max-width: 768px) {
+            .trust-network-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ---- DOMAINS ---- */
+        .domains-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1rem;
+        }
+
+        .domain-card {
+            padding: 2rem;
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            transition: all 0.3s;
+            cursor: default;
+        }
+
+        .domain-card:hover {
+            border-color: var(--border-light);
+            background: var(--bg-elevated);
+            transform: translateY(-2px);
+        }
+
+        .domain-icon {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .domain-name {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .domain-desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .domain-tools {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* ---- VERTICALS ---- */
+        #verticals {
+            border-top: 1px solid var(--border);
+        }
+
+        .verticals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+
+        .vertical-card {
+            padding: 2rem;
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: block;
+        }
+
+        .vertical-card:hover {
+            border-color: var(--border-light);
+            background: var(--bg-elevated);
+            transform: translateY(-2px);
+        }
+
+        .vertical-brand {
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .vertical-full {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+            margin-bottom: 0.75rem;
+        }
+
+        .vertical-desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .vertical-card .vertical-brand span {
+            transition: color 0.2s;
+        }
+
+        .vertical-card:nth-child(1) .vertical-brand span { color: var(--accent); }
+        .vertical-card:nth-child(2) .vertical-brand span { color: var(--cyan); }
+        .vertical-card:nth-child(3) .vertical-brand span { color: var(--amber); }
+        .vertical-card:nth-child(4) .vertical-brand span { color: var(--blue); }
+        .vertical-card:nth-child(5) .vertical-brand span { color: var(--violet); }
+
+        /* ---- EXTENSIONS ---- */
+        #extensions {
+            border-top: 1px solid var(--border);
+        }
+
+        .extensions-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .extension-card {
+            padding: 2.5rem;
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .extension-card:hover {
+            border-color: var(--border-light);
+        }
+
+        .extension-label {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
+        }
+
+        .extension-name {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+        }
+
+        .extension-desc {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .extension-link {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--accent);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: gap 0.2s;
+        }
+
+        .extension-link:hover {
+            gap: 0.7rem;
+        }
+
+        /* ---- QUICKSTART ---- */
+        #quickstart {
+            border-top: 1px solid var(--border);
+        }
+
+        .code-block {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+
+        .code-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 1.25rem;
+            border-bottom: 1px solid var(--border);
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .code-body {
+            padding: 1.25rem;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            overflow-x: auto;
+        }
+
+        .code-body .comment {
+            color: var(--text-muted);
+        }
+
+        .code-body .cmd {
+            color: var(--accent);
+        }
+
+        .code-body .flag {
+            color: var(--amber);
+        }
+
+        /* ---- FOOTER ---- */
+        footer {
+            padding: 4rem 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .footer-brand {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .footer-brand a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-brand a:hover {
+            color: var(--accent);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .footer-links a {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-secondary);
+        }
+
+        /* ---- ANIMATIONS ---- */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ---- RESPONSIVE ---- */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                padding: 8rem 0 4rem;
+            }
+
+            .arch-layer {
+                grid-template-columns: 50px 1fr;
+            }
+
+            .arch-layer-body {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .arch-divider {
+                margin-left: 50px;
+            }
+
+            .extensions-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                gap: 1.5rem;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-actions {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .domains-grid,
+            .verticals-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+    <div class="container">
+        <a href="#" class="nav-brand">
+            <div class="nav-logo">
+                <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M14 2 L14 26" stroke="#4ade80" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M8 6 L8 26" stroke="#4ade80" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+                    <path d="M20 6 L20 26" stroke="#4ade80" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+                    <path d="M4 12 L24 12" stroke="#4ade80" stroke-width="1" opacity="0.3"/>
+                    <path d="M4 18 L24 18" stroke="#4ade80" stroke-width="1" opacity="0.3"/>
+                    <path d="M4 24 L24 24" stroke="#4ade80" stroke-width="1" opacity="0.3"/>
+                    <circle cx="14" cy="4" r="2" fill="#4ade80"/>
+                </svg>
+            </div>
+            <span class="nav-name">trellis-mcp</span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="#architecture">Architecture</a></li>
+            <li><a href="#trust">Trust</a></li>
+            <li><a href="#domains">Domains</a></li>
+            <li><a href="#verticals">Verticals</a></li>
+            <li><a href="#quickstart">Quick Start</a></li>
+            <li>
+                <a href="https://github.com/trellis-mcp/trellis-mcp" class="nav-github" target="_blank" rel="noopener">
+                    <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+                    GitHub
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+    <div class="container">
+        <div class="hero-badge">OPEN SOURCE &middot; APACHE 2.0</div>
+        <h1>The only AI infrastructure<br>worth building on is<br>infrastructure <em>you can verify</em></h1>
+        <p class="hero-sub">Trellis MCP gives AI agents structured access to Hiero's distributed ledger and Guardian governance — through five auditable layers, each independently attestable. No trust-me APIs. Every action traces to the ledger. Every layer can be verified in isolation.</p>
+
+        <div class="trust-pillars">
+            <div class="trust-pillar">
+                <div class="trust-icon">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M10 1L3 5v6c0 4.4 3 7.5 7 9 4-1.5 7-4.6 7-9V5l-7-4z"/>
+                        <path d="M7 10l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <div class="trust-text">
+                    <strong>Layered attestation</strong>
+                    <span>Each layer auditable in isolation. PwC can verify L1 through L5 independently.</span>
+                </div>
+            </div>
+            <div class="trust-pillar">
+                <div class="trust-icon">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <circle cx="10" cy="10" r="8"/>
+                        <path d="M10 6v4l3 3" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <div class="trust-text">
+                    <strong>Cryptographic provenance</strong>
+                    <span>Every agent action traces to a Hiero transaction with consensus timestamp.</span>
+                </div>
+            </div>
+            <div class="trust-pillar">
+                <div class="trust-icon">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <circle cx="10" cy="4" r="2.5"/>
+                        <circle cx="4" cy="15" r="2.5"/>
+                        <circle cx="16" cy="15" r="2.5"/>
+                        <path d="M10 6.5V10M8.5 11.5L5.5 13M11.5 11.5L14.5 13"/>
+                        <circle cx="10" cy="11" r="1.5"/>
+                    </svg>
+                </div>
+                <div class="trust-text">
+                    <strong>Trust compounds with adoption</strong>
+                    <span>Every new domain attested on Trellis strengthens every other domain on the platform.</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="hero-actions">
+            <a href="https://github.com/trellis-mcp/trellis-mcp" class="btn-primary" target="_blank" rel="noopener">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+                View on GitHub
+            </a>
+            <a href="#architecture" class="btn-secondary">See the architecture →</a>
+        </div>
+        <div class="hero-install">
+            <div class="install-block" onclick="navigator.clipboard.writeText('git clone https://github.com/trellis-mcp/trellis-mcp.git && cd trellis-mcp && bun install && bun run build')">
+                <span class="prompt">$</span>
+                <code>git clone https://github.com/trellis-mcp/trellis-mcp.git</code>
+                <span class="copy-hint">click to copy</span>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- ARCHITECTURE -->
+<section id="architecture">
+    <div class="container">
+        <div class="reveal">
+            <div class="section-label">Architecture</div>
+            <h2 class="section-title">Five layers. Each does one thing.</h2>
+            <p class="section-desc">Infrastructure separated from domain logic. Open-source core that anyone can build on. Domain layers where your application plugs in.</p>
+        </div>
+
+        <div class="arch-stack reveal">
+            <div class="arch-layer">
+                <div class="arch-layer-num">L5</div>
+                <div class="arch-layer-body">
+                    <div>
+                        <div class="arch-layer-title">Application + Server <span style="color: var(--text-muted); font-weight: 300;">&mdash; WHERE</span></div>
+                        <div class="arch-layer-desc">MCP servers exposing domain tools to AI agents</div>
+                    </div>
+                    <span class="arch-layer-tag tag-domain">YOUR DOMAIN</span>
+                </div>
+            </div>
+            <div class="arch-layer">
+                <div class="arch-layer-num">L4</div>
+                <div class="arch-layer-body">
+                    <div>
+                        <div class="arch-layer-title">Domain Rules <span style="color: var(--text-muted); font-weight: 300;">&mdash; WHY</span></div>
+                        <div class="arch-layer-desc">Business constraints and schemas composing core primitives</div>
+                    </div>
+                    <span class="arch-layer-tag tag-domain">YOUR DOMAIN</span>
+                </div>
+            </div>
+
+            <div class="arch-divider"><span>Open Source &middot; Apache 2.0</span></div>
+
+            <div class="arch-layer">
+                <div class="arch-layer-num">L3</div>
+                <div class="arch-layer-body">
+                    <div>
+                        <div class="arch-layer-title">Asset Types <span style="color: var(--text-muted); font-weight: 300;">&mdash; WHAT</span></div>
+                        <div class="arch-layer-desc">7 universal primitives + 5 operation factories for any tokenized asset</div>
+                    </div>
+                    <span class="arch-layer-tag tag-open">OPEN SOURCE</span>
+                </div>
+            </div>
+            <div class="arch-layer">
+                <div class="arch-layer-num">L2</div>
+                <div class="arch-layer-body">
+                    <div>
+                        <div class="arch-layer-title">Guardian Tools <span style="color: var(--text-muted); font-weight: 300;">&mdash; WHO</span></div>
+                        <div class="arch-layer-desc">Identity, governance, and verification through Hedera Guardian</div>
+                    </div>
+                    <span class="arch-layer-tag tag-open">OPEN SOURCE</span>
+                </div>
+            </div>
+            <div class="arch-layer">
+                <div class="arch-layer-num">L1</div>
+                <div class="arch-layer-body">
+                    <div>
+                        <div class="arch-layer-title">Hashgraph Tools <span style="color: var(--text-muted); font-weight: 300;">&mdash; HOW</span></div>
+                        <div class="arch-layer-desc">19 infrastructure primitives for Hiero: accounts, tokens, topics, NFTs, queries</div>
+                    </div>
+                    <span class="arch-layer-tag tag-open">OPEN SOURCE</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- PRIMITIVES -->
+        <div class="reveal">
+            <div class="section-label" style="margin-top: 2rem;">Layer 3 &middot; Asset Type Primitives</div>
+            <h2 class="section-title" style="font-size: clamp(1.5rem, 3vw, 2rem);">Seven schemas that model any tokenized asset</h2>
+            <p class="section-desc">Each primitive maps a real-world business concept directly to ledger mechanics. No custom integration. No bespoke schema design.</p>
+        </div>
+
+        <div class="primitives-grid reveal">
+            <div class="primitive-card">
+                <div class="primitive-name">Certificate</div>
+                <div class="primitive-use">Verified attestations — crop yields, drug lots, quality certs</div>
+            </div>
+            <div class="primitive-card">
+                <div class="primitive-name">Provenance</div>
+                <div class="primitive-use">Origin and custody tracking — parts, supply chain steps</div>
+            </div>
+            <div class="primitive-card">
+                <div class="primitive-name">Credit</div>
+                <div class="primitive-use">Quantifiable units of value — energy credits, carbon removal</div>
+            </div>
+            <div class="primitive-card">
+                <div class="primitive-name">Agreement</div>
+                <div class="primitive-use">Multi-party contracts — leases, NDAs, service agreements</div>
+            </div>
+            <div class="primitive-card">
+                <div class="primitive-name">Inspection</div>
+                <div class="primitive-use">Evaluation results — soil tests, audits, assessments</div>
+            </div>
+            <div class="primitive-card">
+                <div class="primitive-name">Milestone</div>
+                <div class="primitive-use">Progress markers — payments, deliverables, phases</div>
+            </div>
+            <div class="primitive-card">
+                <div class="primitive-name">Claim</div>
+                <div class="primitive-use">Assertions requiring verification — insurance, warranties</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- TRUST NETWORK -->
+<section id="trust" style="border-top: 1px solid var(--border);">
+    <div class="container">
+        <div class="reveal">
+            <div class="section-label">Why This Matters</div>
+            <h2 class="section-title">Trust is the scarcest resource in AI</h2>
+            <p class="section-desc" style="max-width: 640px;">Every other MCP server is a trust-me API. An agent calls a tool, gets a result, and has no way to verify the response wasn't spoofed, manipulated, or fabricated. That's fine for weather data. It's unacceptable for finance, procurement, or carbon verification.</p>
+        </div>
+
+        <div class="trust-network-grid reveal">
+            <div class="trust-network-card">
+                <div class="trust-network-num">01</div>
+                <h3>Agents don't trust tools.<br>They trust the ledger.</h3>
+                <p>Every Trellis MCP response traces to a Hiero transaction with a consensus timestamp and cryptographic proof. The trust is mathematical, not reputational.</p>
+            </div>
+            <div class="trust-network-card">
+                <div class="trust-network-num">02</div>
+                <h3>Layered architecture<br>enables layered audit.</h3>
+                <p>A monolithic AI system is a black box. Five independent layers with bounded scope and deterministic behavior can be attested in isolation — by PwC, by regulators, by anyone.</p>
+            </div>
+            <div class="trust-network-card">
+                <div class="trust-network-num">03</div>
+                <h3>Every domain attested<br>strengthens every other.</h3>
+                <p>PwC attests procurement governance on Layer&nbsp;1–5. The same methodology transfers to carbon verification, supply chain, healthcare — at decreasing cost and increasing confidence. Trust compounds with adoption.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- DOMAINS -->
+<section id="domains" style="border-top: 1px solid var(--border);">
+    <div class="container">
+        <div class="reveal">
+            <div class="section-label">Example Domains</div>
+            <h2 class="section-title">Five complete implementations included</h2>
+            <p class="section-desc">Each demonstrates the full Layer 4 + Layer 5 pattern. Define your domain, spin up the server, and you have an enterprise-grade AI-native application on Hiero.</p>
+        </div>
+
+        <div class="domains-grid reveal">
+            <div class="domain-card">
+                <span class="domain-icon">🌾</span>
+                <div class="domain-name">Agriculture</div>
+                <div class="domain-desc">Issue and verify crop yield certificates with farm-level audit trails. Crop categories, certification standards, and seasonal tracking.</div>
+                <div class="domain-tools">crop-cert &middot; 5 tools</div>
+            </div>
+            <div class="domain-card">
+                <span class="domain-icon">🏗️</span>
+                <div class="domain-name">Supply Chain</div>
+                <div class="domain-desc">Track parts provenance with quality certifications and custody chains. Material types, quality grades, and verification bodies.</div>
+                <div class="domain-tools">parts-prov &middot; 5 tools</div>
+            </div>
+            <div class="domain-card">
+                <span class="domain-icon">⚡</span>
+                <div class="domain-name">Energy</div>
+                <div class="domain-desc">Mint renewable energy credits as fungible tokens with generation certificates. Energy sources and verification bodies.</div>
+                <div class="domain-tools">rec &middot; 6 tools</div>
+            </div>
+            <div class="domain-card">
+                <span class="domain-icon">🏠</span>
+                <div class="domain-name">Real Estate</div>
+                <div class="domain-desc">Grant lease agreements as NFTs, record payment milestones, and verify tenancy. Property types and lease lifecycle.</div>
+                <div class="domain-tools">lease &middot; 5 tools</div>
+            </div>
+            <div class="domain-card">
+                <span class="domain-icon">💊</span>
+                <div class="domain-name">Healthcare</div>
+                <div class="domain-desc">Certify drug lots with GMP compliance, track cold-chain custody. Drug classifications and storage conditions.</div>
+                <div class="domain-tools">drug-cert &middot; 5 tools</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- COMMERCIAL VERTICALS -->
+<section id="verticals">
+    <div class="container">
+        <div class="reveal">
+            <div class="section-label">Commercial Verticals</div>
+            <h2 class="section-title">Built natively on Trellis</h2>
+            <p class="section-desc">Independent commercial entities proving the enterprise-readiness of the architecture. Each vertical is a complete network application executing on Hiero.</p>
+        </div>
+
+        <div class="verticals-grid reveal">
+            <div class="vertical-card">
+                <div class="vertical-brand"><span>bul</span>Krete</div>
+                <div class="vertical-full">Verity Test Infrastructure</div>
+                <div class="vertical-desc">Verified construction materials procurement and heavy infrastructure governance. Carbon-negative concrete with physics-bounded quality verification.</div>
+            </div>
+            <div class="vertical-card">
+                <div class="vertical-brand"><span>dot</span>OS</div>
+                <div class="vertical-full">Hospitality Registry System</div>
+                <div class="vertical-desc">Agentic workflows and verifiable asset management platform for the hospitality industry.</div>
+            </div>
+            <div class="vertical-card">
+                <div class="vertical-brand"><span>doq</span>Umint</div>
+                <div class="vertical-full">Legal Document Verification</div>
+                <div class="vertical-desc">Cryptographically secure legal document verification and execution. Every signature, every version, every interaction on-chain.</div>
+            </div>
+            <div class="vertical-card">
+                <div class="vertical-brand"><span>re</span>Terra</div>
+                <div class="vertical-full">Bioactive Carbon Bond</div>
+                <div class="vertical-desc">Asset-backed environmental finance primitives with real-time dMRV verification. Green sukuk on Guardian.</div>
+            </div>
+            <div class="vertical-card">
+                <div class="vertical-brand"><span>kon</span>Trax</div>
+                <div class="vertical-full">Infrastructure Contract System</div>
+                <div class="vertical-desc">Verifiable coordination and project management for Public-Private Partnerships. Managed in partnership with PwC.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- COMMERCIAL EXTENSIONS -->
+<section id="extensions">
+    <div class="container">
+        <div class="reveal">
+            <div class="section-label">Commercial Extensions</div>
+            <h2 class="section-title">Beyond open source</h2>
+            <p class="section-desc">Production deployments requiring advanced resilience and physics-bounded intelligence.</p>
+        </div>
+
+        <div class="extensions-grid reveal">
+            <div class="extension-card">
+                <div class="extension-label">Resilience Layer</div>
+                <div class="extension-name">LNC</div>
+                <div class="extension-desc">Linear Network Coding solves the Dual-Record Pattern vulnerability — where on-chain hashes point to off-chain data that can disappear. Polynomial proofs and coded packets ensure data is mathematically reconstructible from any sufficient subset of nodes.</div>
+                <a href="#" class="extension-link">Learn more & licensing <span>→</span></a>
+            </div>
+            <div class="extension-card">
+                <div class="extension-label">Intelligence Layer</div>
+                <div class="extension-name">DCL</div>
+                <div class="extension-desc">Domain Coupled Learning enforces physical laws on AI agent actions. An LLM proposes, DCL validates against domain physics, and only physically possible actions execute on-chain. Protected by 24 issued MIMO patents.</div>
+                <a href="#" class="extension-link">Learn more & licensing <span>→</span></a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- QUICKSTART -->
+<section id="quickstart">
+    <div class="container">
+        <div class="reveal">
+            <div class="section-label">Quick Start</div>
+            <h2 class="section-title">Running in ten minutes</h2>
+            <p class="section-desc">Clone, build, connect your MCP client. The agent discovers tools automatically.</p>
+        </div>
+
+        <div class="code-block reveal">
+            <div class="code-header">
+                <span>terminal</span>
+            </div>
+            <div class="code-body">
+                <span class="comment"># Clone and build</span><br>
+                <span class="cmd">git clone</span> https://github.com/trellis-mcp/trellis-mcp.git<br>
+                <span class="cmd">cd</span> trellis-mcp<br>
+                <span class="cmd">bun install</span><br>
+                <span class="cmd">bun run</span> build<br>
+                <br>
+                <span class="comment"># Configure Hedera testnet</span><br>
+                <span class="cmd">export</span> <span class="flag">HEDERA_NETWORK</span>=testnet<br>
+                <span class="cmd">export</span> <span class="flag">HEDERA_OPERATOR_ID</span>=0.0.xxxxx<br>
+                <span class="cmd">export</span> <span class="flag">HEDERA_OPERATOR_KEY</span>=your-private-key<br>
+                <span class="cmd">export</span> <span class="flag">HEDERA_SUPPLY_KEY</span>=your-supply-key<br>
+                <br>
+                <span class="comment"># Start any example server</span><br>
+                <span class="cmd">cd</span> examples/servers/crop-cert<br>
+                <span class="cmd">bun run</span> dev<br>
+                <br>
+                <span class="comment"># Connect Claude Desktop, Cursor, or any MCP client</span><br>
+                <span class="comment"># Agent discovers tools: crop_cert_issue, crop_cert_verify, crop_cert_get_audit</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                Built by <a href="https://bulkrete.com" target="_blank" rel="noopener">Bulkrete Technologies</a>
+            </div>
+            <ul class="footer-links">
+                <li><a href="https://github.com/trellis-mcp/trellis-mcp" target="_blank" rel="noopener">GitHub</a></li>
+                <li><a href="https://github.com/trellis-mcp/trellis-mcp/blob/main/docs/GUIDE.md" target="_blank" rel="noopener">Docs</a></li>
+                <li><a href="https://github.com/trellis-mcp/trellis-mcp/blob/main/LICENSE" target="_blank" rel="noopener">License</a></li>
+            </ul>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Copy install command
+    document.querySelector('.install-block').addEventListener('click', function() {
+        navigator.clipboard.writeText('git clone https://github.com/trellis-mcp/trellis-mcp.git && cd trellis-mcp && bun install && bun run build');
+        const hint = this.querySelector('.copy-hint');
+        hint.textContent = 'copied!';
+        hint.style.opacity = '1';
+        hint.style.color = 'var(--accent)';
+        setTimeout(() => {
+            hint.textContent = 'click to copy';
+            hint.style.color = '';
+        }, 2000);
+    });
+</script>
+
+</body>
+</html>

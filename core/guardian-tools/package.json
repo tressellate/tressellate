@@ -1,0 +1,32 @@
+{
+  "name": "@trellis-mcp/guardian-tools",
+  "version": "0.1.0",
+  "description": "Layer 2 — Pluggable governance interface with Guardian, RBAC, and Noop providers",
+  "author": "bulKrete Technologies",
+  "license": "Apache-2.0",
+  "private": true,
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./governance": {
+      "types": "./dist/governance-provider.d.ts",
+      "import": "./dist/governance-provider.js"
+    },
+    "./providers": {
+      "types": "./dist/providers/index.d.ts",
+      "import": "./dist/providers/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch"
+  },
+  "dependencies": {
+    "@trellis-mcp/core": "workspace:*"
+  }
+}
