@@ -1,10 +1,10 @@
-# Trellis MCP
+# Tressellate
 
 **Making Hashgraph Infrastructure AI-Native**
 
-Trellis MCP is an open-source framework that gives AI agents structured, composable access to [Hiero](https://hiero.org) distributed ledger technology and the [Guardian](https://github.com/hashgraph/guardian) governance engine through the [Model Context Protocol](https://modelcontextprotocol.io).
+Tressellate is an open-source framework that gives AI agents structured, composable access to [Hiero](https://hiero.org) distributed ledger technology and the [Guardian](https://github.com/hashgraph/guardian) governance engine through the [Model Context Protocol](https://modelcontextprotocol.io).
 
-Just as a trellis gives structure for ivy to grow, Trellis MCP gives AI agents a clean, layered interface to build on Hiero's trust infrastructure.
+Just as tiles tessellate to cover any surface without gaps, Tressellate gives AI agents a clean, layered interface to build on Hiero's trust infrastructure.
 
 ---
 
@@ -14,7 +14,7 @@ Integrating AI agents with distributed ledger technology is hard. Every new doma
 
 ## The Solution
 
-Trellis MCP provides a **5-layer architecture** that separates infrastructure from domain logic, making any Hashgraph-based application instantly consumable by AI agents through MCP.
+Tressellate provides a **5-layer architecture** that separates infrastructure from domain logic, making any Hashgraph-based application instantly consumable by AI agents through MCP.
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -61,21 +61,21 @@ Trellis MCP provides a **5-layer architecture** that separates infrastructure fr
 
 ---
 
-## Trellis vs. Raw SDK: The Operating System for AI-Native Web3
+## Tressellate vs. Raw SDK: The Operating System for AI-Native Web3
 
-The raw Hiero SDK is analogous to a pile of bricks and mortar. Developers can build anything, but every tokenized asset application requires figuring out structural engineering, plumbing, and electrical wiring from scratch. Trellis MCP is a structural leap forward:
+The raw Hiero SDK is analogous to a pile of bricks and mortar. Developers can build anything, but every tokenized asset application requires figuring out structural engineering, plumbing, and electrical wiring from scratch. Tressellate is a structural leap forward:
 
 **1. An Ontology, Not Just Functions**
-The raw SDK provides functions like `TokenCreateTransaction`, but it doesn't know what a "Certificate" or a "Milestone" is. Trellis MCP (Layer 3) provides a semantic ontology of 7 universal primitives that map real-world business concepts directly to ledger mechanics.
+The raw SDK provides functions like `TokenCreateTransaction`, but it doesn't know what a "Certificate" or a "Milestone" is. Tressellate (Layer 3) provides a semantic ontology of 7 universal primitives that map real-world business concepts directly to ledger mechanics.
 
 **2. Zero-Integration AI Translation**
-Building an app with the raw SDK requires a massive "AI Translation" layer—custom APIs, bespoke system prompts, and forcing LLMs to guess JSON payloads. Trellis MCP *is* the translation layer. Via the Model Context Protocol, AI agents intrinsically understand the tool schemas and validation rules with zero custom training.
+Building an app with the raw SDK requires a massive "AI Translation" layer—custom APIs, bespoke system prompts, and forcing LLMs to guess JSON payloads. Tressellate *is* the translation layer. Via the Model Context Protocol, AI agents intrinsically understand the tool schemas and validation rules with zero custom training.
 
 **3. State Composability**
-Linking a Guardian verifier policy to an NFT minting event requires bespoke orchestration code in the raw SDK. In Trellis MCP, Guardian operations (Layer 2) and Hashgraph operations (Layer 1) are abstracted so that Domain Rules (Layer 4) can compose them effortlessly.
+Linking a Guardian verifier policy to an NFT minting event requires bespoke orchestration code in the raw SDK. In Tressellate, Guardian operations (Layer 2) and Hashgraph operations (Layer 1) are abstracted so that Domain Rules (Layer 4) can compose them effortlessly.
 
 **4. Instant Enterprise Onboarding**
-A developer building a supply chain tracker with the raw SDK might spend 6-8 weeks just on infrastructure plumbing. With Trellis MCP, they define their `parts-prov` schema in Layer 4, spin up the Layer 5 server, and possess an enterprise-grade, AI-ready tracking system natively executing on Hiero in an afternoon.
+A developer building a supply chain tracker with the raw SDK might spend 6-8 weeks just on infrastructure plumbing. With Tressellate, they define their `parts-prov` schema in Layer 4, spin up the Layer 5 server, and possess an enterprise-grade, AI-ready tracking system natively executing on Hiero in an afternoon.
 
 ---
 
@@ -89,8 +89,8 @@ A developer building a supply chain tracker with the raw SDK might spend 6-8 wee
 ### Installation
 
 ```bash
-git clone https://github.com/trellis-mcp/trellis-mcp.git
-cd trellis-mcp
+git clone https://github.com/tressellate/tressellate.git
+cd tressellate
 bun install
 bun run build
 ```
@@ -128,7 +128,7 @@ This will connect to the MCP server over stdio and print out all the discovered 
 ## Project Structure
 
 ```
-trellis-mcp/
+tressellate/
 ├── core/                              # Layers 1-3 (shared infrastructure)
 │   ├── hashgraph-tools/               # L1: Hiero SDK primitives (19 tools)
 │   ├── guardian-tools/                # L2: Guardian governance primitives
@@ -200,15 +200,13 @@ Infrastructure primitives for the Hiero network.
 
 ## Examples
 
-Five complete domain implementations are included, each demonstrating the full Layer 4 + Layer 5 pattern:
+Three complete domain implementations are included, each demonstrating the full Layer 4 + Layer 5 pattern:
 
 | Domain | L4 Package | L5 Tools | What It Does |
 |--------|-----------|----------|-------------|
-| **Agriculture** | `domain-agriculture` | `crop-cert` (5 tools) | Issue and verify crop yield certificates with farm-level audit trails |
 | **Real Estate** | `domain-real-estate` | `lease` (5 tools) | Grant lease agreements as NFTs, record payment milestones, verify tenancy |
-| **Supply Chain** | `domain-supply-chain` | `parts-prov` (5 tools) | Track parts provenance with quality certifications and custody chains |
-| **Energy** | `domain-energy` | `rec` (6 tools) | Mint renewable energy credits as fungible tokens with generation certificates |
 | **Healthcare** | `domain-healthcare` | `drug-cert` (5 tools) | Certify drug lots with GMP compliance, track cold-chain custody |
+| **Logistics** | `domain-supply-chain` | `parts-prov` (5 tools) | Track parts provenance with quality certifications and custody chains |
 
 See the [Implementation Guide](./docs/GUIDE.md) for step-by-step instructions on building your own domain.
 
@@ -230,21 +228,21 @@ See the [Implementation Guide](./docs/GUIDE.md) for step-by-step instructions on
 
 As AI agents orchestrate production systems, the gap between intent and execution becomes opaque. An agent reasons internally, proposes an action, and executes it on external infrastructure — but without a structured protocol at the execution boundary, there is no inspectable record of *what* was requested, *why*, or *whether the outcome matched the intent*. For trust-sensitive domains like finance, procurement, and carbon verification, this opacity is unacceptable.
 
-Trellis MCP solves this at the execution boundary — exactly where opaque reasoning meets real-world action:
+Tressellate solves this at the execution boundary — exactly where opaque reasoning meets real-world action:
 
 **Standardized tool contracts.** MCP isn't loose prompt-based tool calling. It's a client-server protocol with explicit schemas, parameter definitions, and constraints. Agents discover tools dynamically, request them in structured JSON-RPC format, and receive predictable responses. Developers and auditors can inspect exact tool interfaces, inputs/outputs, and invocation logs without diving into a model's internal weights.
 
 **Built-in traceability.** Every MCP interaction is inherently loggable: tool discovery, calls, parameters, results, errors. This creates a machine-readable chain of actions that's far easier to audit than opaque neural activations or scattered custom integrations.
 
-**Ledger-grounded trust.** In vanilla setups, agents call tools and blindly trust responses. Trellis MCP flips this by grounding high-stakes actions in **on-ledger proofs**: every write, issuance, and verification traces to a Hiero transaction with consensus timestamp and cryptographic signature. Even if the AI agent hallucinates or its generated code has flaws, the final outcome is verifiable against the immutable ledger.
+**Ledger-grounded trust.** In vanilla setups, agents call tools and blindly trust responses. Tressellate flips this by grounding high-stakes actions in **on-ledger proofs**: every write, issuance, and verification traces to a Hiero transaction with consensus timestamp and cryptographic signature. Even if the AI agent hallucinates or its generated code has flaws, the final outcome is verifiable against the immutable ledger.
 
 **Independently attestable layers.** The 5-layer design avoids monolithic black boxes. Each layer has deterministic behavior, bounded responsibility, and can be audited independently — PwC verifies L1 hashgraph calls separately from L5 agent tool calls. Transparency compounds: you don't need to understand the entire AI brain to verify a specific action.
 
-**Preventing agentic drift.** Over successive autonomous iterations, AI agents can gradually move system behavior away from intended parameters in ways that are individually small but collectively significant and untraceable. Trellis MCP's fixed-contract tool interfaces and per-action ledger attestation make drift *detectable by design*, not just in retrospect.
+**Preventing agentic drift.** Over successive autonomous iterations, AI agents can gradually move system behavior away from intended parameters in ways that are individually small but collectively significant and untraceable. Tressellate's fixed-contract tool interfaces and per-action ledger attestation make drift *detectable by design*, not just in retrospect.
 
 Critically, the LLM's internal reasoning opacity is **irrelevant** in this architecture. The model has no unmediated authority — it can only call tools with defined parameters through the MCP protocol, and every resulting action is validated by deterministic layers below. The LLM proposes; the ledger disposes. You don't need to audit the AI's reasoning when you can audit every action it takes.
 
-This creates a new category of attestable AI infrastructure. Each domain verified on Trellis strengthens every other domain on the platform — the same methodology PwC applies to procurement governance transfers directly to carbon verification, supply chain, and healthcare at decreasing cost and increasing confidence. Trust compounds with adoption.
+This creates a new category of attestable AI infrastructure. Each domain verified on Tressellate strengthens every other domain on the platform — the same methodology PwC applies to procurement governance transfers directly to carbon verification, supply chain, and healthcare at decreasing cost and increasing confidence. Trust compounds with adoption.
 
 ---
 
@@ -252,7 +250,7 @@ This creates a new category of attestable AI infrastructure. Each domain verifie
 
 - [x] Layer 1: Core Hiero tool coverage (19 tools)
 - [x] Layer 3: 7 asset type primitives + 5 operation factories
-- [x] Layer 4-5: 5 domain example implementations
+- [x] Layer 4-5: 3 domain example implementations (Real Estate, Healthcare, Logistics)
 - [ ] Layer 1: `hedera_pin_to_ipfs` — standardized off-chain storage with CID formatting
 - [ ] Layer 1: Smart Contract Service integration
 - [ ] Layer 1: Scheduled transactions
@@ -267,7 +265,7 @@ This creates a new category of attestable AI infrastructure. Each domain verifie
 
 ## Commercial Extensions
 
-Trellis MCP's open-source core (Layers 1-3) provides the foundation. For production deployments requiring advanced resilience and intelligence capabilities:
+Tressellate's open-source core (Layers 1-3) provides the foundation. For production deployments requiring advanced resilience and intelligence capabilities:
 
 - **LNC (Linear Network Coding)** — A Layer 1 resilience upgrade that solves the Dual-Record Pattern vulnerability, where on-chain hashes point to off-chain data that can disappear. LNC uses polynomial proofs and coded packets scattered across network nodes so that data is mathematically reconstructible from any sufficient subset of nodes — no single node holds the complete data, and all data is encrypted before coding. Smart contracts can prove data integrity without exposing content.
 
@@ -275,13 +273,14 @@ Trellis MCP's open-source core (Layers 1-3) provides the foundation. For product
 
 ### Flagship Commercial Verticals
 
-To prove the enterprise-readiness of the Trellis architecture, we are launching independent commercial entities and network applications built natively on this MCP:
+To prove the enterprise-readiness of the Tressellate architecture, we are launching independent commercial entities and network applications built natively on this MCP:
 
 1. **bulKrete (Verity Test Infrastructure)** — Verified construction materials procurement and heavy infrastructure governance.
 2. **dotOS (Hospitality Registry System)** — Agentic workflows and verifiable asset management platform for the hospitality industry.
 3. **doqUmint** — Cryptographically secure legal document verification and execution.
 4. **reTerra (Bioactive Carbon Bond)** — Asset-backed environmental finance primitives with real-time verification.
 5. **konTrax (Infrastructure Contract System)** — Verifiable coordination and project management for Public-Private Partnerships (PPP), managed in partnership with PwC.
+6. **solarAnihan (Community Solar Cooperative)** — Community-driven distributed solar energy, battery sharing networks, and prosumer microgrids for the Philippines. Bayanihan-powered energy democracy on-chain.
 
 ---
 

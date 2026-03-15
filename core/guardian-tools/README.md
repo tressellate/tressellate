@@ -1,4 +1,4 @@
-# @trellis-mcp/guardian-tools
+# @tressellate/guardian-tools
 
 **Layer 2 — Governance Interface for the Hiero Ecosystem**
 
@@ -78,7 +78,7 @@ interface ProviderCapabilities {
 A pass-through provider for development and testing that authorizes all operations:
 
 ```typescript
-import { NoopGovernanceProvider } from '@trellis-mcp/guardian-tools';
+import { NoopGovernanceProvider } from '@tressellate/guardian-tools';
 
 const provider = new NoopGovernanceProvider();
 
@@ -114,7 +114,7 @@ type PolicyStatus = 'DRAFT' | 'DRY_RUN' | 'PUBLISHED' | 'DISCONTINUED';
 Domain tools program against the `GovernanceProvider` interface:
 
 ```typescript
-import type { GovernanceProvider } from '@trellis-mcp/guardian-tools';
+import type { GovernanceProvider } from '@tressellate/guardian-tools';
 
 async function mintCertificate(
   config: DomainConfig,
@@ -143,7 +143,7 @@ async function mintCertificate(
 ## Implementing a Custom Provider
 
 ```typescript
-import type { GovernanceProvider, ProviderCapabilities } from '@trellis-mcp/guardian-tools';
+import type { GovernanceProvider, ProviderCapabilities } from '@tressellate/guardian-tools';
 
 class RBACProvider implements GovernanceProvider {
   readonly name = 'RBAC';

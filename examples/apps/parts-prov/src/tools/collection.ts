@@ -1,6 +1,6 @@
-import type { MCPTool } from '@trellis-mcp/core/config';
-import { createNFTCollection, mintNFT } from '@trellis-mcp/core';
-import { requireConfigField, createAuditSubmitter } from '@trellis-mcp/core/helpers';
+import type { MCPTool } from '@tressellate/core/config';
+import { createNFTCollection, mintNFT } from '@tressellate/core';
+import { requireConfigField, createAuditSubmitter } from '@tressellate/core/helpers';
 import type { PartsProvConfig } from '../config.js';
 
 const requirePartsCollectionId = requireConfigField<PartsProvConfig>(

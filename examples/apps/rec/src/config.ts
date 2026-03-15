@@ -1,1 +1,1 @@
-export type { EnergyConfig as RECConfig } from '@trellis-mcp/domain-energy';
+export type { EnergyConfig as RECConfig } from '@tressellate/domain-energy';

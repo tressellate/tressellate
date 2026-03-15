@@ -1,1 +1,1 @@
-export type { RealEstateConfig as LeaseConfig } from '@trellis-mcp/domain-real-estate';
+export type { RealEstateConfig as LeaseConfig } from '@tressellate/domain-real-estate';

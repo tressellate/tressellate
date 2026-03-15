@@ -1,4 +1,4 @@
-import type { HederaConfig } from '@trellis-mcp/core/config';
+import type { HederaConfig } from '@tressellate/core/config';
 
 /**
  * Healthcare domain configuration.

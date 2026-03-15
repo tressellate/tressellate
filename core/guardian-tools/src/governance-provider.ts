@@ -3,7 +3,7 @@
  *
  * Guardian is the full-featured implementation (DIDs, VCs, policies, dMRV).
  * Lightweight providers (e.g., Smart Contract RBAC) can implement the subset
- * they support, allowing teams to adopt Trellis (L1, L3, L4, L5) without
+ * they support, allowing teams to adopt Tressellate (L1, L3, L4, L5) without
  * the operational overhead of deploying Guardian.
  *
  * Design principle: Layer 4 domains depend on this interface, not on

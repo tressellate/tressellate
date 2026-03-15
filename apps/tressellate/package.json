@@ -1,8 +1,8 @@
 {
-    "name": "@trellis-mcp/website",
+    "name": "@tressellate/website",
     "version": "0.1.0",
     "private": true,
-    "description": "Trellis MCP Landing Page",
+    "description": "Tressellate Landing Page",
     "scripts": {
         "dev": "npx serve .",
         "build": "echo 'No build step required for static HTML'"

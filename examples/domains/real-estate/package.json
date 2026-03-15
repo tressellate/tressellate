@@ -1,5 +1,5 @@
 {
-  "name": "@trellis-mcp/domain-real-estate",
+  "name": "@tressellate/domain-real-estate",
   "version": "0.1.0",
   "description": "Layer 4 — Real Estate domain rules (schemas, enums, validation)",
   "author": "bulKrete Technologies",
@@ -19,7 +19,7 @@
     "dev": "tsc --watch"
   },
   "dependencies": {
-    "@trellis-mcp/core": "workspace:*",
-    "@trellis-mcp/asset-types": "workspace:*"
+    "@tressellate/core": "workspace:*",
+    "@tressellate/asset-types": "workspace:*"
   }
 }

@@ -1,5 +1,5 @@
-import type { HederaConfig } from '@trellis-mcp/core/config';
-import { mintToken } from '@trellis-mcp/core';
+import type { HederaConfig } from '@tressellate/core/config';
+import { mintToken } from '@tressellate/core';
 import type { AssetOperationResult, AssetType } from '../types.js';
 
 /**

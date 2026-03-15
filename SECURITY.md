@@ -2,7 +2,7 @@
 
 ## Reporting a Vulnerability
 
-If you discover a security vulnerability in Trellis MCP, please report it responsibly.
+If you discover a security vulnerability in Tressellate, please report it responsibly.
 
 **Do not open a public GitHub issue for security vulnerabilities.**
 

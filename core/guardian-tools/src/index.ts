@@ -1,4 +1,4 @@
-import type { MCPTool } from '@trellis-mcp/core/config';
+import type { MCPTool } from '@tressellate/core/config';
 import type { GuardianConfig } from './config.js';
 
 export type { GuardianConfig } from './config.js';

@@ -5,9 +5,9 @@ import {
 	ListToolsRequestSchema
 } from '@modelcontextprotocol/sdk/types.js';
 
-import type { MCPTool } from '@trellis-mcp/core/config';
-import { HEDERA_TOOLS } from '@trellis-mcp/core';
-import { PARTS_PROV_TOOLS, type PartsProvConfig } from '@trellis-mcp/parts-prov';
+import type { MCPTool } from '@tressellate/core/config';
+import { HEDERA_TOOLS } from '@tressellate/core';
+import { PARTS_PROV_TOOLS, type PartsProvConfig } from '@tressellate/parts-prov';
 
 const ALL_TOOLS: MCPTool<PartsProvConfig>[] = [
 	...(HEDERA_TOOLS as MCPTool<PartsProvConfig>[]),

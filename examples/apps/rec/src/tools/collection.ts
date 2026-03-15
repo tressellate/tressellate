@@ -1,6 +1,6 @@
-import type { MCPTool } from '@trellis-mcp/core/config';
-import { createToken, mintToken, createNFTCollection } from '@trellis-mcp/core';
-import { requireConfigField, createAuditSubmitter } from '@trellis-mcp/core/helpers';
+import type { MCPTool } from '@tressellate/core/config';
+import { createToken, mintToken, createNFTCollection } from '@tressellate/core';
+import { requireConfigField, createAuditSubmitter } from '@tressellate/core/helpers';
 import type { RECConfig } from '../config.js';
 
 const requireRecTokenId = requireConfigField<RECConfig>(

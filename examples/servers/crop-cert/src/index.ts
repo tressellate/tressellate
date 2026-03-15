@@ -5,9 +5,9 @@ import {
 	ListToolsRequestSchema
 } from '@modelcontextprotocol/sdk/types.js';
 
-import type { MCPTool } from '@trellis-mcp/core/config';
-import { HEDERA_TOOLS } from '@trellis-mcp/core';
-import { CROP_CERT_TOOLS, type CropCertConfig } from '@trellis-mcp/crop-cert';
+import type { MCPTool } from '@tressellate/core/config';
+import { HEDERA_TOOLS } from '@tressellate/core';
+import { CROP_CERT_TOOLS, type CropCertConfig } from '@tressellate/crop-cert';
 
 const ALL_TOOLS: MCPTool<CropCertConfig>[] = [
 	...(HEDERA_TOOLS as MCPTool<CropCertConfig>[]),

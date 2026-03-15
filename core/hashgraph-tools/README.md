@@ -1,4 +1,4 @@
-# @trellis-mcp/core
+# @tressellate/core
 
 **Layer 1 — Infrastructure Primitives for Hiero (formerly Hedera Hashgraph)**
 
@@ -10,7 +10,7 @@ Hashgraph tools handle ledger-level operations: creating accounts, managing toke
 
 ## What This Layer Does NOT Do
 
-This layer has no knowledge of governance workflows or domain-specific logic. It interacts only with the Hiero network. For governance, use `@trellis-mcp/guardian-tools` (Layer 2). For asset abstractions, use `@trellis-mcp/asset-types` (Layer 3).
+This layer has no knowledge of governance workflows or domain-specific logic. It interacts only with the Hiero network. For governance, use `@tressellate/guardian-tools` (Layer 2). For asset abstractions, use `@tressellate/asset-types` (Layer 3).
 
 ## Tools (22)
 
@@ -63,7 +63,7 @@ This layer has no knowledge of governance workflows or domain-specific logic. It
 Register all tools with an MCP server:
 
 ```typescript
-import { HEDERA_TOOLS, type HederaConfig, type MCPTool } from '@trellis-mcp/core';
+import { HEDERA_TOOLS, type HederaConfig, type MCPTool } from '@tressellate/core';
 
 const config: HederaConfig = {
   network: 'testnet',
@@ -81,7 +81,7 @@ for (const tool of HEDERA_TOOLS) {
 Or register tools by category:
 
 ```typescript
-import { HEDERA_TOKEN_TOOLS, HEDERA_NFT_TOOLS } from '@trellis-mcp/core';
+import { HEDERA_TOKEN_TOOLS, HEDERA_NFT_TOOLS } from '@tressellate/core';
 ```
 
 ### Composable Functions
@@ -97,7 +97,7 @@ import {
   mintNFT,
   getNFTInfo,
   type HederaConfig,
-} from '@trellis-mcp/core';
+} from '@tressellate/core';
 
 // Create a consensus topic
 const topic = await createTopic(config, {
@@ -121,7 +121,7 @@ const info = await getNFTInfo(config, {
 ### Helpers
 
 ```typescript
-import { createAuditSubmitter, requireConfigField } from '@trellis-mcp/core';
+import { createAuditSubmitter, requireConfigField } from '@tressellate/core';
 
 // Create a reusable audit submission function
 const submitAudit = createAuditSubmitter(config, topicId);

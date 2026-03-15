@@ -9,8 +9,8 @@
     "dev": "bun src/index.ts"
   },
   "dependencies": {
-    "@trellis-mcp/core": "workspace:*",
-    "@trellis-mcp/parts-prov": "workspace:*",
+    "@tressellate/core": "workspace:*",
+    "@tressellate/parts-prov": "workspace:*",
     "@modelcontextprotocol/sdk": "^1.0.0"
   }
 }

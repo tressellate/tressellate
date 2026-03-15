@@ -1,5 +1,5 @@
 {
-  "name": "trellis-mcp",
+  "name": "tressellate",
   "version": "0.1.0",
   "description": "Intelligent Access to Hiero and Guardian",
   "author": "bulKrete Technologies",
@@ -21,7 +21,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/trellis-mcp/trellis-mcp.git"
+    "url": "https://github.com/tressellate/tressellate.git"
   },
   "keywords": [
     "mcp",
@@ -37,9 +37,9 @@
     "distributed-ledger",
     "model-context-protocol"
   ],
-  "homepage": "https://trellis-mcp.dev",
+  "homepage": "https://tressellate.dev",
   "bugs": {
-    "url": "https://github.com/trellis-mcp/trellis-mcp/issues"
+    "url": "https://github.com/tressellate/tressellate/issues"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

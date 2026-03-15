@@ -1,5 +1,5 @@
 {
-  "name": "@trellis-mcp/guardian-tools",
+  "name": "@tressellate/guardian-tools",
   "version": "0.1.0",
   "description": "Layer 2 — Pluggable governance interface with Guardian, RBAC, and Noop providers",
   "author": "bulKrete Technologies",
@@ -27,6 +27,6 @@
     "dev": "tsc --watch"
   },
   "dependencies": {
-    "@trellis-mcp/core": "workspace:*"
+    "@tressellate/core": "workspace:*"
   }
 }

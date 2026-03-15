@@ -5,9 +5,9 @@ import {
 	ListToolsRequestSchema
 } from '@modelcontextprotocol/sdk/types.js';
 
-import type { MCPTool } from '@trellis-mcp/core/config';
-import { HEDERA_TOOLS } from '@trellis-mcp/core';
-import { DRUG_CERT_TOOLS, type DrugCertConfig } from '@trellis-mcp/drug-cert';
+import type { MCPTool } from '@tressellate/core/config';
+import { HEDERA_TOOLS } from '@tressellate/core';
+import { DRUG_CERT_TOOLS, type DrugCertConfig } from '@tressellate/drug-cert';
 
 const ALL_TOOLS: MCPTool<DrugCertConfig>[] = [
 	...(HEDERA_TOOLS as MCPTool<DrugCertConfig>[]),

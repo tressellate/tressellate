@@ -1,5 +1,5 @@
 {
-  "name": "@trellis-mcp/parts-prov",
+  "name": "@tressellate/parts-prov",
   "version": "1.0.0",
   "private": true,
   "type": "module",
@@ -12,9 +12,9 @@
   },
   "scripts": { "build": "tsc", "dev": "tsc --watch" },
   "dependencies": {
-    "@trellis-mcp/core": "workspace:*",
-    "@trellis-mcp/asset-types": "workspace:*",
-    "@trellis-mcp/domain-supply-chain": "workspace:*",
+    "@tressellate/core": "workspace:*",
+    "@tressellate/asset-types": "workspace:*",
+    "@tressellate/domain-supply-chain": "workspace:*",
     "@hashgraph/sdk": "^2.50.0"
   }
 }

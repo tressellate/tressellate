@@ -1,6 +1,6 @@
-import type { MCPTool } from '@trellis-mcp/core/config';
-import { getNFTInfo, getAccountNFTs } from '@trellis-mcp/core/tools/nft';
-import { requireConfigField } from '@trellis-mcp/core/helpers';
+import type { MCPTool } from '@tressellate/core/config';
+import { getNFTInfo, getAccountNFTs } from '@tressellate/core/tools/nft';
+import { requireConfigField } from '@tressellate/core/helpers';
 import type { CropCertConfig } from '../config.js';
 
 const requireCropCertCollectionId = requireConfigField<CropCertConfig>(

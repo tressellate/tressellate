@@ -5,9 +5,9 @@ import {
 	ListToolsRequestSchema
 } from '@modelcontextprotocol/sdk/types.js';
 
-import type { MCPTool } from '@trellis-mcp/core/config';
-import { HEDERA_TOOLS } from '@trellis-mcp/core';
-import { LEASE_TOOLS, type LeaseConfig } from '@trellis-mcp/lease';
+import type { MCPTool } from '@tressellate/core/config';
+import { HEDERA_TOOLS } from '@tressellate/core';
+import { LEASE_TOOLS, type LeaseConfig } from '@tressellate/lease';
 
 const ALL_TOOLS: MCPTool<LeaseConfig>[] = [
 	...(HEDERA_TOOLS as MCPTool<LeaseConfig>[]),

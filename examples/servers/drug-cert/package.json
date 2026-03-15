@@ -9,8 +9,8 @@
     "dev": "bun src/index.ts"
   },
   "dependencies": {
-    "@trellis-mcp/core": "workspace:*",
-    "@trellis-mcp/drug-cert": "workspace:*",
+    "@tressellate/core": "workspace:*",
+    "@tressellate/drug-cert": "workspace:*",
     "@modelcontextprotocol/sdk": "^1.0.0"
   }
 }

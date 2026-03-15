@@ -1,5 +1,5 @@
 {
-  "name": "@trellis-mcp/asset-types",
+  "name": "@tressellate/asset-types",
   "version": "0.1.0",
   "description": "Layer 3 — Reusable asset type schemas and operation factories (Hiero ecosystem)",
   "author": "bulKrete Technologies",
@@ -27,6 +27,6 @@
     "dev": "tsc --watch"
   },
   "dependencies": {
-    "@trellis-mcp/core": "workspace:*"
+    "@tressellate/core": "workspace:*"
   }
 }

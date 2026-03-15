@@ -1,5 +1,5 @@
-import type { HederaConfig } from '@trellis-mcp/core/config';
-import { getTopicMessages } from '@trellis-mcp/core';
+import type { HederaConfig } from '@tressellate/core/config';
+import { getTopicMessages } from '@tressellate/core';
 import type { AuditTrailQuery, AuditTrailResult, AuditTrailMessage } from '../types.js';
 
 /**

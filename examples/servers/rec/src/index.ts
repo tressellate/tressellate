@@ -5,9 +5,9 @@ import {
 	ListToolsRequestSchema
 } from '@modelcontextprotocol/sdk/types.js';
 
-import type { MCPTool } from '@trellis-mcp/core/config';
-import { HEDERA_TOOLS } from '@trellis-mcp/core';
-import { REC_TOOLS, type RECConfig } from '@trellis-mcp/rec';
+import type { MCPTool } from '@tressellate/core/config';
+import { HEDERA_TOOLS } from '@tressellate/core';
+import { REC_TOOLS, type RECConfig } from '@tressellate/rec';
 
 const ALL_TOOLS: MCPTool<RECConfig>[] = [
 	...(HEDERA_TOOLS as MCPTool<RECConfig>[]),

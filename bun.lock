@@ -12,115 +12,119 @@
         "typescript-eslint": "^8.56.1",
       },
     },
+    "apps/tressellate": {
+      "name": "@tressellate/website",
+      "version": "0.1.0",
+    },
     "core/asset-types": {
-      "name": "@trellis-mcp/asset-types",
+      "name": "@tressellate/asset-types",
       "version": "0.1.0",
       "dependencies": {
-        "@trellis-mcp/core": "workspace:*",
+        "@tressellate/core": "workspace:*",
       },
     },
     "core/guardian-tools": {
-      "name": "@trellis-mcp/guardian-tools",
+      "name": "@tressellate/guardian-tools",
       "version": "0.1.0",
       "dependencies": {
-        "@trellis-mcp/core": "workspace:*",
+        "@tressellate/core": "workspace:*",
       },
     },
     "core/hashgraph-tools": {
-      "name": "@trellis-mcp/core",
+      "name": "@tressellate/core",
       "version": "1.0.0",
       "dependencies": {
         "@hashgraph/sdk": "^2.50.0",
       },
     },
     "examples/apps/crop-cert": {
-      "name": "@trellis-mcp/crop-cert",
+      "name": "@tressellate/crop-cert",
       "version": "1.0.0",
       "dependencies": {
         "@hashgraph/sdk": "^2.50.0",
-        "@trellis-mcp/asset-types": "workspace:*",
-        "@trellis-mcp/core": "workspace:*",
-        "@trellis-mcp/domain-agriculture": "workspace:*",
+        "@tressellate/asset-types": "workspace:*",
+        "@tressellate/core": "workspace:*",
+        "@tressellate/domain-agriculture": "workspace:*",
       },
     },
     "examples/apps/drug-cert": {
-      "name": "@trellis-mcp/drug-cert",
+      "name": "@tressellate/drug-cert",
       "version": "1.0.0",
       "dependencies": {
         "@hashgraph/sdk": "^2.50.0",
-        "@trellis-mcp/asset-types": "workspace:*",
-        "@trellis-mcp/core": "workspace:*",
-        "@trellis-mcp/domain-healthcare": "workspace:*",
+        "@tressellate/asset-types": "workspace:*",
+        "@tressellate/core": "workspace:*",
+        "@tressellate/domain-healthcare": "workspace:*",
       },
     },
     "examples/apps/lease": {
-      "name": "@trellis-mcp/lease",
+      "name": "@tressellate/lease",
       "version": "1.0.0",
       "dependencies": {
         "@hashgraph/sdk": "^2.50.0",
-        "@trellis-mcp/asset-types": "workspace:*",
-        "@trellis-mcp/core": "workspace:*",
-        "@trellis-mcp/domain-real-estate": "workspace:*",
+        "@tressellate/asset-types": "workspace:*",
+        "@tressellate/core": "workspace:*",
+        "@tressellate/domain-real-estate": "workspace:*",
       },
     },
     "examples/apps/parts-prov": {
-      "name": "@trellis-mcp/parts-prov",
+      "name": "@tressellate/parts-prov",
       "version": "1.0.0",
       "dependencies": {
         "@hashgraph/sdk": "^2.50.0",
-        "@trellis-mcp/asset-types": "workspace:*",
-        "@trellis-mcp/core": "workspace:*",
-        "@trellis-mcp/domain-supply-chain": "workspace:*",
+        "@tressellate/asset-types": "workspace:*",
+        "@tressellate/core": "workspace:*",
+        "@tressellate/domain-supply-chain": "workspace:*",
       },
     },
     "examples/apps/rec": {
-      "name": "@trellis-mcp/rec",
+      "name": "@tressellate/rec",
       "version": "1.0.0",
       "dependencies": {
         "@hashgraph/sdk": "^2.50.0",
-        "@trellis-mcp/asset-types": "workspace:*",
-        "@trellis-mcp/core": "workspace:*",
-        "@trellis-mcp/domain-energy": "workspace:*",
+        "@tressellate/asset-types": "workspace:*",
+        "@tressellate/core": "workspace:*",
+        "@tressellate/domain-energy": "workspace:*",
       },
     },
     "examples/domains/agriculture": {
-      "name": "@trellis-mcp/domain-agriculture",
+      "name": "@tressellate/domain-agriculture",
       "version": "0.1.0",
       "dependencies": {
-        "@trellis-mcp/asset-types": "workspace:*",
-        "@trellis-mcp/core": "workspace:*",
+        "@tressellate/asset-types": "workspace:*",
+        "@tressellate/core": "workspace:*",
       },
     },
     "examples/domains/energy": {
-      "name": "@trellis-mcp/domain-energy",
+      "name": "@tressellate/domain-energy",
       "version": "0.1.0",
       "dependencies": {
-        "@trellis-mcp/asset-types": "workspace:*",
-        "@trellis-mcp/core": "workspace:*",
+        "@tressellate/asset-types": "workspace:*",
+        "@tressellate/core": "workspace:*",
       },
     },
     "examples/domains/healthcare": {
-      "name": "@trellis-mcp/domain-healthcare",
+      "name": "@tressellate/domain-healthcare",
       "version": "0.1.0",
       "dependencies": {
-        "@trellis-mcp/asset-types": "workspace:*",
-        "@trellis-mcp/core": "workspace:*",
+        "@tressellate/asset-types": "workspace:*",
+        "@tressellate/core": "workspace:*",
       },
     },
     "examples/domains/real-estate": {
-      "name": "@trellis-mcp/domain-real-estate",
+      "name": "@tressellate/domain-real-estate",
       "version": "0.1.0",
       "dependencies": {
-        "@trellis-mcp/asset-types": "workspace:*",
-        "@trellis-mcp/core": "workspace:*",
+        "@tressellate/asset-types": "workspace:*",
+        "@tressellate/core": "workspace:*",
       },
     },
     "examples/domains/supply-chain": {
-      "name": "@trellis-mcp/domain-supply-chain",
+      "name": "@tressellate/domain-supply-chain",
       "version": "0.1.0",
       "dependencies": {
-        "@trellis-mcp/asset-types": "workspace:*",
-        "@trellis-mcp/core": "workspace:*",
+        "@tressellate/asset-types": "workspace:*",
+        "@tressellate/core": "workspace:*",
       },
     },
     "examples/servers/crop-cert": {
@@ -128,8 +132,8 @@
       "version": "1.0.0",
       "dependencies": {
         "@modelcontextprotocol/sdk": "^1.0.0",
-        "@trellis-mcp/core": "workspace:*",
-        "@trellis-mcp/crop-cert": "workspace:*",
+        "@tressellate/core": "workspace:*",
+        "@tressellate/crop-cert": "workspace:*",
       },
     },
     "examples/servers/drug-cert": {
@@ -137,8 +141,8 @@
       "version": "1.0.0",
       "dependencies": {
         "@modelcontextprotocol/sdk": "^1.0.0",
-        "@trellis-mcp/core": "workspace:*",
-        "@trellis-mcp/drug-cert": "workspace:*",
+        "@tressellate/core": "workspace:*",
+        "@tressellate/drug-cert": "workspace:*",
       },
     },
     "examples/servers/lease": {
@@ -146,8 +150,8 @@
       "version": "1.0.0",
       "dependencies": {
         "@modelcontextprotocol/sdk": "^1.0.0",
-        "@trellis-mcp/core": "workspace:*",
-        "@trellis-mcp/lease": "workspace:*",
+        "@tressellate/core": "workspace:*",
+        "@tressellate/lease": "workspace:*",
       },
     },
     "examples/servers/parts-prov": {
@@ -155,8 +159,8 @@
       "version": "1.0.0",
       "dependencies": {
         "@modelcontextprotocol/sdk": "^1.0.0",
-        "@trellis-mcp/core": "workspace:*",
-        "@trellis-mcp/parts-prov": "workspace:*",
+        "@tressellate/core": "workspace:*",
+        "@tressellate/parts-prov": "workspace:*",
       },
     },
     "examples/servers/rec": {
@@ -164,8 +168,8 @@
       "version": "1.0.0",
       "dependencies": {
         "@modelcontextprotocol/sdk": "^1.0.0",
-        "@trellis-mcp/core": "workspace:*",
-        "@trellis-mcp/rec": "workspace:*",
+        "@tressellate/core": "workspace:*",
+        "@tressellate/rec": "workspace:*",
       },
     },
   },
@@ -394,31 +398,33 @@
 
     "@sinonjs/fake-timers": ["@sinonjs/fake-timers@10.3.0", "", { "dependencies": { "@sinonjs/commons": "^3.0.0" } }, "sha512-V4BG07kuYSUkTCSBHG8G8TNhM+F19jXFWnQtzj+we8DrkpSBCee9Z3Ms8yiGer/dlmhe35/Xdgyo3/0rQKg7YA=="],
 
-    "@trellis-mcp/asset-types": ["@trellis-mcp/asset-types@workspace:core/asset-types"],
+    "@tressellate/asset-types": ["@tressellate/asset-types@workspace:core/asset-types"],
 
-    "@trellis-mcp/core": ["@trellis-mcp/core@workspace:core/hashgraph-tools"],
+    "@tressellate/core": ["@tressellate/core@workspace:core/hashgraph-tools"],
 
-    "@trellis-mcp/crop-cert": ["@trellis-mcp/crop-cert@workspace:examples/apps/crop-cert"],
+    "@tressellate/crop-cert": ["@tressellate/crop-cert@workspace:examples/apps/crop-cert"],
 
-    "@trellis-mcp/domain-agriculture": ["@trellis-mcp/domain-agriculture@workspace:examples/domains/agriculture"],
+    "@tressellate/domain-agriculture": ["@tressellate/domain-agriculture@workspace:examples/domains/agriculture"],
 
-    "@trellis-mcp/domain-energy": ["@trellis-mcp/domain-energy@workspace:examples/domains/energy"],
+    "@tressellate/domain-energy": ["@tressellate/domain-energy@workspace:examples/domains/energy"],
 
-    "@trellis-mcp/domain-healthcare": ["@trellis-mcp/domain-healthcare@workspace:examples/domains/healthcare"],
+    "@tressellate/domain-healthcare": ["@tressellate/domain-healthcare@workspace:examples/domains/healthcare"],
 
-    "@trellis-mcp/domain-real-estate": ["@trellis-mcp/domain-real-estate@workspace:examples/domains/real-estate"],
+    "@tressellate/domain-real-estate": ["@tressellate/domain-real-estate@workspace:examples/domains/real-estate"],
 
-    "@trellis-mcp/domain-supply-chain": ["@trellis-mcp/domain-supply-chain@workspace:examples/domains/supply-chain"],
+    "@tressellate/domain-supply-chain": ["@tressellate/domain-supply-chain@workspace:examples/domains/supply-chain"],
 
-    "@trellis-mcp/drug-cert": ["@trellis-mcp/drug-cert@workspace:examples/apps/drug-cert"],
+    "@tressellate/drug-cert": ["@tressellate/drug-cert@workspace:examples/apps/drug-cert"],
 
-    "@trellis-mcp/guardian-tools": ["@trellis-mcp/guardian-tools@workspace:core/guardian-tools"],
+    "@tressellate/guardian-tools": ["@tressellate/guardian-tools@workspace:core/guardian-tools"],
 
-    "@trellis-mcp/lease": ["@trellis-mcp/lease@workspace:examples/apps/lease"],
+    "@tressellate/lease": ["@tressellate/lease@workspace:examples/apps/lease"],
 
-    "@trellis-mcp/parts-prov": ["@trellis-mcp/parts-prov@workspace:examples/apps/parts-prov"],
+    "@tressellate/parts-prov": ["@tressellate/parts-prov@workspace:examples/apps/parts-prov"],
 
-    "@trellis-mcp/rec": ["@trellis-mcp/rec@workspace:examples/apps/rec"],
+    "@tressellate/rec": ["@tressellate/rec@workspace:examples/apps/rec"],
+
+    "@tressellate/website": ["@tressellate/website@workspace:apps/tressellate"],
 
     "@types/babel__core": ["@types/babel__core@7.20.5", "", { "dependencies": { "@babel/parser": "^7.20.7", "@babel/types": "^7.20.7", "@types/babel__generator": "*", "@types/babel__template": "*", "@types/babel__traverse": "*" } }, "sha512-qoQprZvz5wQFJwMDqeseRXWv3rqMvhgpbXFfVyWhbx9X47POIA6i/+dXefEmZKoAgOaTdaIgNSMqMIU61yRyzA=="],
 

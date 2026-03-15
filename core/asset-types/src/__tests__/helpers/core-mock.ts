@@ -1,7 +1,7 @@
 /**
  * Shared Layer 1 mock for Layer 3 operation factory tests.
  *
- * Mocks @trellis-mcp/core module so that Layer 3 factories
+ * Mocks @tressellate/core module so that Layer 3 factories
  * can be tested without SDK or network dependencies.
  */
 import { mock } from 'bun:test';
@@ -60,7 +60,7 @@ export const defaultTopicMessagesResult = {
 };
 
 /**
- * Install module mock for @trellis-mcp/core.
+ * Install module mock for @tressellate/core.
  * Returns mock function references for assertions.
  */
 export function mockCoreModule(overrides?: {
@@ -83,7 +83,7 @@ export function mockCoreModule(overrides?: {
         ...overrides,
     };
 
-    mock.module('@trellis-mcp/core', () => mocks);
+    mock.module('@tressellate/core', () => mocks);
 
     return mocks;
 }

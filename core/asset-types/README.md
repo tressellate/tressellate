@@ -1,4 +1,4 @@
-# @trellis-mcp/asset-types
+# @tressellate/asset-types
 
 **Layer 3 — Universal Asset Primitives for Tokenized Assets**
 
@@ -175,7 +175,7 @@ Higher-order functions that accept configuration and return reusable async opera
 Mint NFTs with structured metadata and optional audit trail.
 
 ```typescript
-import { createMintNFTAsset } from '@trellis-mcp/asset-types';
+import { createMintNFTAsset } from '@tressellate/asset-types';
 
 const mintCert = createMintNFTAsset({
   assetType: 'Certificate',
@@ -198,7 +198,7 @@ const result = await mintCert(args, config);
 Mint fungible tokens (Credits) with optional audit trail.
 
 ```typescript
-import { createMintTokenAsset } from '@trellis-mcp/asset-types';
+import { createMintTokenAsset } from '@tressellate/asset-types';
 
 const mintCredits = createMintTokenAsset({
   assetType: 'Credit',
@@ -217,7 +217,7 @@ const result = await mintCredits(args, config);
 Query and filter audit trail messages from an HCS topic.
 
 ```typescript
-import { createQueryAuditTrail } from '@trellis-mcp/asset-types';
+import { createQueryAuditTrail } from '@tressellate/asset-types';
 
 const queryAudit = createQueryAuditTrail({
   getTopicId: (config) => config.auditTopicId,
@@ -232,7 +232,7 @@ const trail = await queryAudit({ schemaType: 'CROP_YIELD_CERT', limit: 50 }, con
 Retrieve a single NFT record by schema type and serial number.
 
 ```typescript
-import { createQueryRecord } from '@trellis-mcp/asset-types';
+import { createQueryRecord } from '@tressellate/asset-types';
 
 const queryRecord = createQueryRecord({
   supportedSchemas: ['CROP_YIELD_CERT', 'SOIL_INSPECTION'],
@@ -249,7 +249,7 @@ const record = await queryRecord('CROP_YIELD_CERT', 1, config);
 Create grant (mint + transfer) and revoke (burn) functions for NFT-gated access control.
 
 ```typescript
-import { createAgreementLifecycle } from '@trellis-mcp/asset-types';
+import { createAgreementLifecycle } from '@tressellate/asset-types';
 
 const { grant, revoke } = createAgreementLifecycle({
   getCollectionId: (config) => config.leaseCollectionId,
@@ -301,7 +301,7 @@ interface AuditTrailResult {
 
 ```typescript
 // examples/domains/agriculture/schemas.ts
-import type { CertificateSchema } from '@trellis-mcp/asset-types';
+import type { CertificateSchema } from '@tressellate/asset-types';
 
 interface CropYieldCert extends CertificateSchema {
   farmId: string;
@@ -315,7 +315,7 @@ interface CropYieldCert extends CertificateSchema {
 
 ```typescript
 // examples/apps/crop-cert/tools.ts
-import { createMintNFTAsset, createQueryAuditTrail } from '@trellis-mcp/asset-types';
+import { createMintNFTAsset, createQueryAuditTrail } from '@tressellate/asset-types';
 
 const mintCropCert = createMintNFTAsset({ /* config */ });
 const queryAudit = createQueryAuditTrail({ /* config */ });

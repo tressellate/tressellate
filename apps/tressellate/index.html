@@ -4,9 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trellis MCP — Verifiable AI Infrastructure on Hashgraph</title>
+    <title>Tressellate — 5 layers, 7 tiles, any domain</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%234ade80'/%3E%3Cstop offset='100%25' stop-color='%2322d3ee'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpolygon points='16,2 22,5.5 22,12.5 16,16 10,12.5 10,5.5' stroke='url(%23g)' stroke-width='1.5' fill='none'/%3E%3Cpolygon points='16,12 22,15.5 22,22.5 16,26 10,22.5 10,15.5' stroke='url(%23g)' stroke-width='1.5' fill='none' opacity='0.6'/%3E%3Cpolygon points='16,7 19,9 19,13 16,15 13,13 13,9' fill='url(%23g)' opacity='0.3'/%3E%3Ccircle cx='16' cy='11' r='1.5' fill='url(%23g)'/%3E%3C/svg%3E">
     <meta name="description"
-        content="The only AI infrastructure worth building on is infrastructure you can verify. Trellis MCP provides five auditable layers giving AI agents structured access to Hiero distributed ledger technology and Guardian governance through the Model Context Protocol.">
+        content="Tressellate (trellis + tessellate) is a layered and tiled framework for verifiable AI infrastructure on Hiero. 5 auditable layers give AI agents structured access to the ledger. 7 universal asset primitives tile across any regulated domain. No black boxes. Every action traces to the ledger.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -59,7 +60,7 @@
             overflow-x: hidden;
         }
 
-        /* Trellis grid background */
+        /* Tressellate tessellation grid background */
         body::before {
             content: '';
             position: fixed;
@@ -545,40 +546,130 @@
             text-transform: uppercase;
         }
 
-        /* ---- PRIMITIVES ---- */
-        .primitives-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1px;
-            background: var(--border);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            overflow: hidden;
+        /* ---- PRIMITIVES (Honeycomb) ---- */
+        .hex-honeycomb {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             margin-bottom: 3rem;
         }
 
-        .primitive-card {
-            padding: 1.5rem;
-            background: var(--bg-surface);
-            transition: background 0.2s;
+        .hex-row {
+            display: flex;
+            justify-content: center;
         }
 
-        .primitive-card:hover {
+        .hex-row:nth-child(2),
+        .hex-row:nth-child(3) {
+            margin-top: -55px;
+        }
+
+        .hex-cell {
+            position: relative;
+            width: 200px;
+            height: 220px;
+        }
+
+        /* Hex border (full-width for tessellation) */
+        .hex-cell::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            background: var(--border);
+            transition: background 0.3s;
+        }
+
+        .hex-cell:hover::before {
+            background: var(--border-light);
+        }
+
+        .hex-inner {
+            position: absolute;
+            inset: 1px;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            background: var(--bg-surface);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2.5rem 1.5rem;
+            transition: all 0.3s;
+        }
+
+        .hex-cell:hover .hex-inner {
             background: var(--bg-elevated);
         }
 
-        .primitive-name {
+        .hex-name {
             font-family: var(--font-mono);
             font-size: 0.85rem;
             font-weight: 500;
             color: var(--text-primary);
-            margin-bottom: 0.4rem;
+            margin-bottom: 0.5rem;
         }
 
-        .primitive-use {
-            font-size: 0.8rem;
+        .hex-use {
+            font-size: 0.75rem;
             color: var(--text-muted);
             line-height: 1.5;
+        }
+
+        /* Per-hex accent colors on hover */
+        .hex-cell:nth-child(1):hover .hex-name { color: var(--accent); }
+        .hex-cell:nth-child(2):hover .hex-name { color: var(--cyan); }
+        .hex-cell:nth-child(3):hover .hex-name { color: var(--amber); }
+        .hex-cell:nth-child(4):hover .hex-name { color: var(--blue); }
+
+        .hex-row:nth-child(1) .hex-cell:nth-child(1):hover .hex-name { color: var(--accent); }
+        .hex-row:nth-child(1) .hex-cell:nth-child(2):hover .hex-name { color: var(--cyan); }
+        .hex-row:nth-child(2) .hex-cell:nth-child(1):hover .hex-name { color: var(--amber); }
+        .hex-row:nth-child(2) .hex-cell:nth-child(2):hover .hex-name { color: var(--blue); }
+        .hex-row:nth-child(2) .hex-cell:nth-child(3):hover .hex-name { color: var(--violet); }
+        .hex-row:nth-child(3) .hex-cell:nth-child(1):hover .hex-name { color: var(--rose); }
+        .hex-row:nth-child(3) .hex-cell:nth-child(2):hover .hex-name { color: var(--cyan); }
+
+        /* Subtle glow on hover */
+        .hex-cell:hover {
+            filter: drop-shadow(0 0 12px rgba(74, 222, 128, 0.08));
+        }
+
+        /* Mobile: stack vertically as simple cards */
+        @media (max-width: 640px) {
+            .hex-honeycomb {
+                gap: 0.75rem;
+            }
+
+            .hex-row {
+                flex-direction: column;
+                width: 100%;
+                gap: 0.75rem;
+            }
+
+            .hex-row:nth-child(2),
+            .hex-row:nth-child(3) {
+                margin-top: 0;
+            }
+
+            .hex-cell {
+                width: 100%;
+                height: auto;
+            }
+
+            .hex-cell::before {
+                clip-path: none;
+                border-radius: 8px;
+            }
+
+            .hex-inner {
+                clip-path: none;
+                border-radius: 8px;
+                position: relative;
+                inset: auto;
+                padding: 1.25rem 1.5rem;
+                border: 1px solid var(--border);
+            }
         }
 
         /* ---- TRUST NETWORK ---- */
@@ -839,6 +930,10 @@
             color: var(--violet);
         }
 
+        .vertical-card:nth-child(6) .vertical-brand span {
+            color: var(--rose);
+        }
+
         /* ---- EXTENSIONS ---- */
         #extensions {
             border-top: 1px solid var(--border);
@@ -1084,17 +1179,14 @@
             <a href="#" class="nav-brand">
                 <div class="nav-logo">
                     <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M14 2 L14 26" stroke="#4ade80" stroke-width="2" stroke-linecap="round" />
-                        <path d="M8 6 L8 26" stroke="#4ade80" stroke-width="1.5" stroke-linecap="round" opacity="0.6" />
-                        <path d="M20 6 L20 26" stroke="#4ade80" stroke-width="1.5" stroke-linecap="round"
-                            opacity="0.6" />
-                        <path d="M4 12 L24 12" stroke="#4ade80" stroke-width="1" opacity="0.3" />
-                        <path d="M4 18 L24 18" stroke="#4ade80" stroke-width="1" opacity="0.3" />
-                        <path d="M4 24 L24 24" stroke="#4ade80" stroke-width="1" opacity="0.3" />
-                        <circle cx="14" cy="4" r="2" fill="#4ade80" />
+                        <!-- Tessellating hexagons on a trellis grid -->
+                        <polygon points="14,2 20,5.5 20,12.5 14,16 8,12.5 8,5.5" stroke="#4ade80" stroke-width="1.5" fill="none" />
+                        <polygon points="14,12 20,15.5 20,22.5 14,26 8,22.5 8,15.5" stroke="#4ade80" stroke-width="1.5" fill="none" opacity="0.6" />
+                        <polygon points="14,7 17,9 17,13 14,15 11,13 11,9" fill="#4ade80" opacity="0.3" />
+                        <circle cx="14" cy="11" r="1.5" fill="#4ade80" />
                     </svg>
                 </div>
-                <span class="nav-name">trellis-mcp</span>
+                <span class="nav-name">tressellate</span>
             </a>
             <ul class="nav-links">
                 <li><a href="#architecture">Architecture</a></li>
@@ -1103,7 +1195,7 @@
                 <li><a href="#verticals">Verticals</a></li>
                 <li><a href="#quickstart">Quick Start</a></li>
                 <li>
-                    <a href="https://github.com/trellis-mcp/trellis-mcp" class="nav-github" target="_blank"
+                    <a href="https://github.com/tressellate/tressellate" class="nav-github" target="_blank"
                         rel="noopener">
                         <svg viewBox="0 0 16 16">
                             <path
@@ -1120,10 +1212,11 @@
     <header class="hero">
         <div class="container">
             <div class="hero-badge">OPEN SOURCE &middot; APACHE 2.0</div>
-            <h1>The only AI infrastructure<br>worth building on is<br>infrastructure <em>you can verify</em></h1>
-            <p class="hero-sub">Trellis MCP gives AI agents structured access to Hiero's distributed ledger and Guardian
-                governance — through five auditable layers, each independently attestable. No trust-me APIs. Every
-                action traces to the ledger. Every layer can be verified in isolation.</p>
+            <h1>5 layers. 7 tiles.<br><em>Any domain.</em></h1>
+            <p class="hero-sub"><strong>Tressellate</strong> = trellis + tessellate. A layered and tiled framework for
+                verifiable AI infrastructure on Hiero. Five auditable layers give AI agents structured access to the
+                ledger. Seven universal asset primitives tile across any regulated domain — agriculture, energy,
+                healthcare, supply chain. Learn the shapes once, reason about everything.</p>
 
             <div class="trust-pillars">
                 <div class="trust-pillar">
@@ -1165,14 +1258,14 @@
                     </div>
                     <div class="trust-text">
                         <strong>Trust compounds with adoption</strong>
-                        <span>Every new domain attested on Trellis strengthens every other domain on the
+                        <span>Every new domain attested on Tressellate strengthens every other domain on the
                             platform.</span>
                     </div>
                 </div>
             </div>
 
             <div class="hero-actions">
-                <a href="https://github.com/trellis-mcp/trellis-mcp" class="btn-primary" target="_blank" rel="noopener">
+                <a href="https://github.com/tressellate/tressellate" class="btn-primary" target="_blank" rel="noopener">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                         <path
                             d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
@@ -1183,9 +1276,9 @@
             </div>
             <div class="hero-install">
                 <div class="install-block"
-                    onclick="navigator.clipboard.writeText('git clone https://github.com/trellis-mcp/trellis-mcp.git && cd trellis-mcp && bun install && bun run build')">
+                    onclick="navigator.clipboard.writeText('git clone https://github.com/tressellate/tressellate.git && cd tressellate && bun install && bun run build')">
                     <span class="prompt">$</span>
-                    <code>git clone https://github.com/trellis-mcp/trellis-mcp.git</code>
+                    <code>git clone https://github.com/tressellate/tressellate.git</code>
                     <span class="copy-hint">click to copy</span>
                 </div>
             </div>
@@ -1197,11 +1290,10 @@
         <div class="container">
             <div class="reveal">
                 <div class="section-label">Architecture</div>
-                <h2 class="section-title">Five layers. Each does one thing.</h2>
+                <h2 class="section-title">The trellis: five layers, each does one thing</h2>
                 <p class="section-desc">Infrastructure separated from domain logic. Open-source core that anyone can
                     build on. Domain layers where your application plugs in. Developers work in their domain language —
-                    certificates, milestones, provenance — not Hedera's infrastructure language. The ledger is the trust
-                    layer, not the interface layer.</p>
+                    certificates, milestones, provenance — not the ledger's infrastructure language.</p>
             </div>
 
             <div class="arch-stack reveal">
@@ -1261,7 +1353,7 @@
                         <div>
                             <div class="arch-layer-title">Hashgraph Tools <span
                                     style="color: var(--text-muted); font-weight: 300;">&mdash; HOW</span></div>
-                            <div class="arch-layer-desc">19 infrastructure primitives for Hiero: accounts, tokens,
+                            <div class="arch-layer-desc">22 infrastructure primitives for Hiero: accounts, tokens,
                                 topics, NFTs, queries</div>
                         </div>
                         <span class="arch-layer-tag tag-open">OPEN SOURCE</span>
@@ -1271,41 +1363,62 @@
 
             <!-- PRIMITIVES -->
             <div class="reveal">
-                <div class="section-label" style="margin-top: 2rem;">Layer 3 &middot; Asset Type Primitives</div>
-                <h2 class="section-title" style="font-size: clamp(1.5rem, 3vw, 2rem);">Seven schemas that model any
-                    tokenized asset</h2>
-                <p class="section-desc">Each primitive maps a real-world business concept directly to ledger mechanics.
-                    No custom integration. No bespoke schema design.</p>
+                <div class="section-label" style="margin-top: 2rem;">Layer 3 &middot; The Tessellation</div>
+                <h2 class="section-title" style="font-size: clamp(1.5rem, 3vw, 2rem);">Seven tiles that cover any
+                    domain</h2>
+                <p class="section-desc">Like tiles in a tessellation, these 7 primitives fit together with no gaps. An
+                    AI agent learns the shapes once and reasons about any regulated domain — crop certificates and drug
+                    lot certifications are both <em>Certificate</em> tiles.</p>
             </div>
 
-            <div class="primitives-grid reveal">
-                <div class="primitive-card">
-                    <div class="primitive-name">Certificate</div>
-                    <div class="primitive-use">Verified attestations — crop yields, drug lots, quality certs</div>
+            <div class="hex-honeycomb reveal">
+                <div class="hex-row">
+                    <div class="hex-cell">
+                        <div class="hex-inner">
+                            <div class="hex-name">Certificate</div>
+                            <div class="hex-use">Verified attestations — crop yields, drug lots, quality certs</div>
+                        </div>
+                    </div>
+                    <div class="hex-cell">
+                        <div class="hex-inner">
+                            <div class="hex-name">Provenance</div>
+                            <div class="hex-use">Origin and custody tracking — parts, supply chain steps</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="primitive-card">
-                    <div class="primitive-name">Provenance</div>
-                    <div class="primitive-use">Origin and custody tracking — parts, supply chain steps</div>
+                <div class="hex-row">
+                    <div class="hex-cell">
+                        <div class="hex-inner">
+                            <div class="hex-name">Credit</div>
+                            <div class="hex-use">Quantifiable units of value — energy credits, carbon removal</div>
+                        </div>
+                    </div>
+                    <div class="hex-cell">
+                        <div class="hex-inner">
+                            <div class="hex-name">Agreement</div>
+                            <div class="hex-use">Multi-party contracts — leases, NDAs, service agreements</div>
+                        </div>
+                    </div>
+                    <div class="hex-cell">
+                        <div class="hex-inner">
+                            <div class="hex-name">Inspection</div>
+                            <div class="hex-use">Evaluation results — soil tests, audits, assessments</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="primitive-card">
-                    <div class="primitive-name">Credit</div>
-                    <div class="primitive-use">Quantifiable units of value — energy credits, carbon removal</div>
-                </div>
-                <div class="primitive-card">
-                    <div class="primitive-name">Agreement</div>
-                    <div class="primitive-use">Multi-party contracts — leases, NDAs, service agreements</div>
-                </div>
-                <div class="primitive-card">
-                    <div class="primitive-name">Inspection</div>
-                    <div class="primitive-use">Evaluation results — soil tests, audits, assessments</div>
-                </div>
-                <div class="primitive-card">
-                    <div class="primitive-name">Milestone</div>
-                    <div class="primitive-use">Progress markers — payments, deliverables, phases</div>
-                </div>
-                <div class="primitive-card">
-                    <div class="primitive-name">Claim</div>
-                    <div class="primitive-use">Assertions requiring verification — insurance, warranties</div>
+                <div class="hex-row">
+                    <div class="hex-cell">
+                        <div class="hex-inner">
+                            <div class="hex-name">Milestone</div>
+                            <div class="hex-use">Progress markers — payments, deliverables, phases</div>
+                        </div>
+                    </div>
+                    <div class="hex-cell">
+                        <div class="hex-inner">
+                            <div class="hex-name">Claim</div>
+                            <div class="hex-use">Assertions requiring verification — insurance, warranties</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1327,7 +1440,7 @@
                 <div class="trust-network-card">
                     <div class="trust-network-num">01</div>
                     <h3>Agents don't trust tools.<br>They trust the ledger.</h3>
-                    <p>Every Trellis MCP response traces to a Hiero transaction with a consensus timestamp and
+                    <p>Every Tressellate response traces to a Hiero transaction with a consensus timestamp and
                         cryptographic proof. The trust is mathematical, not reputational.</p>
                 </div>
                 <div class="trust-network-card">
@@ -1398,7 +1511,7 @@
                         </svg>
                     </div>
                     <h3>Ledger-grounded trust</h3>
-                    <p>Other frameworks let agents blindly trust tool responses. Trellis grounds every high-stakes
+                    <p>Other frameworks let agents blindly trust tool responses. Tressellate grounds every high-stakes
                         action in on-ledger proofs — consensus timestamps and cryptographic signatures. Even if the AI
                         hallucinates, the outcome is verifiable against the immutable ledger.</p>
                 </div>
@@ -1419,7 +1532,7 @@
             </div>
 
             <div class="blackbox-callout reveal">
-                <strong>Compounding attestation value:</strong> Each domain verified on Trellis creates a reusable
+                <strong>Compounding attestation value:</strong> Each domain verified on Tressellate creates a reusable
                 attestation methodology that transfers to the next domain at reduced cost. An auditor attests
                 procurement
                 governance across Layers 1–5 — the same methodology applies to carbon verification, supply chain, and
@@ -1434,46 +1547,46 @@
         <div class="container">
             <div class="reveal">
                 <div class="section-label">Example Domains</div>
-                <h2 class="section-title">Five complete implementations included</h2>
-                <p class="section-desc">Each demonstrates the full Layer 4 + Layer 5 pattern. Define your domain, spin
-                    up the server, and you have an enterprise-grade AI-native application on Hiero.</p>
+                <h2 class="section-title">Five domains, same seven tiles</h2>
+                <p class="section-desc">Each domain demonstrates the full Layer 4 + Layer 5 pattern — different
+                    business logic, same universal primitives. The tessellation in action.</p>
             </div>
 
             <div class="domains-grid reveal">
                 <div class="domain-card">
                     <span class="domain-icon">🌾</span>
                     <div class="domain-name">Agriculture</div>
-                    <div class="domain-desc">Issue and verify crop yield certificates with farm-level audit trails. Crop
-                        categories, certification standards, and seasonal tracking.</div>
+                    <div class="domain-desc">Certify crop yields, record soil inspections, and trace farm-to-market
+                        provenance. Certificate + Inspection tiles.</div>
                     <div class="domain-tools">crop-cert &middot; 5 tools</div>
-                </div>
-                <div class="domain-card">
-                    <span class="domain-icon">🏗️</span>
-                    <div class="domain-name">Supply Chain</div>
-                    <div class="domain-desc">Track parts provenance with quality certifications and custody chains.
-                        Material types, quality grades, and verification bodies.</div>
-                    <div class="domain-tools">parts-prov &middot; 5 tools</div>
                 </div>
                 <div class="domain-card">
                     <span class="domain-icon">⚡</span>
                     <div class="domain-name">Energy</div>
                     <div class="domain-desc">Mint renewable energy credits as fungible tokens with generation
-                        certificates. Energy sources and verification bodies.</div>
+                        evidence and audit trails. Credit tiles.</div>
                     <div class="domain-tools">rec &middot; 6 tools</div>
                 </div>
                 <div class="domain-card">
                     <span class="domain-icon">🏠</span>
                     <div class="domain-name">Real Estate</div>
                     <div class="domain-desc">Grant lease agreements as NFTs, record payment milestones, and verify
-                        tenancy. Property types and lease lifecycle.</div>
+                        tenancy. Agreement + Milestone tiles.</div>
                     <div class="domain-tools">lease &middot; 5 tools</div>
                 </div>
                 <div class="domain-card">
                     <span class="domain-icon">💊</span>
                     <div class="domain-name">Healthcare</div>
-                    <div class="domain-desc">Certify drug lots with GMP compliance, track cold-chain custody. Drug
-                        classifications and storage conditions.</div>
+                    <div class="domain-desc">Certify drug lots with GMP compliance, track cold-chain custody.
+                        Certificate + Provenance tiles.</div>
                     <div class="domain-tools">drug-cert &middot; 5 tools</div>
+                </div>
+                <div class="domain-card">
+                    <span class="domain-icon">🚛</span>
+                    <div class="domain-name">Supply Chain</div>
+                    <div class="domain-desc">Track parts provenance with quality certifications and custody chains.
+                        Provenance + Certificate tiles.</div>
+                    <div class="domain-tools">parts-prov &middot; 5 tools</div>
                 </div>
             </div>
         </div>
@@ -1484,7 +1597,7 @@
         <div class="container">
             <div class="reveal">
                 <div class="section-label">Commercial Verticals</div>
-                <h2 class="section-title">Built natively on Trellis</h2>
+                <h2 class="section-title">Built natively on Tressellate</h2>
                 <p class="section-desc">Independent commercial entities proving the enterprise-readiness of the
                     architecture. Each vertical is a complete network application executing on Hiero.</p>
             </div>
@@ -1520,6 +1633,12 @@
                     <div class="vertical-desc">Verifiable coordination and project management for Public-Private
                         Partnerships. Managed in partnership with Big Four advisory firms.</div>
                 </div>
+                <div class="vertical-card">
+                    <div class="vertical-brand"><span>solar</span>Anihan</div>
+                    <div class="vertical-full">Community Solar Cooperative</div>
+                    <div class="vertical-desc">Community-driven distributed solar energy, battery sharing networks, and
+                        prosumer microgrids for the Philippines. Bayanihan-powered energy democracy on-chain.</div>
+                </div>
             </div>
         </div>
     </section>
@@ -1550,9 +1669,9 @@
                     <div class="extension-name">DCL <span
                             style="font-size: 0.8rem; vertical-align: middle; margin-left: 0.5rem; padding: 0.2rem 0.5rem; background: var(--bg-elevated); border: 1px solid var(--border-light); border-radius: 4px; color: var(--text-muted); font-family: var(--font-mono);">COMING
                             SOON</span></div>
-                    <div class="extension-desc">Domain Coupled Learning enforces physical laws on AI agent actions. An
-                        LLM proposes, DCL validates against domain physics, and only physically possible actions execute
-                        on-chain. Protected by 24 issued MIMO patents.</div>
+                    <div class="extension-desc">Domain Coupled Learning enforces physical laws on AI agent actions —
+                        the intelligence behind the tessellation. An LLM proposes, DCL validates against domain physics,
+                        and only physically possible actions execute on-chain. Protected by 24 issued MIMO patents.</div>
                     <a href="#" class="extension-link">Learn more & licensing <span>→</span></a>
                 </div>
             </div>
@@ -1575,8 +1694,8 @@
                 </div>
                 <div class="code-body">
                     <span class="comment"># Clone and build</span><br>
-                    <span class="cmd">git clone</span> https://github.com/trellis-mcp/trellis-mcp.git<br>
-                    <span class="cmd">cd</span> trellis-mcp<br>
+                    <span class="cmd">git clone</span> https://github.com/tressellate/tressellate.git<br>
+                    <span class="cmd">cd</span> tressellate<br>
                     <span class="cmd">bun install</span><br>
                     <span class="cmd">bun run</span> build<br>
                     <br>
@@ -1587,12 +1706,12 @@
                     <span class="cmd">export</span> <span class="flag">HEDERA_SUPPLY_KEY</span>=your-supply-key<br>
                     <br>
                     <span class="comment"># Start any example server</span><br>
-                    <span class="cmd">cd</span> examples/servers/crop-cert<br>
+                    <span class="cmd">cd</span> examples/servers/lease<br>
                     <span class="cmd">bun run</span> dev<br>
                     <br>
                     <span class="comment"># Connect Claude Desktop, Cursor, or any MCP client</span><br>
-                    <span class="comment"># Agent discovers tools: crop_cert_issue, crop_cert_verify,
-                        crop_cert_get_audit</span>
+                    <span class="comment"># Agent discovers tools: lease_create, lease_verify,
+                        lease_get_audit</span>
                 </div>
             </div>
         </div>
@@ -1603,14 +1722,14 @@
         <div class="container">
             <div class="footer-inner">
                 <div class="footer-brand">
-                    Built by <a href="https://bulkrete.com" target="_blank" rel="noopener">Bulkrete Technologies</a>
+                    Built by <a href="https://tressellate.dev" target="_blank" rel="noopener">Tressellate</a>
                 </div>
                 <ul class="footer-links">
-                    <li><a href="https://github.com/trellis-mcp/trellis-mcp" target="_blank" rel="noopener">GitHub</a>
+                    <li><a href="https://github.com/tressellate/tressellate" target="_blank" rel="noopener">GitHub</a>
                     </li>
-                    <li><a href="https://github.com/trellis-mcp/trellis-mcp/blob/main/docs/GUIDE.md" target="_blank"
+                    <li><a href="https://github.com/tressellate/tressellate/blob/main/docs/GUIDE.md" target="_blank"
                             rel="noopener">Docs</a></li>
-                    <li><a href="https://github.com/trellis-mcp/trellis-mcp/blob/main/LICENSE" target="_blank"
+                    <li><a href="https://github.com/tressellate/tressellate/blob/main/LICENSE" target="_blank"
                             rel="noopener">License</a></li>
                 </ul>
             </div>
@@ -1631,7 +1750,7 @@
 
         // Copy install command
         document.querySelector('.install-block').addEventListener('click', function () {
-            navigator.clipboard.writeText('git clone https://github.com/trellis-mcp/trellis-mcp.git && cd trellis-mcp && bun install && bun run build');
+            navigator.clipboard.writeText('git clone https://github.com/tressellate/tressellate.git && cd tressellate && bun install && bun run build');
             const hint = this.querySelector('.copy-hint');
             hint.textContent = 'copied!';
             hint.style.opacity = '1';

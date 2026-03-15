@@ -1,6 +1,6 @@
-# Extending Trellis MCP
+# Extending Tressellate
 
-This guide walks through creating a new domain-specific tool package that composes on top of `@trellis-mcp/core`. By the end you will have a working package with typed config, composable tools, an MCP server, and an audit trail — following the exact patterns used by the included domain examples (crop-cert, lease, parts-prov, rec, drug-cert).
+This guide walks through creating a new domain-specific tool package that composes on top of `@tressellate/core`. By the end you will have a working package with typed config, composable tools, an MCP server, and an audit trail — following the exact patterns used by the included domain examples (crop-cert, lease, parts-prov, rec, drug-cert).
 
 > **Note:** For a more comprehensive guide that covers the full 5-layer architecture (including Layer 3 asset types and Layer 4 domain rules), see [GUIDE.md](./GUIDE.md). This document covers the simplified 2-layer approach (core + domain package) for projects that don't need the full Layer 3/4 normalization.
 
@@ -35,20 +35,20 @@ The monorepo has three layers:
 └─────────────────────────────────────────┘
 ```
 
-**Key principle**: Domain packages never call the Hedera SDK directly. They import composable functions from `@trellis-mcp/core` and orchestrate them into multi-step workflows.
+**Key principle**: Domain packages never call the Hedera SDK directly. They import composable functions from `@tressellate/core` and orchestrate them into multi-step workflows.
 
 ### What Core Gives You
 
-These composable functions are importable from `@trellis-mcp/core`:
+These composable functions are importable from `@tressellate/core`:
 
-**Fungible Tokens** (`@trellis-mcp/core/tools/token`):
+**Fungible Tokens** (`@tressellate/core/tools/token`):
 - `createToken(config, opts)` — create a fungible token
 - `mintToken(config, tokenId, amount)` — mint to treasury
 - `transferToken(config, tokenId, from, to, amount)` — transfer between accounts
 - `burnToken(config, tokenId, amount)` — burn from treasury
 - `associateToken(config, tokenId, accountId, privateKey?)` — associate before receiving
 
-**NFTs** (`@trellis-mcp/core/tools/nft`):
+**NFTs** (`@tressellate/core/tools/nft`):
 - `createNFTCollection(config, opts)` — create NFT collection
 - `mintNFT(config, tokenId, metadata[])` — mint with metadata, returns serial numbers
 - `transferNFT(config, tokenId, from, to, serial)` — transfer by serial
@@ -56,16 +56,16 @@ These composable functions are importable from `@trellis-mcp/core`:
 - `getNFTInfo(config, tokenId, serial)` — query NFT metadata via mirror node
 - `getAccountNFTs(config, accountId, tokenId?)` — list account NFTs
 
-**Accounts** (`@trellis-mcp/core/tools/account`):
+**Accounts** (`@tressellate/core/tools/account`):
 - `createAccount(config, opts)` — create ED25519 account
 - `getAccountInfo(config, accountId)` — query via mirror node
 
-**Consensus / Audit** (`@trellis-mcp/core/tools/consensus`):
+**Consensus / Audit** (`@tressellate/core/tools/consensus`):
 - `createTopic(config, opts)` — create HCS topic
 - `submitTopicMessage(config, topicId, message)` — submit JSON message
 - `getTopicMessages(config, topicId, filters?)` — read messages
 
-**Queries** (`@trellis-mcp/core/tools/query`):
+**Queries** (`@tressellate/core/tools/query`):
 - `getTokenBalance(config, tokenId, accountId)`
 - `getTokenInfo(config, tokenId)`
 - `getTokenTransactionHistory(config, tokenId, accountId?)`
@@ -94,7 +94,7 @@ examples/apps/yourproject/
 
 ```json
 {
-  "name": "@trellis-mcp/yourproject",
+  "name": "@tressellate/yourproject",
   "version": "1.0.0",
   "private": true,
   "type": "module",
@@ -109,7 +109,7 @@ examples/apps/yourproject/
     "dev": "tsc --watch"
   },
   "dependencies": {
-    "@trellis-mcp/core": "workspace:*",
+    "@tressellate/core": "workspace:*",
     "@hashgraph/sdk": "^2.50.0"
   }
 }
@@ -139,7 +139,7 @@ Every domain package extends `HederaConfig` with its own fields. These are typic
 ### `src/config.ts`
 
 ```typescript
-import type { HederaConfig } from '@trellis-mcp/core/config';
+import type { HederaConfig } from '@tressellate/core/config';
 
 export interface YourProjectConfig extends HederaConfig {
   // Resource IDs created during setup (stored in .env)
@@ -161,9 +161,9 @@ Each tool file follows the **dual-export pattern**: composable functions + MCPTo
 ```typescript
 // examples/apps/yourproject/src/tools/operations.ts
 
-import type { MCPTool } from '@trellis-mcp/core/config';
-import { mintToken, transferToken } from '@trellis-mcp/core/tools/token';
-import { submitTopicMessage } from '@trellis-mcp/core/tools/consensus';
+import type { MCPTool } from '@tressellate/core/config';
+import { mintToken, transferToken } from '@tressellate/core/tools/token';
+import { submitTopicMessage } from '@tressellate/core/tools/consensus';
 import type { YourProjectConfig } from '../config.js';
 
 // ─── Helper: Config Validator ───────────────────────────
@@ -323,7 +323,7 @@ Each file exports a typed array: `MCPTool<YourProjectConfig>[]`.
 import { YOUR_TOKEN_TOOLS } from './token.js';
 import { YOUR_QUERY_TOOLS } from './query.js';
 import { YOUR_AUDIT_TOOLS } from './audit.js';
-import type { MCPTool } from '@trellis-mcp/core/config';
+import type { MCPTool } from '@tressellate/core/config';
 import type { YourProjectConfig } from '../config.js';
 
 export const YOURPROJECT_TOOLS: MCPTool<YourProjectConfig>[] = [
@@ -371,8 +371,8 @@ examples/servers/yourproject/
     "dev": "bun src/index.ts"
   },
   "dependencies": {
-    "@trellis-mcp/core": "workspace:*",
-    "@trellis-mcp/yourproject": "workspace:*",
+    "@tressellate/core": "workspace:*",
+    "@tressellate/yourproject": "workspace:*",
     "@modelcontextprotocol/sdk": "^1.0.0"
   }
 }
@@ -400,9 +400,9 @@ import {
   CallToolRequestSchema,
   ListToolsRequestSchema
 } from '@modelcontextprotocol/sdk/types.js';
-import type { MCPTool } from '@trellis-mcp/core/config';
-import { HEDERA_TOOLS } from '@trellis-mcp/core';
-import { YOURPROJECT_TOOLS, type YourProjectConfig } from '@trellis-mcp/yourproject';
+import type { MCPTool } from '@tressellate/core/config';
+import { HEDERA_TOOLS } from '@tressellate/core';
+import { YOURPROJECT_TOOLS, type YourProjectConfig } from '@tressellate/yourproject';
 
 // ─── Compose tool arrays ────────────────────────────────
 const ALL_TOOLS: MCPTool<YourProjectConfig>[] = [
@@ -508,7 +508,7 @@ bun examples/servers/yourproject/src/index.ts
   "mcpServers": {
     "hedera-yourproject": {
       "command": "bun",
-      "args": ["/path/to/trellis-mcp/examples/servers/yourproject/src/index.ts"]
+      "args": ["/path/to/tressellate/examples/servers/yourproject/src/index.ts"]
     }
   }
 }
@@ -599,9 +599,9 @@ NFT metadata is stored as base64-encoded JSON on-chain. The `getNFTInfo` functio
 Your package can compose both fungible and NFT operations. Import from both:
 
 ```typescript
-import { mintToken, transferToken } from '@trellis-mcp/core/tools/token';
-import { mintNFT, transferNFT } from '@trellis-mcp/core/tools/nft';
-import { submitTopicMessage } from '@trellis-mcp/core/tools/consensus';
+import { mintToken, transferToken } from '@tressellate/core/tools/token';
+import { mintNFT, transferNFT } from '@tressellate/core/tools/nft';
+import { submitTopicMessage } from '@tressellate/core/tools/consensus';
 ```
 
 ---
@@ -614,7 +614,7 @@ Here's a complete example of a hypothetical escrow package that uses fungible to
 
 ```typescript
 // examples/apps/escrow/src/config.ts
-import type { HederaConfig } from '@trellis-mcp/core/config';
+import type { HederaConfig } from '@tressellate/core/config';
 
 export interface EscrowConfig extends HederaConfig {
   escrowTokenId?: string;
@@ -626,9 +626,9 @@ export interface EscrowConfig extends HederaConfig {
 
 ```typescript
 // examples/apps/escrow/src/tools/escrow.ts
-import type { MCPTool } from '@trellis-mcp/core/config';
-import { mintToken, transferToken } from '@trellis-mcp/core/tools/token';
-import { submitTopicMessage } from '@trellis-mcp/core/tools/consensus';
+import type { MCPTool } from '@tressellate/core/config';
+import { mintToken, transferToken } from '@tressellate/core/tools/token';
+import { submitTopicMessage } from '@tressellate/core/tools/consensus';
 import type { EscrowConfig } from '../config.js';
 
 function requireEscrowTokenId(config: EscrowConfig): string {
@@ -774,7 +774,7 @@ Follow Steps 4 and 5 identically. The server imports `HEDERA_TOOLS + ESCROW_TOOL
 
 When creating a new domain package, verify:
 
-- [ ] `examples/apps/yourproject/package.json` has `"@trellis-mcp/core": "workspace:*"`
+- [ ] `examples/apps/yourproject/package.json` has `"@tressellate/core": "workspace:*"`
 - [ ] `tsconfig.json` extends `../../../tsconfig.base.json`
 - [ ] Config interface extends `HederaConfig`
 - [ ] All tool arrays are typed `MCPTool<YourConfig>[]`

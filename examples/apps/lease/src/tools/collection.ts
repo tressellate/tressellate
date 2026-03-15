@@ -1,6 +1,6 @@
-import type { MCPTool } from '@trellis-mcp/core/config';
-import { createNFTCollection, mintNFT, transferNFT } from '@trellis-mcp/core';
-import { requireConfigField, createAuditSubmitter } from '@trellis-mcp/core/helpers';
+import type { MCPTool } from '@tressellate/core/config';
+import { createNFTCollection, mintNFT, transferNFT } from '@tressellate/core';
+import { requireConfigField, createAuditSubmitter } from '@tressellate/core/helpers';
 import type { LeaseConfig } from '../config.js';
 
 const requireLeaseCollectionId = requireConfigField<LeaseConfig>(

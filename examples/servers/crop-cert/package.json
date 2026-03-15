@@ -9,8 +9,8 @@
     "dev": "bun src/index.ts"
   },
   "dependencies": {
-    "@trellis-mcp/core": "workspace:*",
-    "@trellis-mcp/crop-cert": "workspace:*",
+    "@tressellate/core": "workspace:*",
+    "@tressellate/crop-cert": "workspace:*",
     "@modelcontextprotocol/sdk": "^1.0.0"
   }
 }

@@ -1,4 +1,4 @@
-# Building on Trellis MCP
+# Building on Tressellate
 
 A step-by-step guide to implementing domain-specific tokenized assets using the 5-layer architecture.
 
@@ -20,14 +20,14 @@ This guide walks through the included examples and shows you how to build your o
 
 ## Architecture Overview
 
-Trellis MCP separates concerns into 5 layers. The bottom 3 are shared infrastructure. The top 2 are where you plug in your domain.
+Tressellate separates concerns into 5 layers. The bottom 3 are shared infrastructure. The top 2 are where you plug in your domain.
 
 ```
 YOU BUILD THESE:
   Layer 5 — Application + Server (WHERE)     Your MCP tools + server
   Layer 4 — Domain Rules (WHY)               Your config, enums, schemas
 
-PROVIDED BY TRELLIS:
+PROVIDED BY TRESSELLATE:
   Layer 3 — Asset Types (WHAT)               7 primitives + 5 factories
   Layer 2 — Guardian Tools (WHO)             Identity + governance
   Layer 1 — Hashgraph Tools (HOW)            Hedera SDK wrappers
@@ -65,9 +65,9 @@ You rarely call these directly in a domain implementation. Instead, Layer 3 oper
 
 **Key exports:**
 ```typescript
-import { createNFTCollection, mintNFT, getTopicMessages } from '@trellis-mcp/core';
-import { requireConfigField, createAuditSubmitter } from '@trellis-mcp/core/helpers';
-import type { HederaConfig, MCPTool } from '@trellis-mcp/core/config';
+import { createNFTCollection, mintNFT, getTopicMessages } from '@tressellate/core';
+import { requireConfigField, createAuditSubmitter } from '@tressellate/core/helpers';
+import type { HederaConfig, MCPTool } from '@tressellate/core/config';
 ```
 
 ### Layer 2: Guardian Tools (`core/guardian-tools/`)
@@ -86,12 +86,12 @@ This is the normalization layer. It provides:
 
 **7 Schema interfaces** — TypeScript types you compose into domain schemas:
 ```typescript
-import type { CertificateSchema, ProvenanceSchema, CreditSchema } from '@trellis-mcp/asset-types';
+import type { CertificateSchema, ProvenanceSchema, CreditSchema } from '@tressellate/asset-types';
 ```
 
 **5 Operation factories** — functions that create reusable tool implementations:
 ```typescript
-import { createMintNFTAsset, createQueryAuditTrail } from '@trellis-mcp/asset-types';
+import { createMintNFTAsset, createQueryAuditTrail } from '@tressellate/asset-types';
 ```
 
 ### Layer 4: Domain Rules (`examples/domains/*/`)
@@ -240,14 +240,14 @@ mkdir -p examples/domains/forestry/src
 **`examples/domains/forestry/package.json`:**
 ```json
 {
-  "name": "@trellis-mcp/domain-forestry",
+  "name": "@tressellate/domain-forestry",
   "version": "0.1.0",
   "type": "module",
   "main": "dist/index.js",
   "scripts": { "build": "tsc" },
   "dependencies": {
-    "@trellis-mcp/core": "workspace:*",
-    "@trellis-mcp/asset-types": "workspace:*"
+    "@tressellate/core": "workspace:*",
+    "@tressellate/asset-types": "workspace:*"
   }
 }
 ```
@@ -263,7 +263,7 @@ mkdir -p examples/domains/forestry/src
 
 **`examples/domains/forestry/src/config.ts`:**
 ```typescript
-import type { HederaConfig } from '@trellis-mcp/core/config';
+import type { HederaConfig } from '@tressellate/core/config';
 
 export interface ForestryConfig extends HederaConfig {
   /** NFT collection ID for timber certificates. */
@@ -328,29 +328,29 @@ mkdir -p examples/apps/timber-cert/src/tools
 **`examples/apps/timber-cert/package.json`:**
 ```json
 {
-  "name": "@trellis-mcp/timber-cert",
+  "name": "@tressellate/timber-cert",
   "version": "0.1.0",
   "type": "module",
   "main": "dist/index.js",
   "scripts": { "build": "tsc" },
   "dependencies": {
-    "@trellis-mcp/core": "workspace:*",
-    "@trellis-mcp/asset-types": "workspace:*",
-    "@trellis-mcp/domain-forestry": "workspace:*"
+    "@tressellate/core": "workspace:*",
+    "@tressellate/asset-types": "workspace:*",
+    "@tressellate/domain-forestry": "workspace:*"
   }
 }
 ```
 
 **`examples/apps/timber-cert/src/config.ts`:**
 ```typescript
-export type { ForestryConfig as TimberCertConfig } from '@trellis-mcp/domain-forestry';
+export type { ForestryConfig as TimberCertConfig } from '@tressellate/domain-forestry';
 ```
 
 **`examples/apps/timber-cert/src/tools/collection.ts`:**
 ```typescript
-import type { MCPTool } from '@trellis-mcp/core/config';
-import { createNFTCollection, mintNFT } from '@trellis-mcp/core';
-import { requireConfigField, createAuditSubmitter } from '@trellis-mcp/core/helpers';
+import type { MCPTool } from '@tressellate/core/config';
+import { createNFTCollection, mintNFT } from '@tressellate/core';
+import { requireConfigField, createAuditSubmitter } from '@tressellate/core/helpers';
 import type { TimberCertConfig } from '../config.js';
 
 // Helper: throw if collection ID not configured
@@ -461,9 +461,9 @@ import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { CallToolRequestSchema, ListToolsRequestSchema } from '@modelcontextprotocol/sdk/types.js';
 
-import type { MCPTool } from '@trellis-mcp/core/config';
-import { HEDERA_TOOLS } from '@trellis-mcp/core';
-import { TIMBER_CERT_TOOLS, type TimberCertConfig } from '@trellis-mcp/timber-cert';
+import type { MCPTool } from '@tressellate/core/config';
+import { HEDERA_TOOLS } from '@tressellate/core';
+import { TIMBER_CERT_TOOLS, type TimberCertConfig } from '@tressellate/timber-cert';
 
 const ALL_TOOLS: MCPTool<TimberCertConfig>[] = [
   ...(HEDERA_TOOLS as MCPTool<TimberCertConfig>[]),
@@ -555,7 +555,7 @@ Add to your `claude_desktop_config.json`:
     "timber-cert": {
       "command": "bun",
       "args": ["run", "dev"],
-      "cwd": "/path/to/trellis-mcp/examples/servers/timber-cert",
+      "cwd": "/path/to/tressellate/examples/servers/timber-cert",
       "env": {
         "HEDERA_NETWORK": "testnet",
         "HEDERA_OPERATOR_ID": "0.0.xxxxx",
@@ -653,7 +653,7 @@ HEDERA_TIMBER_AUDIT_TOPIC_ID=0.0.xxxxx
 - **Compose multiple primitives** — the Energy (REC) example shows how to combine fungible tokens with NFT certificates
 - **Explore Guardian integration** for governance workflows at Layer 2
 
-For questions, issues, or contributions: [github.com/trellis-mcp/trellis-mcp](https://github.com/trellis-mcp/trellis-mcp)
+For questions, issues, or contributions: [github.com/tressellate/tressellate](https://github.com/tressellate/tressellate)
 
 ---
 

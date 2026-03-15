@@ -1,5 +1,5 @@
-import type { HederaConfig } from '@trellis-mcp/core/config';
-import { getNFTInfo } from '@trellis-mcp/core';
+import type { HederaConfig } from '@tressellate/core/config';
+import { getNFTInfo } from '@tressellate/core';
 
 /**
  * Configuration for a query-record operation factory.

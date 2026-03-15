@@ -1,1 +1,1 @@
-export type { HealthcareConfig as DrugCertConfig } from '@trellis-mcp/domain-healthcare';
+export type { HealthcareConfig as DrugCertConfig } from '@tressellate/domain-healthcare';

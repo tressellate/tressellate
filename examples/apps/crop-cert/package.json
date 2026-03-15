@@ -1,5 +1,5 @@
 {
-  "name": "@trellis-mcp/crop-cert",
+  "name": "@tressellate/crop-cert",
   "version": "1.0.0",
   "private": true,
   "type": "module",
@@ -24,9 +24,9 @@
     "dev": "tsc --watch"
   },
   "dependencies": {
-    "@trellis-mcp/core": "workspace:*",
-    "@trellis-mcp/asset-types": "workspace:*",
-    "@trellis-mcp/domain-agriculture": "workspace:*",
+    "@tressellate/core": "workspace:*",
+    "@tressellate/asset-types": "workspace:*",
+    "@tressellate/domain-agriculture": "workspace:*",
     "@hashgraph/sdk": "^2.50.0"
   }
 }

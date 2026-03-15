@@ -1,7 +1,7 @@
-import type { MCPTool } from '@trellis-mcp/core/config';
-import { mintNFT } from '@trellis-mcp/core';
-import { getTokenBalance } from '@trellis-mcp/core/tools/query';
-import { requireConfigField, createAuditSubmitter } from '@trellis-mcp/core/helpers';
+import type { MCPTool } from '@tressellate/core/config';
+import { mintNFT } from '@tressellate/core';
+import { getTokenBalance } from '@tressellate/core/tools/query';
+import { requireConfigField, createAuditSubmitter } from '@tressellate/core/helpers';
 import type { RECConfig } from '../config.js';
 
 const requireRecTokenId = requireConfigField<RECConfig>(

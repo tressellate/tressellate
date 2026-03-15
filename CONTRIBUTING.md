@@ -1,6 +1,6 @@
-# Contributing to Trellis MCP
+# Contributing to Tressellate
 
-Thank you for your interest in contributing to Trellis MCP. This project provides open-source MCP tools for Hiero (Layer 1) and Guardian (Layer 2). Contributions to these layers are welcome and encouraged.
+Thank you for your interest in contributing to Tressellate. This project provides open-source MCP tools for Hiero (Layer 1) and Guardian (Layer 2). Contributions to these layers are welcome and encouraged.
 
 ## Scope of Contributions
 
@@ -22,8 +22,8 @@ Thank you for your interest in contributing to Trellis MCP. This project provide
 ## Development Setup
 
 ```bash
-git clone https://github.com/trellis-mcp/trellis-mcp.git
-cd trellis-mcp
+git clone https://github.com/tressellate/tressellate.git
+cd tressellate
 bun install
 bun run build
 bun test
@@ -71,4 +71,4 @@ Open an issue with the `question` label. We're happy to help contributors find t
 
 ---
 
-*Building the trellis together.*
+*Building the framework together.*

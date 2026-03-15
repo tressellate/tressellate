@@ -1,1 +1,1 @@
-export type { AgricultureConfig as CropCertConfig } from '@trellis-mcp/domain-agriculture';
+export type { AgricultureConfig as CropCertConfig } from '@tressellate/domain-agriculture';

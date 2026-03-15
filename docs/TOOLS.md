@@ -1,6 +1,6 @@
 # MCP Tool Inventory
 
-Complete inventory of all 48 MCP tools across the Trellis MCP framework.
+Complete inventory of all 48 MCP tools across the Tressellate framework.
 
 ## Layer 1: Hashgraph Tools (`core/hashgraph-tools/`)
 
@@ -135,14 +135,14 @@ Domain: Healthcare | Primitives: Certificate + Provenance
 
 | Package | Layer | Location | Tools |
 |---------|-------|----------|-------|
-| `@trellis-mcp/core` | 1 (Hashgraph) | `core/hashgraph-tools/` | 22 |
-| `@trellis-mcp/guardian-tools` | 2 (Guardian) | `core/guardian-tools/` | 0 (GovernanceProvider interface) |
-| `@trellis-mcp/asset-types` | 3 (Asset Types) | `core/asset-types/` | 0 (schemas + factories) |
-| `@trellis-mcp/crop-cert` | 5 (Agriculture) | `examples/apps/crop-cert/` | 5 |
-| `@trellis-mcp/lease` | 5 (Real Estate) | `examples/apps/lease/` | 5 |
-| `@trellis-mcp/parts-prov` | 5 (Supply Chain) | `examples/apps/parts-prov/` | 5 |
-| `@trellis-mcp/rec` | 5 (Energy) | `examples/apps/rec/` | 6 |
-| `@trellis-mcp/drug-cert` | 5 (Healthcare) | `examples/apps/drug-cert/` | 5 |
+| `@tressellate/core` | 1 (Hashgraph) | `core/hashgraph-tools/` | 22 |
+| `@tressellate/guardian-tools` | 2 (Guardian) | `core/guardian-tools/` | 0 (GovernanceProvider interface) |
+| `@tressellate/asset-types` | 3 (Asset Types) | `core/asset-types/` | 0 (schemas + factories) |
+| `@tressellate/crop-cert` | 5 (Agriculture) | `examples/apps/crop-cert/` | 5 |
+| `@tressellate/lease` | 5 (Real Estate) | `examples/apps/lease/` | 5 |
+| `@tressellate/parts-prov` | 5 (Supply Chain) | `examples/apps/parts-prov/` | 5 |
+| `@tressellate/rec` | 5 (Energy) | `examples/apps/rec/` | 6 |
+| `@tressellate/drug-cert` | 5 (Healthcare) | `examples/apps/drug-cert/` | 5 |
 | **Total** | | | **48** |
 
 > Note: Layer 2 (Guardian Tools) provides the `GovernanceProvider` interface and `NoopGovernanceProvider` class but no MCP tools yet. Layer 3 (Asset Types) provides 7 schema primitives and 5 operation factories consumed by Layer 5 tools. Layer 4 (Domain Rules) packages contain domain configuration, enums, and schemas but no MCP tools.

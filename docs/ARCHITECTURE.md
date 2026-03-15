@@ -1,4 +1,4 @@
-# Trellis Framework Architecture
+# Tressellate Framework Architecture
 
 ## A Universal Asset Registry with Agentic Orchestration
 
@@ -11,7 +11,7 @@
 
 ## 1. Executive Summary
 
-Trellis is an open-source framework that enables any business asset — documents, credentials, certificates, currencies, access rights — to be registered, verified, and operated on through a distributed ledger, with AI agents orchestrating the workflows.
+Tressellate is an open-source framework that enables any business asset — documents, credentials, certificates, currencies, access rights — to be registered, verified, and operated on through a distributed ledger, with AI agents orchestrating the workflows.
 
 The framework provides a five-layer composable architecture built on Hiero (the distributed ledger technology under the Linux Foundation Decentralized Trust, powering the Hedera network) and Guardian (a governance framework for policy-driven verification). Each layer is independent, typed, and serves a distinct purpose.
 
@@ -78,9 +78,9 @@ Therefore: **asset type defines the noun (what it is), domain defines the adject
 │   MCP tool definitions, multi-step workflows, server         │
 │   composition, and deployment configuration.                 │
 │                                                              │
-│   Packages: @trellis-mcp/crop-cert, @trellis-mcp/lease,      │
-│   @trellis-mcp/parts-prov, @trellis-mcp/rec,                │
-│   @trellis-mcp/drug-cert                                     │
+│   Packages: @tressellate/crop-cert, @tressellate/lease,      │
+│   @tressellate/parts-prov, @tressellate/rec,                │
+│   @tressellate/drug-cert                                     │
 │                                                              │
 ├─────────────────────────────────────────────────────────────┤
 │                                                              │
@@ -91,10 +91,10 @@ Therefore: **asset type defines the noun (what it is), domain defines the adject
 │   and configuration. Shared across applications within       │
 │   the same domain.                                           │
 │                                                              │
-│   Packages: @trellis-mcp/domain-agriculture,                 │
-│   @trellis-mcp/domain-energy, @trellis-mcp/domain-healthcare,│
-│   @trellis-mcp/domain-real-estate,                           │
-│   @trellis-mcp/domain-supply-chain                           │
+│   Packages: @tressellate/domain-agriculture,                 │
+│   @tressellate/domain-energy, @tressellate/domain-healthcare,│
+│   @tressellate/domain-real-estate,                           │
+│   @tressellate/domain-supply-chain                           │
 │                                                              │
 ├─────────────────────────────────────────────────────────────┤
 │                                                              │
@@ -106,7 +106,7 @@ Therefore: **asset type defines the noun (what it is), domain defines the adject
 │   rules. An asset type works the same way regardless         │
 │   of which domain uses it.                                   │
 │                                                              │
-│   Package: @trellis-mcp/asset-types                          │
+│   Package: @tressellate/asset-types                          │
 │                                                              │
 ├─────────────────────────────────────────────────────────────┤
 │                                                              │
@@ -117,7 +117,7 @@ Therefore: **asset type defines the noun (what it is), domain defines the adject
 │   Credential lifecycle, dMRV workflows, role                 │
 │   assignment, and audit trail management.                    │
 │                                                              │
-│   Package: @trellis-mcp/guardian-tools                       │
+│   Package: @tressellate/guardian-tools                       │
 │                                                              │
 ├─────────────────────────────────────────────────────────────┤
 │                                                              │
@@ -128,7 +128,7 @@ Therefore: **asset type defines the noun (what it is), domain defines the adject
 │   operations, NFT management, and mirror node queries.       │
 │   Stateless wrappers around Hiero SDK operations.            │
 │                                                              │
-│   Package: @trellis-mcp/core                                 │
+│   Package: @tressellate/core                                 │
 │                                                              │
 └─────────────────────────────────────────────────────────────┘
 ```
@@ -194,7 +194,7 @@ The intersection cell represents a Layer 5 application tool — e.g., `ics_certi
 
 **Architectural Decision:** Layer 4 domains **compose** Layer 3 asset types via extension, not inheritance. A `BatchCertSchema` extends `CertificateSchema` with construction-specific fields. Layer 5 application tools then wire these composed schemas into MCP tool definitions with input schemas, validation, and multi-step workflows.
 
-**Key separation:** Multiple Layer 5 applications can share the same Layer 4 domain. For example, both BCB and a future REDD+ application compose `@trellis-mcp/domain-climate-finance`. The domain defines the shared language; the application defines the concrete deployment.
+**Key separation:** Multiple Layer 5 applications can share the same Layer 4 domain. For example, both BCB and a future REDD+ application compose `@tressellate/domain-climate-finance`. The domain defines the shared language; the application defines the concrete deployment.
 
 ---
 
@@ -202,7 +202,7 @@ The intersection cell represents a Layer 5 application tool — e.g., `ics_certi
 
 ### 4.1 Layer 1: Ledger Infrastructure
 
-**Package:** `@trellis-mcp/core`
+**Package:** `@tressellate/core`
 **Dependency:** Hiero SDK only
 **Responsibility:** Direct interaction with the Hiero network
 
@@ -220,7 +220,7 @@ Layer 1 provides stateless wrappers around Hiero's native services with MCP-comp
 
 #### The Dual-Record Pattern
 
-**Architectural Decision:** Both independent reviewers identified Hiero's 100-byte NFT metadata limit as a hard constraint that the architecture must address structurally, not as a risk to mitigate. Trellis adopts the **Dual-Record Pattern**: on-chain records store only content identifiers (hashes or CIDs), while structured content lives in off-chain storage (IPFS, Arweave, or application databases). Layer 1 provides the primitives for both.
+**Architectural Decision:** Both independent reviewers identified Hiero's 100-byte NFT metadata limit as a hard constraint that the architecture must address structurally, not as a risk to mitigate. Tressellate adopts the **Dual-Record Pattern**: on-chain records store only content identifiers (hashes or CIDs), while structured content lives in off-chain storage (IPFS, Arweave, or application databases). Layer 1 provides the primitives for both.
 
 ```
 On-Chain (Hiero NFT metadata, ≤100 bytes):
@@ -269,7 +269,7 @@ interface HederaConfig {
 
 ### 4.2 Layer 2: Governance Primitives
 
-**Package:** `@trellis-mcp/guardian-tools`
+**Package:** `@tressellate/guardian-tools`
 **Dependency:** Guardian API + Layer 1
 **Responsibility:** Trust, authorization, and policy management
 
@@ -342,7 +342,7 @@ Layer 4 domains register domain-specific resolvers as plugins. This keeps resolu
 
 ### 4.3 Layer 3: Asset Type Patterns (NEW)
 
-**Package:** `@trellis-mcp/asset-types`
+**Package:** `@tressellate/asset-types`
 **Dependency:** Layers 1 and 2
 **Responsibility:** Reusable, domain-agnostic asset definitions
 
@@ -632,11 +632,11 @@ This standardization enables cross-type workflows (e.g., "a Milestone depends on
 
 ### 4.4 Layer 4: Domain Rules
 
-**Packages:** `@trellis-mcp/domain-agriculture`, `@trellis-mcp/domain-energy`, `@trellis-mcp/domain-healthcare`, `@trellis-mcp/domain-real-estate`, `@trellis-mcp/domain-supply-chain`
+**Packages:** `@tressellate/domain-agriculture`, `@tressellate/domain-energy`, `@tressellate/domain-healthcare`, `@tressellate/domain-real-estate`, `@tressellate/domain-supply-chain`
 **Dependency:** Layers 1 and 3
 **Responsibility:** Domain-specific schemas, enums, validation rules, and configuration
 
-Layer 4 defines the shared language for each business domain. Multiple Layer 5 applications can compose the same domain rules — for example, both a crop certification app and a farm management system could share `@trellis-mcp/domain-agriculture`.
+Layer 4 defines the shared language for each business domain. Multiple Layer 5 applications can compose the same domain rules — for example, both a crop certification app and a farm management system could share `@tressellate/domain-agriculture`.
 
 #### What Layer 4 Provides
 
@@ -720,7 +720,7 @@ The key insight: **this new domain required zero changes to Layers 1, 2, or 3.**
 
 ### 4.5 Layer 5: Application Workflows
 
-**Packages:** `@trellis-mcp/crop-cert`, `@trellis-mcp/lease`, `@trellis-mcp/parts-prov`, `@trellis-mcp/rec`, `@trellis-mcp/drug-cert`
+**Packages:** `@tressellate/crop-cert`, `@tressellate/lease`, `@tressellate/parts-prov`, `@tressellate/rec`, `@tressellate/drug-cert`
 **Dependency:** Layers 1, 3, and 4
 **Responsibility:** Concrete MCP tool definitions, multi-step workflows, server composition, and deployment
 
@@ -752,11 +752,11 @@ const certifyTerraPrima = createMintNFTAsset<ClimateFinanceConfig, CertifyArgs>(
 
 | Package | Domain | Tools |
 |---------|--------|-------|
-| `@trellis-mcp/crop-cert` | Agriculture | 5 tools: crop yield certificate collection, issuance, verification, audit trail, record query |
-| `@trellis-mcp/lease` | Real Estate | 5 tools: lease collection, grant, payment milestone, verification, audit trail |
-| `@trellis-mcp/parts-prov` | Supply Chain | 5 tools: parts collection, provenance recording, quality certification, verification, audit trail |
-| `@trellis-mcp/rec` | Energy | 6 tools: REC token creation, generation certificate, minting, retirement, verification, audit trail |
-| `@trellis-mcp/drug-cert` | Healthcare | 5 tools: drug lot collection, certification, custody transfer, verification, audit trail |
+| `@tressellate/crop-cert` | Agriculture | 5 tools: crop yield certificate collection, issuance, verification, audit trail, record query |
+| `@tressellate/lease` | Real Estate | 5 tools: lease collection, grant, payment milestone, verification, audit trail |
+| `@tressellate/parts-prov` | Supply Chain | 5 tools: parts collection, provenance recording, quality certification, verification, audit trail |
+| `@tressellate/rec` | Energy | 6 tools: REC token creation, generation certificate, minting, retirement, verification, audit trail |
+| `@tressellate/drug-cert` | Healthcare | 5 tools: drug lot collection, certification, custody transfer, verification, audit trail |
 
 ---
 
@@ -764,7 +764,7 @@ const certifyTerraPrima = createMintNFTAsset<ClimateFinanceConfig, CertifyArgs>(
 
 ### 5.1 Why MCP Matters
 
-The Model Context Protocol provides a standardized interface between AI agents and tools. By exposing each layer as MCP tools, Trellis enables AI agents to:
+The Model Context Protocol provides a standardized interface between AI agents and tools. By exposing each layer as MCP tools, Tressellate enables AI agents to:
 
 1. **Discover available operations** through tool listing
 2. **Understand parameters** through structured input schemas with descriptions
@@ -805,13 +805,13 @@ An AI agent connected to this server can operate at any level of abstraction:
 
 ### 5.4 Dynamic Tool Discovery
 
-**Architectural Decision:** Gemini identified that as domains grow, a universal Trellis server could expose 200+ tools, causing "tool confusion" and consuming the agent's context window. We adopt **Dynamic Tool Discovery** — instead of loading all tools upfront, agents discover and load domain-specific tool sets on demand.
+**Architectural Decision:** Gemini identified that as domains grow, a universal Tressellate server could expose 200+ tools, causing "tool confusion" and consuming the agent's context window. We adopt **Dynamic Tool Discovery** — instead of loading all tools upfront, agents discover and load domain-specific tool sets on demand.
 
 ```
 Always-available meta-tools:
-  trellis_list_domains()          → ["climate-finance", "construction", "hospitality", "legal"]
-  trellis_load_domain(domain)     → Loads Layer 5 tools for that domain's applications
-  trellis_describe_domain(domain) → Returns available workflows, asset types, and tool summaries
+  tressellate_list_domains()          → ["climate-finance", "construction", "hospitality", "legal"]
+  tressellate_load_domain(domain)     → Loads Layer 5 tools for that domain's applications
+  tressellate_describe_domain(domain) → Returns available workflows, asset types, and tool summaries
 
 Layered loading:
   Layer 1 tools (hedera_*):        Always loaded (infrastructure primitives)
@@ -820,7 +820,7 @@ Layered loading:
   Layer 5 tools (bcb_*, ics_*):    Loaded only when that specific application is activated
 ```
 
-This means an agent processing a carbon credit request calls `trellis_load_domain("climate-finance")` and only sees the relevant ~20 tools, not all 200+ across every domain.
+This means an agent processing a carbon credit request calls `tressellate_load_domain("climate-finance")` and only sees the relevant ~20 tools, not all 200+ across every domain.
 
 ### 5.5 Agentic Guardrails: The Intent Pattern
 
@@ -828,12 +828,12 @@ This means an agent processing a carbon credit request calls `trellis_load_domai
 
 ```
 Phase 1: Agent creates an Intent (non-destructive)
-  → trellis_request_revocation(certificateId, reason)
+  → tressellate_request_revocation(certificateId, reason)
   → Creates a "RevocationIntent" record (Layer 3: Claim asset type)
   → Returns: intentId, summary for human review
 
 Phase 2: Human approves via Layer 1 multi-signature
-  → trellis_approve_intent(intentId, approverSignature)
+  → tressellate_approve_intent(intentId, approverSignature)
   → Layer 2 validates approver holds required persona
   → Layer 1 executes the actual burn operation
   → Audit trail records both the intent and the approval
@@ -899,7 +899,7 @@ Agent response:
 
 As AI agents orchestrate production systems, the gap between intent and execution becomes opaque. An agent reasons internally, proposes an action, and executes it on external infrastructure — but without a structured protocol at the execution boundary, there is no inspectable record of what was requested, why, or whether the outcome matched the intent.
 
-This is the **agentic black box** problem. Trellis MCP's architecture directly counters it at the execution boundary — exactly where opaque reasoning meets real-world action — through four structural properties:
+This is the **agentic black box** problem. Tressellate's architecture directly counters it at the execution boundary — exactly where opaque reasoning meets real-world action — through four structural properties:
 
 #### 5.7.1 Auditable Execution Boundary
 
@@ -909,7 +909,7 @@ MCP draws a hard, inspectable line at exactly this point. Every tool call is a s
 
 #### 5.7.2 Composable Trust Through Layer Independence
 
-A monolithic AI system is a single black box. Trellis MCP's five independent layers are five independently attestable components:
+A monolithic AI system is a single black box. Tressellate's five independent layers are five independently attestable components:
 
 - **Layer 1** can be verified against Hiero SDK behavior (deterministic)
 - **Layer 2** can be verified against Guardian policy rules (deterministic)  
@@ -923,7 +923,7 @@ This composability means transparency compounds: you don't need to understand th
 
 Over successive autonomous iterations, AI agents can gradually move system behavior away from intended parameters. Each individual deviation may be small and individually rational, but collectively they can produce significant, untraceable divergence from design intent — a phenomenon we call **agentic drift**.
 
-Trellis MCP makes drift detectable by design through two mechanisms:
+Tressellate makes drift detectable by design through two mechanisms:
 
 1. **Fixed-contract tool interfaces**: Tool schemas are defined at deployment, not generated at runtime. An agent cannot create new tool behavior — it can only call tools with defined parameters. This bounds the space of possible actions.
 
@@ -931,7 +931,7 @@ Trellis MCP makes drift detectable by design through two mechanisms:
 
 #### 5.7.4 LLM Opacity Is Irrelevant
 
-The LLM's internal reasoning will always contain some opacity — neural networks are not fully interpretable. But in Trellis MCP's architecture, this opacity is **irrelevant** because the model has no unmediated authority. It can only call tools with defined parameters through the MCP protocol, and every resulting action is validated by the deterministic layers below.
+The LLM's internal reasoning will always contain some opacity — neural networks are not fully interpretable. But in Tressellate's architecture, this opacity is **irrelevant** because the model has no unmediated authority. It can only call tools with defined parameters through the MCP protocol, and every resulting action is validated by the deterministic layers below.
 
 The LLM proposes; the ledger disposes.
 
@@ -939,9 +939,9 @@ You don't need to audit the AI's reasoning when you can audit every action it ta
 
 #### 5.7.5 Compounding Attestation Value
 
-Regulatory frameworks like the EU AI Act (2024) set a compliance floor — transparency, traceability, and contestability for high-risk AI systems. Trellis MCP meets these requirements structurally:
+Regulatory frameworks like the EU AI Act (2024) set a compliance floor — transparency, traceability, and contestability for high-risk AI systems. Tressellate meets these requirements structurally:
 
-| Regulatory Requirement | Trellis MCP Mechanism |
+| Regulatory Requirement | Tressellate Mechanism |
 |----------------------|---------------------|
 | **Transparency** (Art. 13) | Structured tool schemas with explicit descriptions, discoverable by inspection |
 | **Human oversight** (Art. 14) | Intent Pattern for destructive operations, two-phase commit with human approval |
@@ -949,7 +949,7 @@ Regulatory frameworks like the EU AI Act (2024) set a compliance floor — trans
 | **Contestability** | On-chain evidence enables independent verification of any agent action |
 | **Risk management** (Art. 9) | Layer-by-layer bounded scope prevents monolithic risk accumulation |
 
-But compliance is the floor. The ceiling is that each domain attested on Trellis creates a reusable attestation methodology that transfers to the next domain at reduced cost. PwC attests procurement governance across Layers 1–5. The same methodology applies to carbon verification, supply chain, healthcare — at decreasing cost and increasing confidence. This creates a **compounding trust network** that no single-domain solution can replicate.
+But compliance is the floor. The ceiling is that each domain attested on Tressellate creates a reusable attestation methodology that transfers to the next domain at reduced cost. PwC attests procurement governance across Layers 1–5. The same methodology applies to carbon verification, supply chain, healthcare — at decreasing cost and increasing confidence. This creates a **compounding trust network** that no single-domain solution can replicate.
 
 ---
 
@@ -1034,7 +1034,7 @@ The key claim: **each layer can evolve independently.**
 ## 8. Package Structure
 
 ```
-trellis-mcp/
+tressellate/
 ├── core/                                # Layers 1-3 (shared infrastructure)
 │   ├── hashgraph-tools/                 # Layer 1: Ledger Infrastructure
 │   │   └── src/tools/
@@ -1098,7 +1098,7 @@ trellis-mcp/
 
 **Trade-off:** Additional complexity vs. reusability and separation of concerns.
 
-The original three-layer architecture (Infrastructure → Governance → Domain) worked well for initial development. However, as we built four domain implementations, we observed that asset type patterns were being independently re-implemented in each domain. The four-layer architecture extracted these patterns into a shared layer (Layer 3: Asset Types). The five-layer architecture further separates the original "Domain Workflows" layer into **Domain Rules** (Layer 4: shared schemas, enums, validation) and **Application Workflows** (Layer 5: concrete MCP tools and deployments). This enables multiple applications to share the same domain language — for example, BCB and a future REDD+ application both compose `@trellis-mcp/domain-climate-finance`.
+The original three-layer architecture (Infrastructure → Governance → Domain) worked well for initial development. However, as we built four domain implementations, we observed that asset type patterns were being independently re-implemented in each domain. The four-layer architecture extracted these patterns into a shared layer (Layer 3: Asset Types). The five-layer architecture further separates the original "Domain Workflows" layer into **Domain Rules** (Layer 4: shared schemas, enums, validation) and **Application Workflows** (Layer 5: concrete MCP tools and deployments). This enables multiple applications to share the same domain language — for example, BCB and a future REDD+ application both compose `@tressellate/domain-climate-finance`.
 
 **Risk:** Layer 3 could become a "god layer" if asset types are too broadly defined. We mitigate this by keeping asset types structurally minimal — they define shape and lifecycle, not business logic.
 
@@ -1246,7 +1246,7 @@ These questions from the initial draft have been addressed in this version:
 
 6. **~~Layer 3 as library vs. service~~** → **Resolved.** Keep as a library. An independent third-party review (Gemini) confirmed: transitioning Layer 3 to a centralized service orchestrator introduces a single point of failure and network latency. The trigger for service extraction would be multiple discrete Layer 5 MCP servers (on different infrastructure) needing to mutually enforce cross-application state transitions synchronously. Until that need arises, library deployment is correct.
 
-7. **~~Guardian as pluggable interface~~** → **Resolved.** Implement now. Layer 2 defines a `GovernanceProvider` interface that Guardian implements. This allows lightweight alternatives (e.g., a Hedera Smart Contract RBAC plugin) for teams that need Trellis capabilities (L1, L3, L4, L5) but only require simple Role-Based Access Control. This significantly lowers the barrier to entry for smaller projects. See `core/guardian-tools/src/governance-provider.ts`.
+7. **~~Guardian as pluggable interface~~** → **Resolved.** Implement now. Layer 2 defines a `GovernanceProvider` interface that Guardian implements. This allows lightweight alternatives (e.g., a Hedera Smart Contract RBAC plugin) for teams that need Tressellate capabilities (L1, L3, L4, L5) but only require simple Role-Based Access Control. This significantly lowers the barrier to entry for smaller projects. See `core/guardian-tools/src/governance-provider.ts`.
 
 8. **Multi-chain future**: Both reviewers raised ledger-agnosticism. The current architecture is Hiero-specific. Making Layer 1 a pluggable adapter is feasible (Layer 3 already references abstract operations like "mint NFT" rather than Hiero-specific calls). Deferred until ecosystem demand justifies the abstraction cost.
 
@@ -1278,25 +1278,25 @@ These questions from the initial draft have been addressed in this version:
 
 ### 11.1 vs. Traditional DApp Architecture
 
-Traditional DApps embed business logic in smart contracts, creating tight coupling between domain rules and ledger operations. Trellis separates these concerns across four layers, enabling domain logic changes without contract redeployment.
+Traditional DApps embed business logic in smart contracts, creating tight coupling between domain rules and ledger operations. Tressellate separates these concerns across four layers, enabling domain logic changes without contract redeployment.
 
 ### 11.2 vs. Token Standards (ERC-721, ERC-1155)
 
-Token standards define the interface for asset operations but not the semantics of what those assets represent. Trellis Layer 3 provides the semantic layer — a Certificate has a lifecycle, verification rules, and structural properties that an ERC-721 does not define.
+Token standards define the interface for asset operations but not the semantics of what those assets represent. Tressellate Layer 3 provides the semantic layer — a Certificate has a lifecycle, verification rules, and structural properties that an ERC-721 does not define.
 
 ### 11.3 vs. Verifiable Credential Ecosystems (W3C VC)
 
-W3C Verifiable Credentials provide a standard for credential issuance and verification. Trellis integrates with this standard through Layer 2 (Guardian) but extends it with asset lifecycle management, multi-step workflows, and ledger-backed immutability that the VC specification does not cover.
+W3C Verifiable Credentials provide a standard for credential issuance and verification. Tressellate integrates with this standard through Layer 2 (Guardian) but extends it with asset lifecycle management, multi-step workflows, and ledger-backed immutability that the VC specification does not cover.
 
 ### 11.4 vs. Enterprise Blockchain Platforms (Hyperledger Fabric, R3 Corda)
 
-Enterprise blockchain platforms provide permissioned ledger infrastructure but require significant custom development for each use case. Trellis provides the same separation of concerns with pre-built asset type patterns and domain composition, reducing the development cost of new use cases from months to days.
+Enterprise blockchain platforms provide permissioned ledger infrastructure but require significant custom development for each use case. Tressellate provides the same separation of concerns with pre-built asset type patterns and domain composition, reducing the development cost of new use cases from months to days.
 
 ---
 
 ## 12. Summary
 
-Trellis is a five-layer framework for universal asset registration and verification:
+Tressellate is a five-layer framework for universal asset registration and verification:
 
 1. **Layer 1 (Ledger)**: HOW things are recorded — Hiero infrastructure primitives
 2. **Layer 2 (Governance)**: WHO can do what — Guardian trust and policy primitives
@@ -1310,7 +1310,7 @@ The core innovation is the separation of asset type patterns (Layer 3) from doma
 
 ---
 
-*Trellis: the lattice that gives structure to organic growth.*
+*Tressellate: the lattice that gives structure to organic growth.*
 
 *Version 3.0 — Five-Layer Architecture*
 *March 2026 — Arnold Alagar*

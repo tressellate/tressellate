@@ -1,5 +1,5 @@
-import type { HederaConfig } from '@trellis-mcp/core/config';
-import { mintNFT } from '@trellis-mcp/core';
+import type { HederaConfig } from '@tressellate/core/config';
+import { mintNFT } from '@tressellate/core';
 import type { AssetOperationResult, AssetType } from '../types.js';
 
 /**

@@ -1,5 +1,5 @@
 {
-  "name": "@trellis-mcp/lease",
+  "name": "@tressellate/lease",
   "version": "1.0.0",
   "private": true,
   "type": "module",
@@ -24,9 +24,9 @@
     "dev": "tsc --watch"
   },
   "dependencies": {
-    "@trellis-mcp/core": "workspace:*",
-    "@trellis-mcp/asset-types": "workspace:*",
-    "@trellis-mcp/domain-real-estate": "workspace:*",
+    "@tressellate/core": "workspace:*",
+    "@tressellate/asset-types": "workspace:*",
+    "@tressellate/domain-real-estate": "workspace:*",
     "@hashgraph/sdk": "^2.50.0"
   }
 }

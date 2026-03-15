@@ -1,5 +1,5 @@
-import type { HederaConfig } from '@trellis-mcp/core/config';
-import { mintNFT, transferNFT, burnNFT } from '@trellis-mcp/core';
+import type { HederaConfig } from '@tressellate/core/config';
+import { mintNFT, transferNFT, burnNFT } from '@tressellate/core';
 
 /**
  * Configuration for agreement lifecycle operations.

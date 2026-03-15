@@ -2,7 +2,7 @@ import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { StdioClientTransport } from '@modelcontextprotocol/sdk/client/stdio.js';
 
 /**
- * Trellis MCP Test Client
+ * Tressellate Test Client
  * 
  * Usage:
  * bun test-server <path-to-server-entrypoint>
@@ -35,7 +35,7 @@ const transport = new StdioClientTransport({
 });
 
 const client = new Client(
-    { name: 'trellis-test-client', version: '1.0.0' },
+    { name: 'tressellate-test-client', version: '1.0.0' },
     { capabilities: {} }
 );
 

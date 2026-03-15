@@ -40,3 +40,5 @@ npm-debug.log*
 # Temporary
 tmp/
 temp/
+.vercel
+.env*.local
