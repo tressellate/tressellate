@@ -4,10 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tressellate — 5 layers, 7 tiles, any domain</title>
+    <title>Tressellate — Every AI action, on the ledger</title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%234ade80'/%3E%3Cstop offset='100%25' stop-color='%2322d3ee'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpolygon points='16,2 22,5.5 22,12.5 16,16 10,12.5 10,5.5' stroke='url(%23g)' stroke-width='1.5' fill='none'/%3E%3Cpolygon points='16,12 22,15.5 22,22.5 16,26 10,22.5 10,15.5' stroke='url(%23g)' stroke-width='1.5' fill='none' opacity='0.6'/%3E%3Cpolygon points='16,7 19,9 19,13 16,15 13,13 13,9' fill='url(%23g)' opacity='0.3'/%3E%3Ccircle cx='16' cy='11' r='1.5' fill='url(%23g)'/%3E%3C/svg%3E">
     <meta name="description"
-        content="Tressellate (trellis + tessellate) is a layered and tiled framework for verifiable AI infrastructure on Hiero. 5 auditable layers give AI agents structured access to the ledger. 7 universal asset primitives tile across any regulated domain. No black boxes. Every action traces to the ledger.">
+        content="Tressellate is an open-source framework that makes every AI agent action auditable on Hiero. 5 layers separate infrastructure from domain logic. 7 universal asset primitives tile across any regulated domain. The LLM proposes. The ledger disposes.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -237,8 +237,17 @@
             color: var(--text-secondary);
             max-width: 600px;
             line-height: 1.7;
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
             animation: fadeInUp 0.6s ease-out 0.2s both;
+        }
+
+        .hero-punchline {
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            color: var(--text-primary);
+            font-style: italic;
+            margin-bottom: 3rem;
+            animation: fadeInUp 0.6s ease-out 0.25s both;
         }
 
         .hero-actions {
@@ -337,53 +346,57 @@
             opacity: 1;
         }
 
-        /* ---- TRUST PILLARS ---- */
-        .trust-pillars {
-            display: flex;
-            flex-direction: column;
-            gap: 1.25rem;
-            margin-bottom: 3rem;
-            padding: 2rem 0;
-            animation: fadeInUp 0.6s ease-out 0.25s both;
-        }
-
-        .trust-pillar {
-            display: flex;
-            align-items: flex-start;
-            gap: 1rem;
-        }
-
-        .trust-icon {
-            width: 36px;
-            height: 36px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--accent);
-            background: var(--accent-glow);
-            border: 1px solid rgba(74, 222, 128, 0.12);
+        /* ---- PROBLEM STATEMENT ---- */
+        .problem-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
             border-radius: 8px;
-            flex-shrink: 0;
+            overflow: hidden;
+            margin-bottom: 3rem;
         }
 
-        .trust-text {
-            display: flex;
-            flex-direction: column;
-            gap: 0.15rem;
+        .problem-card {
+            padding: 2.5rem 2rem;
+            background: var(--bg-surface);
+            transition: background 0.3s;
         }
 
-        .trust-text strong {
+        .problem-card:hover {
+            background: var(--bg-elevated);
+        }
+
+        .problem-label {
             font-family: var(--font-mono);
-            font-size: 0.85rem;
-            font-weight: 500;
-            color: var(--text-primary);
-            letter-spacing: 0.01em;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
         }
 
-        .trust-text span {
+        .problem-card.bad .problem-label {
+            color: var(--rose);
+        }
+
+        .problem-card.good .problem-label {
+            color: var(--accent);
+        }
+
+        .problem-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 400;
+            line-height: 1.3;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+        }
+
+        .problem-card p {
             font-size: 0.85rem;
             color: var(--text-secondary);
-            line-height: 1.5;
+            line-height: 1.7;
         }
 
         /* ---- SECTION STYLES ---- */
@@ -617,11 +630,6 @@
         }
 
         /* Per-hex accent colors on hover */
-        .hex-cell:nth-child(1):hover .hex-name { color: var(--accent); }
-        .hex-cell:nth-child(2):hover .hex-name { color: var(--cyan); }
-        .hex-cell:nth-child(3):hover .hex-name { color: var(--amber); }
-        .hex-cell:nth-child(4):hover .hex-name { color: var(--blue); }
-
         .hex-row:nth-child(1) .hex-cell:nth-child(1):hover .hex-name { color: var(--accent); }
         .hex-row:nth-child(1) .hex-cell:nth-child(2):hover .hex-name { color: var(--cyan); }
         .hex-row:nth-child(2) .hex-cell:nth-child(1):hover .hex-name { color: var(--amber); }
@@ -788,21 +796,6 @@
             line-height: 1.7;
         }
 
-        .blackbox-callout {
-            padding: 1.5rem 2rem;
-            background: var(--bg-surface);
-            border: 1px solid var(--border);
-            border-left: 3px solid var(--accent);
-            border-radius: 0 8px 8px 0;
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            line-height: 1.7;
-        }
-
-        .blackbox-callout strong {
-            color: var(--text-primary);
-        }
-
         @media (max-width: 768px) {
             .blackbox-grid {
                 grid-template-columns: 1fr;
@@ -852,10 +845,22 @@
             margin-bottom: 1rem;
         }
 
-        .domain-tools {
+        .domain-tiles {
             font-family: var(--font-mono);
             font-size: 0.75rem;
             color: var(--text-muted);
+            margin-bottom: 0.75rem;
+        }
+
+        .domain-example {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--accent);
+            background: var(--accent-glow);
+            padding: 0.5rem 0.75rem;
+            border-radius: 4px;
+            border: 1px solid rgba(74, 222, 128, 0.1);
+            display: inline-block;
         }
 
         /* ---- VERTICALS ---- */
@@ -877,6 +882,7 @@
             transition: all 0.3s;
             text-decoration: none;
             display: block;
+            position: relative;
         }
 
         .vertical-card:hover {
@@ -934,6 +940,21 @@
             color: var(--rose);
         }
 
+        .vertical-status {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--cyan);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 0.2rem 0.5rem;
+            background: rgba(34, 211, 238, 0.08);
+            border: 1px solid rgba(34, 211, 238, 0.15);
+            border-radius: 4px;
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+        }
+
         /* ---- EXTENSIONS ---- */
         #extensions {
             border-top: 1px solid var(--border);
@@ -980,19 +1001,16 @@
             margin-bottom: 1.5rem;
         }
 
-        .extension-link {
+        .extension-status {
             font-family: var(--font-mono);
-            font-size: 0.8rem;
-            color: var(--accent);
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-            transition: gap 0.2s;
-        }
-
-        .extension-link:hover {
-            gap: 0.7rem;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            letter-spacing: 0.05em;
+            padding: 0.3rem 0.6rem;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-light);
+            border-radius: 4px;
+            display: inline-block;
         }
 
         /* ---- QUICKSTART ---- */
@@ -1038,6 +1056,47 @@
 
         .code-body .flag {
             color: var(--amber);
+        }
+
+        /* ---- CTA ---- */
+        .cta-section {
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .cta-section .section-desc {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-outline {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            background: transparent;
+            color: var(--text-primary);
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            font-weight: 400;
+            text-decoration: none;
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            transition: all 0.2s;
+            letter-spacing: 0.02em;
+        }
+
+        .btn-outline:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: var(--accent-glow);
         }
 
         /* ---- FOOTER ---- */
@@ -1146,7 +1205,8 @@
                 margin-left: 50px;
             }
 
-            .extensions-grid {
+            .extensions-grid,
+            .problem-grid {
                 grid-template-columns: 1fr;
             }
 
@@ -1179,7 +1239,6 @@
             <a href="#" class="nav-brand">
                 <div class="nav-logo">
                     <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <!-- Tessellating hexagons on a trellis grid -->
                         <polygon points="14,2 20,5.5 20,12.5 14,16 8,12.5 8,5.5" stroke="#4ade80" stroke-width="1.5" fill="none" />
                         <polygon points="14,12 20,15.5 20,22.5 14,26 8,22.5 8,15.5" stroke="#4ade80" stroke-width="1.5" fill="none" opacity="0.6" />
                         <polygon points="14,7 17,9 17,13 14,15 11,13 11,9" fill="#4ade80" opacity="0.3" />
@@ -1189,10 +1248,10 @@
                 <span class="nav-name">tressellate</span>
             </a>
             <ul class="nav-links">
+                <li><a href="#problem">Problem</a></li>
                 <li><a href="#architecture">Architecture</a></li>
-                <li><a href="#trust">Trust</a></li>
+                <li><a href="#transparency">Transparency</a></li>
                 <li><a href="#domains">Domains</a></li>
-                <li><a href="#verticals">Verticals</a></li>
                 <li><a href="#quickstart">Quick Start</a></li>
                 <li>
                     <a href="https://github.com/tressellate/tressellate" class="nav-github" target="_blank"
@@ -1212,57 +1271,13 @@
     <header class="hero">
         <div class="container">
             <div class="hero-badge">OPEN SOURCE &middot; APACHE 2.0</div>
-            <h1>5 layers. 7 tiles.<br><em>Any domain.</em></h1>
-            <p class="hero-sub"><strong>Tressellate</strong> = trellis + tessellate. A layered and tiled framework for
-                verifiable AI infrastructure on Hiero. Five auditable layers give AI agents structured access to the
-                ledger. Seven universal asset primitives tile across any regulated domain — agriculture, energy,
-                healthcare, supply chain. Learn the shapes once, reason about everything.</p>
-
-            <div class="trust-pillars">
-                <div class="trust-pillar">
-                    <div class="trust-icon">
-                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor"
-                            stroke-width="1.5">
-                            <path d="M10 1L3 5v6c0 4.4 3 7.5 7 9 4-1.5 7-4.6 7-9V5l-7-4z" />
-                            <path d="M7 10l2 2 4-4" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                    </div>
-                    <div class="trust-text">
-                        <strong>Layered attestation</strong>
-                        <span>Each layer auditable in isolation. Auditors can verify L1 through L5 independently.</span>
-                    </div>
-                </div>
-                <div class="trust-pillar">
-                    <div class="trust-icon">
-                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor"
-                            stroke-width="1.5">
-                            <circle cx="10" cy="10" r="8" />
-                            <path d="M10 6v4l3 3" stroke-linecap="round" />
-                        </svg>
-                    </div>
-                    <div class="trust-text">
-                        <strong>Cryptographic provenance</strong>
-                        <span>Every agent action traces to a Hiero transaction with consensus timestamp.</span>
-                    </div>
-                </div>
-                <div class="trust-pillar">
-                    <div class="trust-icon">
-                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor"
-                            stroke-width="1.5">
-                            <circle cx="10" cy="4" r="2.5" />
-                            <circle cx="4" cy="15" r="2.5" />
-                            <circle cx="16" cy="15" r="2.5" />
-                            <path d="M10 6.5V10M8.5 11.5L5.5 13M11.5 11.5L14.5 13" />
-                            <circle cx="10" cy="11" r="1.5" />
-                        </svg>
-                    </div>
-                    <div class="trust-text">
-                        <strong>Trust compounds with adoption</strong>
-                        <span>Every new domain attested on Tressellate strengthens every other domain on the
-                            platform.</span>
-                    </div>
-                </div>
-            </div>
+            <h1>Every AI action,<br><em>on the ledger.</em></h1>
+            <p class="hero-sub">AI agents act without proof. They call tools, get results, and nobody can verify
+                what actually happened. Tressellate fixes this &mdash; a layered framework that gives agents
+                structured access to <a href="https://hiero.org" target="_blank" rel="noopener"
+                style="color: var(--accent); text-decoration: none; border-bottom: 1px solid rgba(74, 222, 128, 0.3);">Hiero</a>
+                so every action is cryptographically auditable.</p>
+            <p class="hero-punchline">The LLM proposes. The ledger disposes.</p>
 
             <div class="hero-actions">
                 <a href="https://github.com/tressellate/tressellate" class="btn-primary" target="_blank" rel="noopener">
@@ -1272,7 +1287,7 @@
                     </svg>
                     View on GitHub
                 </a>
-                <a href="#architecture" class="btn-secondary">See the architecture →</a>
+                <a href="#architecture" class="btn-secondary">See the architecture &rarr;</a>
             </div>
             <div class="hero-install">
                 <div class="install-block"
@@ -1285,15 +1300,44 @@
         </div>
     </header>
 
+    <!-- PROBLEM -->
+    <section id="problem">
+        <div class="container">
+            <div class="reveal">
+                <div class="section-label">The Problem</div>
+                <h2 class="section-title">Every other MCP server is a trust-me API</h2>
+                <p class="section-desc">An agent calls a tool, gets a result, and has no way to verify the response
+                    wasn't spoofed, manipulated, or fabricated. That's fine for weather data. It's unacceptable for
+                    finance, procurement, or carbon verification.</p>
+            </div>
+
+            <div class="problem-grid reveal">
+                <div class="problem-card bad">
+                    <div class="problem-label">Without Tressellate</div>
+                    <h3>Agent trusts the tool.</h3>
+                    <p>The agent calls a procurement API. It gets back "approved." Was it actually approved?
+                        By whom? When? Against which policy? The agent can't know. The auditor can't know.
+                        The response is just a string.</p>
+                </div>
+                <div class="problem-card good">
+                    <div class="problem-label">With Tressellate</div>
+                    <h3>Agent trusts the ledger.</h3>
+                    <p>The same action returns a Hiero transaction ID with a consensus timestamp and
+                        cryptographic proof. The approval, the approver, the policy version &mdash; all
+                        on-chain. Verifiable by anyone, retroactively, forever.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- ARCHITECTURE -->
-    <section id="architecture">
+    <section id="architecture" style="border-top: 1px solid var(--border);">
         <div class="container">
             <div class="reveal">
                 <div class="section-label">Architecture</div>
-                <h2 class="section-title">The trellis: five layers, each does one thing</h2>
-                <p class="section-desc">Infrastructure separated from domain logic. Open-source core that anyone can
-                    build on. Domain layers where your application plugs in. Developers work in their domain language —
-                    certificates, milestones, provenance — not the ledger's infrastructure language.</p>
+                <h2 class="section-title">Five layers, each does one thing</h2>
+                <p class="section-desc">Infrastructure separated from domain logic. Developers work in their domain
+                    language &mdash; certificates, milestones, provenance &mdash; not the ledger's.</p>
             </div>
 
             <div class="arch-stack reveal">
@@ -1367,7 +1411,7 @@
                 <h2 class="section-title" style="font-size: clamp(1.5rem, 3vw, 2rem);">Seven tiles that cover any
                     domain</h2>
                 <p class="section-desc">Like tiles in a tessellation, these 7 primitives fit together with no gaps. An
-                    AI agent learns the shapes once and reasons about any regulated domain — crop certificates and drug
+                    AI agent learns the shapes once and reasons about any regulated domain &mdash; crop certificates and drug
                     lot certifications are both <em>Certificate</em> tiles.</p>
             </div>
 
@@ -1376,13 +1420,13 @@
                     <div class="hex-cell">
                         <div class="hex-inner">
                             <div class="hex-name">Certificate</div>
-                            <div class="hex-use">Verified attestations — crop yields, drug lots, quality certs</div>
+                            <div class="hex-use">Verified attestations &mdash; crop yields, drug lots, quality certs</div>
                         </div>
                     </div>
                     <div class="hex-cell">
                         <div class="hex-inner">
                             <div class="hex-name">Provenance</div>
-                            <div class="hex-use">Origin and custody tracking — parts, supply chain steps</div>
+                            <div class="hex-use">Origin and custody tracking &mdash; parts, supply chain steps</div>
                         </div>
                     </div>
                 </div>
@@ -1390,19 +1434,19 @@
                     <div class="hex-cell">
                         <div class="hex-inner">
                             <div class="hex-name">Credit</div>
-                            <div class="hex-use">Quantifiable units of value — energy credits, carbon removal</div>
+                            <div class="hex-use">Quantifiable units of value &mdash; energy credits, carbon removal</div>
                         </div>
                     </div>
                     <div class="hex-cell">
                         <div class="hex-inner">
                             <div class="hex-name">Agreement</div>
-                            <div class="hex-use">Multi-party contracts — leases, NDAs, service agreements</div>
+                            <div class="hex-use">Multi-party contracts &mdash; leases, NDAs, service agreements</div>
                         </div>
                     </div>
                     <div class="hex-cell">
                         <div class="hex-inner">
                             <div class="hex-name">Inspection</div>
-                            <div class="hex-use">Evaluation results — soil tests, audits, assessments</div>
+                            <div class="hex-use">Evaluation results &mdash; soil tests, audits, assessments</div>
                         </div>
                     </div>
                 </div>
@@ -1410,13 +1454,13 @@
                     <div class="hex-cell">
                         <div class="hex-inner">
                             <div class="hex-name">Milestone</div>
-                            <div class="hex-use">Progress markers — payments, deliverables, phases</div>
+                            <div class="hex-use">Progress markers &mdash; payments, deliverables, phases</div>
                         </div>
                     </div>
                     <div class="hex-cell">
                         <div class="hex-inner">
                             <div class="hex-name">Claim</div>
-                            <div class="hex-use">Assertions requiring verification — insurance, warranties</div>
+                            <div class="hex-use">Assertions requiring verification &mdash; insurance, warranties</div>
                         </div>
                     </div>
                 </div>
@@ -1424,53 +1468,15 @@
         </div>
     </section>
 
-    <!-- TRUST NETWORK -->
-    <section id="trust" style="border-top: 1px solid var(--border);">
-        <div class="container">
-            <div class="reveal">
-                <div class="section-label">Why This Matters</div>
-                <h2 class="section-title">Trust is the scarcest resource in AI</h2>
-                <p class="section-desc" style="max-width: 640px;">Every other MCP server is a trust-me API. An agent
-                    calls a tool, gets a result, and has no way to verify the response wasn't spoofed, manipulated, or
-                    fabricated. That's fine for weather data. It's unacceptable for finance, procurement, or carbon
-                    verification.</p>
-            </div>
-
-            <div class="trust-network-grid reveal">
-                <div class="trust-network-card">
-                    <div class="trust-network-num">01</div>
-                    <h3>Agents don't trust tools.<br>They trust the ledger.</h3>
-                    <p>Every Tressellate response traces to a Hiero transaction with a consensus timestamp and
-                        cryptographic proof. The trust is mathematical, not reputational.</p>
-                </div>
-                <div class="trust-network-card">
-                    <div class="trust-network-num">02</div>
-                    <h3>Layered architecture<br>enables layered audit.</h3>
-                    <p>A monolithic AI system is a black box. Five independent layers with bounded scope and
-                        deterministic behavior can be attested in isolation — by auditors, by regulators, by anyone.</p>
-                </div>
-                <div class="trust-network-card">
-                    <div class="trust-network-num">03</div>
-                    <h3>Every domain attested<br>strengthens every other.</h3>
-                    <p>An auditor attests procurement governance on Layer&nbsp;1–5. The same methodology transfers to
-                        carbon
-                        verification, supply chain, healthcare — at decreasing cost and increasing confidence. Trust
-                        compounds with adoption.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ANTI-BLACK-BOX -->
-    <section id="anti-blackbox" style="border-top: 1px solid var(--border);">
+    <!-- AGENTIC TRANSPARENCY -->
+    <section id="transparency" style="border-top: 1px solid var(--border);">
         <div class="container">
             <div class="reveal">
                 <div class="section-label">Agentic Transparency</div>
                 <h2 class="section-title">The execution boundary is<br>the accountability boundary</h2>
-                <p class="section-desc" style="max-width: 640px;">The LLM's internal reasoning will always be opaque —
+                <p class="section-desc" style="max-width: 640px;">The LLM's internal reasoning will always be opaque &mdash;
                     and that's irrelevant. The model has no unmediated authority. It can only call tools with defined
-                    parameters, and every action is validated by deterministic layers below. The LLM proposes. The
-                    ledger disposes.</p>
+                    parameters, and every action is validated by deterministic layers below.</p>
             </div>
 
             <div class="blackbox-grid reveal">
@@ -1483,7 +1489,7 @@
                         </svg>
                     </div>
                     <h3>Standardized tool contracts</h3>
-                    <p>Not loose prompt-based tool calling. Every agent–tool interaction uses explicit JSON-RPC schemas
+                    <p>Every agent&ndash;tool interaction uses explicit JSON-RPC schemas
                         with defined parameters, constraints, and predictable responses. Developers and auditors inspect
                         exact interfaces without touching model weights.</p>
                 </div>
@@ -1499,8 +1505,7 @@
                     </div>
                     <h3>Built-in traceability</h3>
                     <p>Every MCP interaction is inherently loggable: tool discovery, calls, parameters, results, errors.
-                        A machine-readable chain of actions far easier to audit than opaque neural activations or
-                        scattered custom integrations.</p>
+                        A machine-readable chain of actions far easier to audit than opaque neural activations.</p>
                 </div>
                 <div class="blackbox-card">
                     <div class="blackbox-icon">
@@ -1512,7 +1517,7 @@
                     </div>
                     <h3>Ledger-grounded trust</h3>
                     <p>Other frameworks let agents blindly trust tool responses. Tressellate grounds every high-stakes
-                        action in on-ledger proofs — consensus timestamps and cryptographic signatures. Even if the AI
+                        action in on-ledger proofs. Even if the AI
                         hallucinates, the outcome is verifiable against the immutable ledger.</p>
                 </div>
                 <div class="blackbox-card">
@@ -1525,19 +1530,9 @@
                         </svg>
                     </div>
                     <h3>Detecting agentic drift</h3>
-                    <p>Over autonomous iterations, AI agents gradually diverge from intended parameters — individually
-                        small deviations that become collectively significant. Fixed-contract interfaces and per-action
-                        ledger attestation make drift detectable by design, not in retrospect.</p>
+                    <p>Over autonomous iterations, AI agents gradually diverge from intended parameters. Fixed-contract
+                        interfaces and per-action ledger attestation make drift detectable by design, not in retrospect.</p>
                 </div>
-            </div>
-
-            <div class="blackbox-callout reveal">
-                <strong>Compounding attestation value:</strong> Each domain verified on Tressellate creates a reusable
-                attestation methodology that transfers to the next domain at reduced cost. An auditor attests
-                procurement
-                governance across Layers 1–5 — the same methodology applies to carbon verification, supply chain, and
-                healthcare at decreasing cost and increasing confidence. Compliance is the floor. The compounding trust
-                network is the ceiling.
             </div>
         </div>
     </section>
@@ -1548,45 +1543,48 @@
             <div class="reveal">
                 <div class="section-label">Example Domains</div>
                 <h2 class="section-title">Five domains, same seven tiles</h2>
-                <p class="section-desc">Each domain demonstrates the full Layer 4 + Layer 5 pattern — different
+                <p class="section-desc">Each domain implements Layer 4 + Layer 5 &mdash; different
                     business logic, same universal primitives. The tessellation in action.</p>
             </div>
 
             <div class="domains-grid reveal">
                 <div class="domain-card">
-                    <span class="domain-icon">🌾</span>
+                    <span class="domain-icon">&#127806;</span>
                     <div class="domain-name">Agriculture</div>
                     <div class="domain-desc">Certify crop yields, record soil inspections, and trace farm-to-market
-                        provenance. Certificate + Inspection tiles.</div>
-                    <div class="domain-tools">crop-cert &middot; 5 tools</div>
+                        provenance.</div>
+                    <div class="domain-tiles">Certificate + Inspection tiles</div>
+                    <div class="domain-example">crop_cert_create({ crop: "rice", yield_kg: 4200 })</div>
                 </div>
                 <div class="domain-card">
-                    <span class="domain-icon">⚡</span>
+                    <span class="domain-icon">&#9889;</span>
                     <div class="domain-name">Energy</div>
                     <div class="domain-desc">Mint renewable energy credits as fungible tokens with generation
-                        evidence and audit trails. Credit tiles.</div>
-                    <div class="domain-tools">rec &middot; 6 tools</div>
+                        evidence and audit trails.</div>
+                    <div class="domain-tiles">Credit tiles</div>
+                    <div class="domain-example">rec_mint({ source: "solar", mwh: 150 })</div>
                 </div>
                 <div class="domain-card">
-                    <span class="domain-icon">🏠</span>
+                    <span class="domain-icon">&#127968;</span>
                     <div class="domain-name">Real Estate</div>
                     <div class="domain-desc">Grant lease agreements as NFTs, record payment milestones, and verify
-                        tenancy. Agreement + Milestone tiles.</div>
-                    <div class="domain-tools">lease &middot; 5 tools</div>
+                        tenancy.</div>
+                    <div class="domain-tiles">Agreement + Milestone tiles</div>
+                    <div class="domain-example">lease_create({ tenant: "0.0.123", months: 12 })</div>
                 </div>
                 <div class="domain-card">
-                    <span class="domain-icon">💊</span>
+                    <span class="domain-icon">&#128138;</span>
                     <div class="domain-name">Healthcare</div>
-                    <div class="domain-desc">Certify drug lots with GMP compliance, track cold-chain custody.
-                        Certificate + Provenance tiles.</div>
-                    <div class="domain-tools">drug-cert &middot; 5 tools</div>
+                    <div class="domain-desc">Certify drug lots with GMP compliance, track cold-chain custody.</div>
+                    <div class="domain-tiles">Certificate + Provenance tiles</div>
+                    <div class="domain-example">drug_cert_create({ lot: "B-2024-07", gmp: true })</div>
                 </div>
                 <div class="domain-card">
-                    <span class="domain-icon">🚛</span>
+                    <span class="domain-icon">&#128667;</span>
                     <div class="domain-name">Supply Chain</div>
-                    <div class="domain-desc">Track parts provenance with quality certifications and custody chains.
-                        Provenance + Certificate tiles.</div>
-                    <div class="domain-tools">parts-prov &middot; 5 tools</div>
+                    <div class="domain-desc">Track parts provenance with quality certifications and custody chains.</div>
+                    <div class="domain-tiles">Provenance + Certificate tiles</div>
+                    <div class="domain-example">parts_prov_create({ part: "AX-100", origin: "DE" })</div>
                 </div>
             </div>
         </div>
@@ -1597,47 +1595,53 @@
         <div class="container">
             <div class="reveal">
                 <div class="section-label">Commercial Verticals</div>
-                <h2 class="section-title">Built natively on Tressellate</h2>
-                <p class="section-desc">Independent commercial entities proving the enterprise-readiness of the
-                    architecture. Each vertical is a complete network application executing on Hiero.</p>
+                <h2 class="section-title">Building on Tressellate</h2>
+                <p class="section-desc">Independent commercial applications being rebuilt on the Tressellate
+                    framework &mdash; proving the architecture generalizes across regulated industries.</p>
             </div>
 
             <div class="verticals-grid reveal">
                 <div class="vertical-card">
+                    <span class="vertical-status">Coming soon</span>
                     <div class="vertical-brand"><span>bul</span>Krete</div>
                     <div class="vertical-full">Verity Test Infrastructure</div>
                     <div class="vertical-desc">Verified construction materials procurement and heavy infrastructure
                         governance. Carbon-negative concrete with physics-bounded quality verification.</div>
                 </div>
                 <div class="vertical-card">
+                    <span class="vertical-status">Coming soon</span>
                     <div class="vertical-brand"><span>dot</span>OS</div>
                     <div class="vertical-full">Hospitality Registry System</div>
                     <div class="vertical-desc">Agentic workflows and verifiable asset management platform for the
                         hospitality industry.</div>
                 </div>
                 <div class="vertical-card">
+                    <span class="vertical-status">Coming soon</span>
                     <div class="vertical-brand"><span>doq</span>Umint</div>
                     <div class="vertical-full">Legal Document Verification</div>
                     <div class="vertical-desc">Cryptographically secure legal document verification and execution. Every
                         signature, every version, every interaction on-chain.</div>
                 </div>
                 <div class="vertical-card">
+                    <span class="vertical-status">Coming soon</span>
                     <div class="vertical-brand"><span>re</span>Terra</div>
                     <div class="vertical-full">Bioactive Carbon Bond</div>
                     <div class="vertical-desc">Asset-backed environmental finance primitives with real-time dMRV
                         verification. Green sukuk on Guardian.</div>
                 </div>
                 <div class="vertical-card">
+                    <span class="vertical-status">Coming soon</span>
                     <div class="vertical-brand"><span>kon</span>Trax</div>
                     <div class="vertical-full">Infrastructure Contract System</div>
                     <div class="vertical-desc">Verifiable coordination and project management for Public-Private
-                        Partnerships. Managed in partnership with Big Four advisory firms.</div>
+                        Partnerships.</div>
                 </div>
                 <div class="vertical-card">
+                    <span class="vertical-status">Coming soon</span>
                     <div class="vertical-brand"><span>solar</span>Anihan</div>
                     <div class="vertical-full">Community Solar Cooperative</div>
                     <div class="vertical-desc">Community-driven distributed solar energy, battery sharing networks, and
-                        prosumer microgrids for the Philippines. Bayanihan-powered energy democracy on-chain.</div>
+                        prosumer microgrids for the Philippines.</div>
                 </div>
             </div>
         </div>
@@ -1656,23 +1660,19 @@
             <div class="extensions-grid reveal">
                 <div class="extension-card">
                     <div class="extension-label">Resilience Layer</div>
-                    <div class="extension-name">LNC <span
-                            style="font-size: 0.8rem; vertical-align: middle; margin-left: 0.5rem; padding: 0.2rem 0.5rem; background: var(--bg-elevated); border: 1px solid var(--border-light); border-radius: 4px; color: var(--text-muted); font-family: var(--font-mono);">COMING
-                            SOON</span></div>
-                    <div class="extension-desc">Linear Network Coding solves the Dual-Record Pattern vulnerability —
+                    <div class="extension-name">LNC</div>
+                    <div class="extension-desc">Linear Network Coding solves the Dual-Record Pattern vulnerability &mdash;
                         where on-chain hashes point to off-chain data that can disappear. Polynomial proofs and coded
                         packets ensure data is mathematically reconstructible from any sufficient subset of nodes.</div>
-                    <a href="#" class="extension-link">Learn more & licensing <span>→</span></a>
+                    <span class="extension-status">Coming soon</span>
                 </div>
                 <div class="extension-card">
                     <div class="extension-label">Intelligence Layer</div>
-                    <div class="extension-name">DCL <span
-                            style="font-size: 0.8rem; vertical-align: middle; margin-left: 0.5rem; padding: 0.2rem 0.5rem; background: var(--bg-elevated); border: 1px solid var(--border-light); border-radius: 4px; color: var(--text-muted); font-family: var(--font-mono);">COMING
-                            SOON</span></div>
-                    <div class="extension-desc">Domain Coupled Learning enforces physical laws on AI agent actions —
+                    <div class="extension-name">DCL</div>
+                    <div class="extension-desc">Domain Coupled Learning enforces physical laws on AI agent actions &mdash;
                         the intelligence behind the tessellation. An LLM proposes, DCL validates against domain physics,
-                        and only physically possible actions execute on-chain. Protected by 24 issued MIMO patents.</div>
-                    <a href="#" class="extension-link">Learn more & licensing <span>→</span></a>
+                        and only physically possible actions execute on-chain.</div>
+                    <span class="extension-status">Coming soon</span>
                 </div>
             </div>
         </div>
@@ -1712,6 +1712,29 @@
                     <span class="comment"># Connect Claude Desktop, Cursor, or any MCP client</span><br>
                     <span class="comment"># Agent discovers tools: lease_create, lease_verify,
                         lease_get_audit</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="reveal">
+                <div class="section-label">Get Involved</div>
+                <h2 class="section-title">Build on Tressellate</h2>
+                <p class="section-desc">Whether you're building a new domain, evaluating AI governance for your
+                    organization, or contributing to the open-source core.</p>
+                <div class="cta-actions">
+                    <a href="https://github.com/tressellate/tressellate" class="btn-primary" target="_blank" rel="noopener">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                            <path
+                                d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+                        </svg>
+                        Start building
+                    </a>
+                    <a href="https://github.com/tressellate/tressellate/blob/main/docs/GUIDE.md" class="btn-outline"
+                        target="_blank" rel="noopener">Read the docs</a>
                 </div>
             </div>
         </div>
