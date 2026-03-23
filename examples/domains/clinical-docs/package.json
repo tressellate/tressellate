@@ -1,0 +1,25 @@
+{
+  "name": "@tressellate/domain-clinical-docs",
+  "version": "0.1.0",
+  "description": "Layer 4 — Clinical documentation domain rules (schemas, enums, validation)",
+  "author": "bulKrete Technologies",
+  "license": "Apache-2.0",
+  "private": true,
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch"
+  },
+  "dependencies": {
+    "@tressellate/core": "workspace:*",
+    "@tressellate/asset-types": "workspace:*"
+  }
+}

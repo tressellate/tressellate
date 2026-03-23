@@ -37,6 +37,16 @@
         "@hashgraph/sdk": "^2.50.0",
       },
     },
+    "examples/apps/clinical-scribe": {
+      "name": "@tressellate/clinical-scribe",
+      "version": "1.0.0",
+      "dependencies": {
+        "@hashgraph/sdk": "^2.50.0",
+        "@tressellate/asset-types": "workspace:*",
+        "@tressellate/core": "workspace:*",
+        "@tressellate/domain-clinical-docs": "workspace:*",
+      },
+    },
     "examples/apps/crop-cert": {
       "name": "@tressellate/crop-cert",
       "version": "1.0.0",
@@ -95,6 +105,14 @@
         "@tressellate/core": "workspace:*",
       },
     },
+    "examples/domains/clinical-docs": {
+      "name": "@tressellate/domain-clinical-docs",
+      "version": "0.1.0",
+      "dependencies": {
+        "@tressellate/asset-types": "workspace:*",
+        "@tressellate/core": "workspace:*",
+      },
+    },
     "examples/domains/energy": {
       "name": "@tressellate/domain-energy",
       "version": "0.1.0",
@@ -124,6 +142,15 @@
       "version": "0.1.0",
       "dependencies": {
         "@tressellate/asset-types": "workspace:*",
+        "@tressellate/core": "workspace:*",
+      },
+    },
+    "examples/servers/clinical-scribe": {
+      "name": "clinical-scribe-mcp-server",
+      "version": "1.0.0",
+      "dependencies": {
+        "@modelcontextprotocol/sdk": "^1.0.0",
+        "@tressellate/clinical-scribe": "workspace:*",
         "@tressellate/core": "workspace:*",
       },
     },
@@ -400,11 +427,15 @@
 
     "@tressellate/asset-types": ["@tressellate/asset-types@workspace:core/asset-types"],
 
+    "@tressellate/clinical-scribe": ["@tressellate/clinical-scribe@workspace:examples/apps/clinical-scribe"],
+
     "@tressellate/core": ["@tressellate/core@workspace:core/hashgraph-tools"],
 
     "@tressellate/crop-cert": ["@tressellate/crop-cert@workspace:examples/apps/crop-cert"],
 
     "@tressellate/domain-agriculture": ["@tressellate/domain-agriculture@workspace:examples/domains/agriculture"],
+
+    "@tressellate/domain-clinical-docs": ["@tressellate/domain-clinical-docs@workspace:examples/domains/clinical-docs"],
 
     "@tressellate/domain-energy": ["@tressellate/domain-energy@workspace:examples/domains/energy"],
 
@@ -561,6 +592,8 @@
     "chromium-edge-launcher": ["chromium-edge-launcher@0.2.0", "", { "dependencies": { "@types/node": "*", "escape-string-regexp": "^4.0.0", "is-wsl": "^2.2.0", "lighthouse-logger": "^1.0.0", "mkdirp": "^1.0.4", "rimraf": "^3.0.2" } }, "sha512-JfJjUnq25y9yg4FABRRVPmBGWPZZi+AQXT4mxupb67766/0UlhG8PAZCz6xzEMXTbW3CsSoE8PcCWA49n35mKg=="],
 
     "ci-info": ["ci-info@2.0.0", "", {}, "sha512-5tK7EtrZ0N+OLFMthtqOj4fI2Jeb88C4CAZPu25LDVUgXJ0A3Js4PMGqrn0JU1W0Mh1/Z8wZzYPxqUrXeBboCQ=="],
+
+    "clinical-scribe-mcp-server": ["clinical-scribe-mcp-server@workspace:examples/servers/clinical-scribe"],
 
     "cliui": ["cliui@8.0.1", "", { "dependencies": { "string-width": "^4.2.0", "strip-ansi": "^6.0.1", "wrap-ansi": "^7.0.0" } }, "sha512-BSeNnyus75C4//NQ9gQt1/csTXyo/8Sb+afLAkzAptFuMsod9HFokGNudZpi/oQV73hnVK+sR+5PVRMd+Dr7YQ=="],
 
