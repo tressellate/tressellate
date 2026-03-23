@@ -7,6 +7,9 @@ export type {
     BillingClaimSchema,
     NoteProvenanceSchema,
     TreatmentMilestoneSchema,
+    LNCResilienceRecordSchema,
+    DCLValidationRecordSchema,
+    DCLViolation,
 } from './schemas.js';
 
 export {
@@ -15,6 +18,9 @@ export {
     EncounterType,
     ConsentScope,
     ClaimStatus,
+    LNCStatus,
+    DCLValidationResult,
+    ClinicalConstraint,
     ClinicalSchemaType,
 } from './enums.js';
 
@@ -24,5 +30,8 @@ export type {
     EncounterType as EncounterTypeType,
     ConsentScope as ConsentScopeType,
     ClaimStatus as ClaimStatusType,
+    LNCStatus as LNCStatusType,
+    DCLValidationResult as DCLValidationResultType,
+    ClinicalConstraint as ClinicalConstraintType,
     ClinicalSchemaType as ClinicalSchemaTypeType,
 } from './enums.js';

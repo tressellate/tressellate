@@ -60,6 +60,38 @@ export const ClaimStatus = [
 ] as const;
 export type ClaimStatus = (typeof ClaimStatus)[number];
 
+/** LNC resilience status for off-chain clinical content. */
+export const LNCStatus = [
+    'NOT_ENCODED',
+    'ENCODING',
+    'ENCODED',
+    'DEGRADED',
+    'RECONSTRUCTING',
+] as const;
+export type LNCStatus = (typeof LNCStatus)[number];
+
+/** DCL validation outcome for AI-generated clinical content. */
+export const DCLValidationResult = [
+    'VALID',
+    'CONSTRAINED',
+    'REJECTED',
+    'OVERRIDDEN_BY_CLINICIAN',
+] as const;
+export type DCLValidationResult = (typeof DCLValidationResult)[number];
+
+/** DCL clinical constraint categories. */
+export const ClinicalConstraint = [
+    'VITAL_SIGNS_RANGE',
+    'DRUG_INTERACTION',
+    'CONTRAINDICATION',
+    'DOSAGE_LIMIT',
+    'DIAGNOSIS_CONSISTENCY',
+    'PROCEDURE_ELIGIBILITY',
+    'ALLERGY_CONFLICT',
+    'LAB_VALUE_PLAUSIBILITY',
+] as const;
+export type ClinicalConstraint = (typeof ClinicalConstraint)[number];
+
 /** Schema type identifiers for Clinical Documentation NFTs. */
 export const ClinicalSchemaType = [
     'CLINICAL_NOTE',
@@ -68,5 +100,7 @@ export const ClinicalSchemaType = [
     'BILLING_CLAIM',
     'NOTE_PROVENANCE',
     'TREATMENT_MILESTONE',
+    'LNC_RESILIENCE_RECORD',
+    'DCL_VALIDATION_RECORD',
 ] as const;
 export type ClinicalSchemaType = (typeof ClinicalSchemaType)[number];

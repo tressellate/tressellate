@@ -6,7 +6,7 @@
  * by immutable ledger records for trust, auditability, and verifiability.
  */
 
-import type { NoteFormat, Specialty, EncounterType, ConsentScope, ClaimStatus } from './enums.js';
+import type { NoteFormat, Specialty, EncounterType, ConsentScope, ClaimStatus, LNCStatus, DCLValidationResult, ClinicalConstraint } from './enums.js';
 
 /**
  * Clinical note attestation metadata (composes Certificate).
@@ -161,4 +161,111 @@ export interface TreatmentMilestoneSchema {
     outcome?: string;
     /** When the milestone was completed (ISO-8601). */
     completedAt: string;
+}
+
+/**
+ * LNC Resilience Record metadata (composes Provenance).
+ * Tracks Linear Network Coding status for off-chain clinical content.
+ *
+ * LNC solves the Dual-Record Pattern vulnerability: on-chain hashes point
+ * to off-chain clinical notes that can disappear from EHR/IPFS. LNC encodes
+ * content into polynomial-coded packets scattered across nodes — no single
+ * node holds the complete PHI, and data is mathematically reconstructible
+ * from any sufficient subset. Smart contracts prove integrity without
+ * exposing content.
+ *
+ * For clinical documentation this means:
+ * - PHI is never stored complete on any single node (privacy by design)
+ * - Clinical notes survive EHR outages, vendor lock-in, and data loss
+ * - Content integrity is provable on-chain without decrypting
+ * - Cheaper than full replication: O(k/n) storage per node vs O(1)
+ */
+export interface LNCResilienceRecordSchema {
+    type: 'LNC_RESILIENCE_RECORD';
+    /** Reference to the clinical note or consent being protected. */
+    assetRef: string;
+    /** Hash of the original content before encoding. */
+    contentHash: string;
+    /** Current resilience status. */
+    status: LNCStatus;
+    /** Number of coded packets generated. */
+    totalPackets: number;
+    /** Minimum packets needed for reconstruction (k of n threshold). */
+    reconstructionThreshold: number;
+    /** Number of nodes currently holding packets. */
+    activeNodes: number;
+    /** Polynomial degree used for coding (higher = more resilient). */
+    polynomialDegree: number;
+    /** Whether content was encrypted before LNC encoding. */
+    preEncrypted: boolean;
+    /** Encryption scheme used (e.g. 'AES-256-GCM'). */
+    encryptionScheme?: string;
+    /** When the encoding was completed (ISO-8601). */
+    encodedAt: string;
+    /** Last integrity verification timestamp (ISO-8601). */
+    lastVerifiedAt?: string;
+}
+
+/**
+ * DCL Validation Record metadata (composes Certificate).
+ * Records Domain Coupled Learning validation of AI-generated clinical content.
+ *
+ * DCL enforces clinical domain physics on AI agent actions: the ambient
+ * scribe LLM proposes clinical content, DCL validates it against learned
+ * coupling tensors from real-world clinical data, and only clinically
+ * possible/plausible content is committed on-chain.
+ *
+ * This creates a Validated Clinical State — a hashgraph record proving
+ * that AI-generated notes, assessments, and recommendations were
+ * physics-bounded before execution.
+ *
+ * For clinical documentation this means:
+ * - AI-generated vitals are validated against physiologically possible ranges
+ * - Drug interactions and contraindications are caught before attestation
+ * - Dosage recommendations are bounded by pharmacokinetic models
+ * - Diagnosis codes are checked for consistency with documented findings
+ * - Billing codes are validated against documented procedures
+ * - Cheaper analysis: DCL catches errors before on-chain commit (no wasted gas)
+ * - Better security: hallucinated clinical content never reaches the ledger
+ */
+export interface DCLValidationRecordSchema {
+    type: 'DCL_VALIDATION_RECORD';
+    /** Reference to the clinical note or assessment being validated. */
+    assetRef: string;
+    /** Hash of the AI-proposed content before validation. */
+    proposedContentHash: string;
+    /** Hash of the content after DCL constraints were applied. */
+    validatedContentHash: string;
+    /** Overall validation result. */
+    validationResult: DCLValidationResult;
+    /** Constraints that were evaluated. */
+    constraintsEvaluated: ClinicalConstraint[];
+    /** Constraints that were violated (if any). */
+    constraintsViolated: ClinicalConstraint[];
+    /** Detailed violation descriptions. */
+    violations: DCLViolation[];
+    /** Confidence score of the coupling tensor match (0-1). */
+    tensorConfidence: number;
+    /** Clinical domain model version used for validation. */
+    modelVersion: string;
+    /** Whether a clinician overrode the DCL result. */
+    clinicianOverride: boolean;
+    /** Override reason if clinician overrode DCL. */
+    overrideReason?: string;
+    /** When validation was performed (ISO-8601). */
+    validatedAt: string;
+}
+
+/** A single DCL constraint violation with details. */
+export interface DCLViolation {
+    /** Which constraint was violated. */
+    constraint: ClinicalConstraint;
+    /** What the AI proposed. */
+    proposedValue: string;
+    /** What the valid range/set is. */
+    validRange: string;
+    /** Human-readable explanation. */
+    explanation: string;
+    /** Severity: WARNING allows with flag, ERROR blocks commit. */
+    severity: 'WARNING' | 'ERROR';
 }
