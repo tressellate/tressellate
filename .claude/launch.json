@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "tressellate-website",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["serve", "apps/tressellate"],
+      "port": 3000
+    },
+    {
+      "name": "tressellate-training",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["-c", "cd apps/training && bunx --bun vite dev --port 5173"],
+      "port": 5173
+    }
+  ]
+}

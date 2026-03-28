@@ -8,6 +8,8 @@ build/
 *.d.ts
 *.js.map
 !jest.config.js
+!svelte.config.js
+!vite.config.ts
 
 # Environment
 .env

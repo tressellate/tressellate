@@ -160,6 +160,23 @@
             color: var(--accent);
         }
 
+        .nav-training {
+            padding: 0.4rem 0.85rem;
+            border: 1px solid rgba(74, 222, 128, 0.25);
+            border-radius: 6px;
+            color: var(--accent) !important;
+            background: rgba(74, 222, 128, 0.06);
+            font-size: 0.75rem !important;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            transition: all 0.2s;
+        }
+
+        .nav-training:hover {
+            background: var(--accent-glow-strong);
+            border-color: var(--accent);
+        }
+
         .nav-github {
             display: flex;
             align-items: center;
@@ -863,106 +880,6 @@
             display: inline-block;
         }
 
-        /* ---- VERTICALS ---- */
-        #verticals {
-            border-top: 1px solid var(--border);
-        }
-
-        .verticals-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1rem;
-        }
-
-        .vertical-card {
-            padding: 2rem;
-            background: var(--bg-surface);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            transition: all 0.3s;
-            text-decoration: none;
-            display: block;
-            position: relative;
-        }
-
-        .vertical-card:hover {
-            border-color: var(--border-light);
-            background: var(--bg-elevated);
-            transform: translateY(-2px);
-        }
-
-        .vertical-brand {
-            font-family: var(--font-mono);
-            font-size: 1rem;
-            font-weight: 500;
-            color: var(--text-primary);
-            margin-bottom: 0.5rem;
-        }
-
-        .vertical-full {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            font-family: var(--font-mono);
-            margin-bottom: 0.75rem;
-        }
-
-        .vertical-desc {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            line-height: 1.6;
-        }
-
-        .vertical-card .vertical-brand span {
-            transition: color 0.2s;
-        }
-
-        .vertical-card:nth-child(1) .vertical-brand span {
-            color: var(--accent);
-        }
-
-        .vertical-card:nth-child(2) .vertical-brand span {
-            color: var(--cyan);
-        }
-
-        .vertical-card:nth-child(3) .vertical-brand span {
-            color: var(--amber);
-        }
-
-        .vertical-card:nth-child(4) .vertical-brand span {
-            color: var(--blue);
-        }
-
-        .vertical-card:nth-child(5) .vertical-brand span {
-            color: var(--violet);
-        }
-
-        .vertical-card:nth-child(6) .vertical-brand span {
-            color: var(--rose);
-        }
-
-        .vertical-card:nth-child(7) .vertical-brand span {
-            color: #818cf8;
-        }
-
-        .vertical-card:nth-child(8) .vertical-brand span {
-            color: #2dd4bf;
-        }
-
-        .vertical-status {
-            font-family: var(--font-mono);
-            font-size: 0.65rem;
-            color: var(--cyan);
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            padding: 0.2rem 0.5rem;
-            background: rgba(34, 211, 238, 0.08);
-            border: 1px solid rgba(34, 211, 238, 0.15);
-            border-radius: 4px;
-            position: absolute;
-            top: 1.5rem;
-            right: 1.5rem;
-        }
-
         /* ---- EXTENSIONS ---- */
         #extensions {
             border-top: 1px solid var(--border);
@@ -1064,6 +981,50 @@
 
         .code-body .flag {
             color: var(--amber);
+        }
+
+        /* ---- TRAINING CALLOUT ---- */
+        .training-callout {
+            margin-top: 2.5rem;
+            padding: 1.5rem 2rem;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--accent);
+            border-radius: 8px;
+        }
+
+        .training-callout-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+        }
+
+        .training-callout-text h3 {
+            font-family: var(--font-body);
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.35rem;
+        }
+
+        .training-callout-text p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            max-width: 520px;
+        }
+
+        .training-callout .btn-primary {
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 768px) {
+            .training-callout-content {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
         }
 
         /* ---- CTA ---- */
@@ -1231,8 +1192,7 @@
                 align-items: flex-start;
             }
 
-            .domains-grid,
-            .verticals-grid {
+            .domains-grid {
                 grid-template-columns: 1fr;
             }
         }
@@ -1261,6 +1221,7 @@
                 <li><a href="#transparency">Transparency</a></li>
                 <li><a href="#domains">Domains</a></li>
                 <li><a href="#quickstart">Quick Start</a></li>
+                <li><a href="https://training.tressellate.dev" class="nav-training" target="_blank" rel="noopener">Training</a></li>
                 <li>
                     <a href="https://github.com/tressellate/tressellate" class="nav-github" target="_blank"
                         rel="noopener">
@@ -1549,121 +1510,53 @@
     <section id="domains" style="border-top: 1px solid var(--border);">
         <div class="container">
             <div class="reveal">
-                <div class="section-label">Example Domains</div>
-                <h2 class="section-title">Five domains, same seven tiles</h2>
-                <p class="section-desc">Each domain implements Layer 4 + Layer 5 &mdash; different
-                    business logic, same universal primitives. The tessellation in action.</p>
+                <div class="section-label">Industry Ready</div>
+                <h2 class="section-title">Any regulated industry, same seven tiles</h2>
+                <p class="section-desc">Define your domain at Layer 4, build tools at Layer 5 &mdash; the
+                    framework handles ledger operations, audit trails, and governance. From agriculture to
+                    infrastructure, every industry tessellates the same way.</p>
             </div>
 
             <div class="domains-grid reveal">
                 <div class="domain-card">
                     <span class="domain-icon">&#127806;</span>
-                    <div class="domain-name">Agriculture</div>
-                    <div class="domain-desc">Certify crop yields, record soil inspections, and trace farm-to-market
-                        provenance.</div>
+                    <div class="domain-name">Agriculture &amp; Food</div>
+                    <div class="domain-desc">Crop certification, soil inspections, farm-to-market provenance and
+                        food safety traceability.</div>
                     <div class="domain-tiles">Certificate + Inspection tiles</div>
                     <div class="domain-example">crop_cert_create({ crop: "rice", yield_kg: 4200 })</div>
                 </div>
                 <div class="domain-card">
                     <span class="domain-icon">&#9889;</span>
-                    <div class="domain-name">Energy</div>
-                    <div class="domain-desc">Mint renewable energy credits as fungible tokens with generation
-                        evidence and audit trails.</div>
-                    <div class="domain-tiles">Credit tiles</div>
+                    <div class="domain-name">Energy &amp; Environment</div>
+                    <div class="domain-desc">Renewable energy credits, carbon offsets, emissions tracking, and
+                        environmental compliance.</div>
+                    <div class="domain-tiles">Credit + Certificate tiles</div>
                     <div class="domain-example">rec_mint({ source: "solar", mwh: 150 })</div>
                 </div>
                 <div class="domain-card">
-                    <span class="domain-icon">&#127968;</span>
-                    <div class="domain-name">Real Estate</div>
-                    <div class="domain-desc">Grant lease agreements as NFTs, record payment milestones, and verify
-                        tenancy.</div>
+                    <span class="domain-icon">&#127970;</span>
+                    <div class="domain-name">Built Environment</div>
+                    <div class="domain-desc">Property agreements, construction materials verification,
+                        infrastructure contracts, and permit lifecycle.</div>
                     <div class="domain-tiles">Agreement + Milestone tiles</div>
                     <div class="domain-example">lease_create({ tenant: "0.0.123", months: 12 })</div>
                 </div>
                 <div class="domain-card">
                     <span class="domain-icon">&#128138;</span>
-                    <div class="domain-name">Healthcare</div>
-                    <div class="domain-desc">Certify drug lots with GMP compliance, track cold-chain custody.</div>
+                    <div class="domain-name">Healthcare &amp; Pharma</div>
+                    <div class="domain-desc">Drug lot certification, GMP compliance, cold-chain custody, and
+                        clinical trial provenance.</div>
                     <div class="domain-tiles">Certificate + Provenance tiles</div>
                     <div class="domain-example">drug_cert_create({ lot: "B-2024-07", gmp: true })</div>
                 </div>
                 <div class="domain-card">
                     <span class="domain-icon">&#128667;</span>
-                    <div class="domain-name">Supply Chain</div>
-                    <div class="domain-desc">Track parts provenance with quality certifications and custody chains.</div>
+                    <div class="domain-name">Manufacturing &amp; Logistics</div>
+                    <div class="domain-desc">Parts provenance, quality certifications, custody chains, and
+                        cross-border compliance.</div>
                     <div class="domain-tiles">Provenance + Certificate tiles</div>
                     <div class="domain-example">parts_prov_create({ part: "AX-100", origin: "DE" })</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- COMMERCIAL VERTICALS -->
-    <section id="verticals">
-        <div class="container">
-            <div class="reveal">
-                <div class="section-label">Commercial Verticals</div>
-                <h2 class="section-title">Building on Tressellate</h2>
-                <p class="section-desc">Independent commercial applications being rebuilt on the Tressellate
-                    framework &mdash; proving the architecture generalizes across regulated industries.</p>
-            </div>
-
-            <div class="verticals-grid reveal">
-                <div class="vertical-card">
-                    <span class="vertical-status">Coming soon</span>
-                    <div class="vertical-brand"><span>bul</span>Krete</div>
-                    <div class="vertical-full">Verity Test Infrastructure</div>
-                    <div class="vertical-desc">Verified construction materials procurement and heavy infrastructure
-                        governance. Carbon-negative concrete with physics-bounded quality verification.</div>
-                </div>
-                <div class="vertical-card">
-                    <span class="vertical-status">Coming soon</span>
-                    <div class="vertical-brand"><span>dot</span>OS</div>
-                    <div class="vertical-full">Hospitality Registry System</div>
-                    <div class="vertical-desc">Agentic workflows and verifiable asset management platform for the
-                        hospitality industry.</div>
-                </div>
-                <div class="vertical-card">
-                    <span class="vertical-status">Coming soon</span>
-                    <div class="vertical-brand"><span>doq</span>Umint</div>
-                    <div class="vertical-full">Legal Document Verification</div>
-                    <div class="vertical-desc">Cryptographically secure legal document verification and execution. Every
-                        signature, every version, every interaction on-chain.</div>
-                </div>
-                <div class="vertical-card">
-                    <span class="vertical-status">Coming soon</span>
-                    <div class="vertical-brand"><span>re</span>Terra</div>
-                    <div class="vertical-full">Bioactive Carbon Bond</div>
-                    <div class="vertical-desc">Asset-backed environmental finance primitives with real-time dMRV
-                        verification. Green sukuk on Guardian.</div>
-                </div>
-                <div class="vertical-card">
-                    <span class="vertical-status">Coming soon</span>
-                    <div class="vertical-brand"><span>kon</span>Trax</div>
-                    <div class="vertical-full">Infrastructure Contract System</div>
-                    <div class="vertical-desc">Verifiable coordination and project management for Public-Private
-                        Partnerships.</div>
-                </div>
-                <div class="vertical-card">
-                    <span class="vertical-status">Coming soon</span>
-                    <div class="vertical-brand"><span>solar</span>Anihan</div>
-                    <div class="vertical-full">Community Solar Cooperative</div>
-                    <div class="vertical-desc">Community-driven distributed solar energy, battery sharing networks, and
-                        prosumer microgrids for the Philippines.</div>
-                </div>
-                <div class="vertical-card">
-                    <span class="vertical-status">Coming soon</span>
-                    <div class="vertical-brand"><span>tressell</span>8-gov</div>
-                    <div class="vertical-full">Public Governance &amp; Procurement</div>
-                    <div class="vertical-desc">Ledger-backed government procurement, permit issuance, and public contract
-                        lifecycle management. Every approval auditable, every disbursement traceable.</div>
-                </div>
-                <div class="vertical-card">
-                    <span class="vertical-status">Coming soon</span>
-                    <div class="vertical-brand"><span>tressell</span>8-mine</div>
-                    <div class="vertical-full">Natural Assets &amp; Mining</div>
-                    <div class="vertical-desc">Pit-to-port provenance for extracted minerals, royalty tracking, and
-                        ESG compliance. Conflict-free certification with immutable chain of custody.</div>
                 </div>
             </div>
         </div>
@@ -1734,6 +1627,18 @@
                     <span class="comment"># Connect Claude Desktop, Cursor, or any MCP client</span><br>
                     <span class="comment"># Agent discovers tools: lease_create, lease_verify,
                         lease_get_audit</span>
+                </div>
+            </div>
+
+            <div class="training-callout reveal">
+                <div class="training-callout-content">
+                    <div class="training-callout-text">
+                        <h3>New to tressellate?</h3>
+                        <p>The interactive training walks non-developers through all 48 tools with guided exercises, simulated tool calls, and verification checklists. No code required.</p>
+                    </div>
+                    <a href="https://training.tressellate.dev" class="btn-primary" target="_blank" rel="noopener">
+                        Start Training &rarr;
+                    </a>
                 </div>
             </div>
         </div>

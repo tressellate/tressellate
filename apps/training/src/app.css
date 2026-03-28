@@ -1,0 +1,105 @@
+:root {
+	--bg-deep: #0a0e0d;
+	--bg-surface: #0f1412;
+	--bg-elevated: #151c19;
+	--bg-hover: #1a2320;
+	--border: #1e2b26;
+	--border-light: #2a3d35;
+	--text-primary: #e8ede9;
+	--text-secondary: #8a9e92;
+	--text-muted: #5a7068;
+	--accent: #4ade80;
+	--accent-dim: #22c55e;
+	--accent-glow: rgba(74, 222, 128, 0.08);
+	--accent-glow-strong: rgba(74, 222, 128, 0.15);
+	--amber: #fbbf24;
+	--blue: #60a5fa;
+	--rose: #fb7185;
+	--violet: #a78bfa;
+	--cyan: #22d3ee;
+	--font-display: 'Instrument Serif', Georgia, serif;
+	--font-body: 'DM Sans', -apple-system, sans-serif;
+	--font-mono: 'DM Mono', 'SF Mono', Consolas, monospace;
+}
+
+*, *::before, *::after {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html {
+	scroll-behavior: smooth;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+body {
+	font-family: var(--font-body);
+	background: var(--bg-deep);
+	color: var(--text-primary);
+	line-height: 1.6;
+	overflow-x: hidden;
+}
+
+body::before {
+	content: '';
+	position: fixed;
+	inset: 0;
+	background-image:
+		linear-gradient(var(--border) 1px, transparent 1px),
+		linear-gradient(90deg, var(--border) 1px, transparent 1px);
+	background-size: 80px 80px;
+	opacity: 0.25;
+	pointer-events: none;
+	z-index: 0;
+}
+
+body::after {
+	content: '';
+	position: fixed;
+	top: -50%;
+	left: -50%;
+	width: 200%;
+	height: 200%;
+	background: radial-gradient(ellipse at 30% 20%, var(--accent-glow) 0%, transparent 50%),
+		radial-gradient(ellipse at 70% 80%, rgba(34, 211, 238, 0.03) 0%, transparent 50%);
+	pointer-events: none;
+	z-index: 0;
+}
+
+a {
+	color: var(--accent);
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+code {
+	font-family: var(--font-mono);
+	font-size: 0.875em;
+	background: var(--bg-surface);
+	padding: 0.15em 0.4em;
+	border-radius: 4px;
+	border: 1px solid var(--border);
+}
+
+/* Reveal animations */
+.reveal {
+	opacity: 0;
+	transform: translateY(24px);
+	transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+		transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.visible {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+@keyframes fadeInUp {
+	from { opacity: 0; transform: translateY(24px); }
+	to { opacity: 1; transform: translateY(0); }
+}
