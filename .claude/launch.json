@@ -4,7 +4,7 @@
     {
       "name": "tressellate-website",
       "runtimeExecutable": "npx",
-      "runtimeArgs": ["serve", "apps/tressellate"],
+      "runtimeArgs": ["serve", "apps/website"],
       "port": 3000
     },
     {
