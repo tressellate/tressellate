@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AFCL — Agentic Fowl with Coaching-in-the-Loop</title>
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --muted: #555;
+    --light: #888;
+    --rule: #e0e0e0;
+    --accent: #c0392b;
+    --accent-light: #fdf2f0;
+    --bg: #fafaf8;
+    --card: #ffffff;
+    --mono: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+    --sans: 'Inter', system-ui, -apple-system, sans-serif;
+    --serif: 'Georgia', 'Times New Roman', serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.7;
+    font-size: 16px;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    background: rgba(250,250,248,0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--rule);
+    padding: 0 2rem;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 52px;
+  }
+  .nav-brand {
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .nav-links {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 0.8rem;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+  }
+  .nav-links a:hover { color: var(--ink); }
+
+  /* HERO */
+  .hero {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 5rem 2rem 3rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .hero-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+  .hero h1 {
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.25rem;
+    color: var(--ink);
+  }
+  .hero-sub {
+    font-size: 1.15rem;
+    color: var(--muted);
+    max-width: 640px;
+    line-height: 1.65;
+    margin-bottom: 2rem;
+  }
+  .meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    font-size: 0.8rem;
+    color: var(--light);
+  }
+  .meta-row strong { color: var(--muted); }
+
+  /* MAIN CONTENT */
+  .content {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 2rem 6rem;
+  }
+
+  section {
+    padding: 3.5rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  section:last-child { border-bottom: none; }
+
+  .section-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+
+  h2 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.25rem;
+    line-height: 1.25;
+  }
+
+  h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin: 2rem 0 0.6rem;
+    color: var(--ink);
+  }
+
+  p { margin-bottom: 1rem; color: var(--ink); }
+  p:last-child { margin-bottom: 0; }
+
+  /* FORMULA BLOCK */
+  .formula-block {
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--accent);
+    border-radius: 6px;
+    padding: 1.75rem 2rem;
+    margin: 1.75rem 0;
+    overflow-x: auto;
+  }
+  .formula-block .mjx-container {
+    font-size: 1.1rem !important;
+  }
+  .formula-caption {
+    font-size: 0.8rem;
+    color: var(--light);
+    margin-top: 1rem;
+    font-family: var(--sans);
+  }
+  .formula-caption em { font-style: normal; color: var(--muted); }
+
+  /* LEAGUE TABLE */
+  .league-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin: 1.75rem 0;
+  }
+  .league-card {
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-align: center;
+  }
+  .league-alpha {
+    font-size: 2.2rem;
+    font-weight: 700;
+    font-family: var(--mono);
+    color: var(--accent);
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+  .league-name {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--light);
+    display: block;
+    margin-bottom: 0.75rem;
+  }
+  .league-desc {
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* MEASUREMENTS */
+  .measurement-list {
+    counter-reset: measurements;
+    list-style: none;
+    margin: 1.75rem 0;
+  }
+  .measurement-item {
+    counter-increment: measurements;
+    display: grid;
+    grid-template-columns: 2.5rem 1fr;
+    gap: 1rem;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .measurement-item:last-child { border-bottom: none; }
+  .measurement-num {
+    font-size: 1.4rem;
+    font-weight: 700;
+    font-family: var(--mono);
+    color: var(--accent);
+    opacity: 0.5;
+    line-height: 1.4;
+  }
+  .measurement-title {
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 0.3rem;
+  }
+  .measurement-body {
+    font-size: 0.88rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* ARCHITECTURE LAYERS */
+  .arch-stack {
+    margin: 1.75rem 0;
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .arch-layer {
+    display: grid;
+    grid-template-columns: 3.5rem 1fr;
+    border-bottom: 1px solid var(--rule);
+    transition: background 0.15s;
+  }
+  .arch-layer:last-child { border-bottom: none; }
+  .arch-layer:hover { background: var(--accent-light); }
+  .arch-num {
+    font-size: 0.75rem;
+    font-weight: 700;
+    font-family: var(--mono);
+    color: var(--accent);
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid var(--rule);
+    background: var(--card);
+  }
+  .arch-content {
+    padding: 0.9rem 1.25rem;
+  }
+  .arch-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--light);
+    margin-bottom: 0.2rem;
+  }
+  .arch-desc {
+    font-size: 0.88rem;
+    color: var(--muted);
+  }
+
+  /* BPO STATS */
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+    margin: 1.75rem 0;
+  }
+  .stat-card {
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
+  }
+  .stat-value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    font-family: var(--mono);
+    color: var(--ink);
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+  .stat-label {
+    font-size: 0.78rem;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+
+  /* STUDY DESIGN */
+  .design-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    margin: 1.75rem 0;
+  }
+  .design-item {
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 1.25rem;
+  }
+  .design-item-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.4rem;
+  }
+  .design-item-value {
+    font-size: 0.9rem;
+    color: var(--ink);
+    line-height: 1.5;
+  }
+
+  /* TIMELINE */
+  .timeline {
+    margin: 1.75rem 0;
+    position: relative;
+    padding-left: 1.5rem;
+    border-left: 2px solid var(--rule);
+  }
+  .timeline-item {
+    margin-bottom: 1.5rem;
+    position: relative;
+  }
+  .timeline-item::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    position: absolute;
+    left: -1.9rem;
+    top: 0.45rem;
+  }
+  .timeline-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--light);
+    margin-bottom: 0.2rem;
+  }
+  .timeline-title {
+    font-weight: 600;
+    font-size: 0.92rem;
+    margin-bottom: 0.2rem;
+  }
+  .timeline-body {
+    font-size: 0.84rem;
+    color: var(--muted);
+  }
+
+  /* BIO */
+  .bio-block {
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 2rem;
+    margin: 1.75rem 0;
+  }
+  .bio-block p {
+    font-size: 0.92rem;
+    color: var(--muted);
+    margin-bottom: 0.75rem;
+  }
+
+  /* CALLOUT */
+  .callout {
+    background: var(--accent-light);
+    border: 1px solid #f5c6c0;
+    border-left: 3px solid var(--accent);
+    border-radius: 6px;
+    padding: 1.25rem 1.5rem;
+    margin: 1.75rem 0;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+  .callout strong { color: var(--ink); }
+
+  /* LINKS */
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--rule);
+    padding: 2rem;
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--light);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .league-grid { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+    .hero h1 { font-size: 1.8rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="#">AFCL</a>
+  <ul class="nav-links">
+    <li><a href="#questions">Two Questions</a></li>
+    <li><a href="#instrument">Instrument</a></li>
+    <li><a href="#measurements">Measurements</a></li>
+    <li><a href="#predicts">Predicts</a></li>
+    <li><a href="#population">Population</a></li>
+    <li><a href="#architecture">Architecture</a></li>
+    <li><a href="#study">Study Design</a></li>
+    <li><a href="#researcher">Researcher</a></li>
+  </ul>
+</nav>
+
+<div class="hero">
+  <p class="hero-label">Research Instrument · Human-AI Collaboration</p>
+  <h1>Agentic Fowl with<br>Coaching-in-the-Loop</h1>
+  <p class="hero-sub">A research instrument that measures two questions the current literature cannot answer at scale: how humans calibrate autonomy when coaching AI agents, and whether sustained AI assistance preserves or erodes the engagement that makes human coaching worth keeping in the loop. The first question is studied at lab scale. The second has no empirical answer at any scale.</p>
+  <div class="meta-row">
+    <span><strong>Researcher</strong> Arnold Ray Kagaoan Alagar</span>
+    <span><strong>Institution</strong> Tressellate · <a href="https://tressellate.dev">tressellate.dev</a></span>
+    <span><strong>Contact</strong> arnold.alagar@gmail.com</span>
+    <span><strong>Status</strong> Research instrument · v2 · April 2026</span>
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- TWO QUESTIONS -->
+  <section id="questions">
+    <p class="section-label">Positioning</p>
+    <h2>Two questions, one instrument</h2>
+
+    <h3>Question one: how do humans calibrate autonomy when coaching AI agents?</h3>
+    <p>The applied literature on human-automation interaction is substantial — Cummings on supervisory control, Sarter and Woods on automation surprises, Hancock on trust calibration, Shneiderman on human-centered AI, Handa and others on reliance in language-model interaction. What this literature does not contain: large-N, sustained, ecologically valid measurement of autonomy calibration in human-AI agent coaching under controlled variation of the autonomy mix itself. Existing work is short-task lab studies, single-deployment observational data, or theoretical. AFCL holds the autonomy parameter <strong>α</strong> as a controlled experimental variable while the human-agent coaching relationship runs over hundreds of decision ticks per session, across weeks of voluntary engagement, in a cohort large enough to detect medium effect sizes.</p>
+
+    <h3>Question two: does sustained AI assistance erode the engagement that makes coaching worth doing?</h3>
+    <p>This question has no empirical answer at any scale. The closest relevant literatures point at it without addressing it directly: self-determination theory (Deci &amp; Ryan) on competence as a basic psychological need that requires calibrated challenge; flow theory (Csikszentmihalyi) on engagement requiring challenge calibrated to skill; Calhoun's behavioral-sink work as a dramatic but methodologically limited touchstone for what happens when challenge is removed; deaths-of-despair research as a partial purposelessness-in-post-industrial-communities story; UBI experiments as limited evidence on engagement when economic challenge is reduced. None of these measure what AFCL is positioned to measure: whether α calibration in human-AI coaching, sustained over time, preserves or erodes the engagement and sense-of-contribution substrate that makes the coaching worth doing.</p>
+    <p>This is the load-bearing question for every AI deployment thesis that depends on human oversight remaining meaningful. If humans disengage past a certain α threshold — or disengage gradually under sustained high-α conditions even when they do not notice it themselves — then human-in-the-loop as a safety mechanism has a structural ceiling that no model improvement can lift. AFCL is the first instrument designed to measure where that ceiling is.</p>
+
+    <h3>Why this instrument can measure both</h3>
+    <p>Engagement at scale produces data quality lab conditions and paid-compliance cohorts cannot deliver. Foldit produced peer-reviewed protein structure work that algorithmic methods missed. EyeWire mapped neurons automated tools could not. Galaxy Zoo generated astronomical datasets professional researchers could not produce. The pattern is consistent: gamified participation with intrinsic stakes produces data density and quality that surveys, lab tasks, and paid cohorts structurally cannot reach. AFCL operationalizes this pattern for HITL measurement specifically — and because the engagement is itself a measurement target, the instrument's own engagement behavior becomes the data that answers question two.</p>
+  </section>
+
+  <!-- WHAT AFCL IS -->
+  <section id="instrument">
+    <p class="section-label">The Instrument</p>
+    <h2>A game that is also a measurement device</h2>
+    <p>AFCL is structured as a competitive game in which human players coach AI agents through timed rounds. The game format is modeled on <em>sabong</em> — a Filipino cultural tradition in which a human invests in and coaches a semi-autonomous competitor toward competitive outcomes. In AFCL, the competitor is an AI agent, the coaching is digital, and nothing physical competes. The cultural structure is preserved because it produces engagement; the underlying practice is not.</p>
+    <p>The core variable is <strong>human-in-the-loop intensity</strong>. At each decision tick, the AI agent selects an action based on a weighted combination of its own policy and real-time input from its human coach. The autonomy parameter <strong>α</strong> sets the mix:</p>
+
+    <div class="formula-block">
+      $$a^* = \arg\max_a \left[ (1 - \alpha) \cdot Q_{\text{autonomous}}(s, a) + \alpha \cdot Q_{\text{coached}}(s, a, c) + \varepsilon \right]$$
+      <p class="formula-caption">
+        where <em>c</em> is the coaching input vector provided by the human at tick frequency,
+        <em>α ∈ [0,1]</em> is the autonomy parameter controlling the autonomy/oversight mix,
+        and <em>ε</em> is an exploration term whose distribution is held constant across all conditions.
+      </p>
+    </div>
+
+    <p>AFCL runs three leagues at three α values. The same human coaches the same AI across all three leagues — with counterbalancing, order randomization, and washout protocols to separate α effects from learning transfer and fatigue. This is the cleanest empirical handle on the human-AI autonomy calibration problem currently constructible outside a lab.</p>
+
+    <div class="league-grid">
+      <div class="league-card">
+        <span class="league-alpha">0.20</span>
+        <span class="league-name">League A — Low Coaching Weight</span>
+        <p class="league-desc">The agent relies primarily on its own policy. Human input carries 20% weight. Measures baseline agent behavior and human response to low-autonomy conditions.</p>
+      </div>
+      <div class="league-card">
+        <span class="league-alpha">0.40</span>
+        <span class="league-name">League B — Balanced</span>
+        <p class="league-desc">A near-midpoint split, asymmetrically placed below 0.5. Serves as the primary calibration band for detecting coaching efficiency and mental model formation.</p>
+      </div>
+      <div class="league-card">
+        <span class="league-alpha">0.55</span>
+        <span class="league-name">League C — High Coaching Weight</span>
+        <p class="league-desc">Human coaching drives more than half the action selection. Asymmetric spacing above midpoint reveals non-linear behavior in high-oversight conditions.</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>Why asymmetric spacing?</strong> The leagues are not evenly distributed around 0.5. The gap between A and B (0.20) is larger than between B and C (0.15). This is deliberate: the mid-range is where calibration difficulty is highest and where coaching style differences are most likely to emerge. Finer resolution there increases sensitivity to the effect of interest.
+    </div>
+  </section>
+
+  <!-- FIVE MEASUREMENTS -->
+  <section id="measurements">
+    <p class="section-label">Research Output</p>
+    <h2>Five measurements the current literature lacks</h2>
+    <p>Each measurement is designed to produce data that survey research, lab tasks, and paid-compliance cohorts structurally cannot generate. The game format is not ornamental — it is what makes these measurements possible.</p>
+
+    <ul class="measurement-list">
+      <li class="measurement-item">
+        <span class="measurement-num">01</span>
+        <div>
+          <div class="measurement-title">Performance under adversarial α</div>
+          <div class="measurement-body">How does collaboration quality degrade when α is miscalibrated for a given human-AI pair? Is there an optimal α per pair, and does it shift with coaching experience? This measurement maps the performance surface over the α × experience space — producing the first empirical degradation curves for autonomy miscalibration in human-AI teams.</div>
+        </div>
+      </li>
+      <li class="measurement-item">
+        <span class="measurement-num">02</span>
+        <div>
+          <div class="measurement-title">Mental model convergence</div>
+          <div class="measurement-body">As humans gain experience coaching specific AI agents, does their coaching efficiency improve? How fast, and what does the improvement curve look like across α conditions? This is the learning-curve measurement: how quickly humans build accurate internal models of agent behavior, and whether that model generalizes across autonomy regimes.</div>
+        </div>
+      </li>
+      <li class="measurement-item">
+        <span class="measurement-num">03</span>
+        <div>
+          <div class="measurement-title">Coaching style emergence</div>
+          <div class="measurement-body">Do distinct human coaching strategies emerge across the population? Are they stable across different AI agents and different α values, or do they adapt? This measurement treats the coaching input vector <em>c</em> as a signal — clustering it across participants and sessions to identify natural strategy classes and measure their stability.</div>
+        </div>
+      </li>
+      <li class="measurement-item">
+        <span class="measurement-num">04</span>
+        <div>
+          <div class="measurement-title">Revealed preferences through market behavior</div>
+          <div class="measurement-body">Players buy, sell, and price AI agents in an in-game marketplace. Does the same agent command different prices across the three α leagues? Marketplace pricing is direct economic evidence of how humans value AI capability under different oversight regimes. This is the measurement that survey research cannot produce: actual revealed preferences, not stated ones, under real stakes.</div>
+        </div>
+      </li>
+      <li class="measurement-item">
+        <span class="measurement-num">05</span>
+        <div>
+          <div class="measurement-title">Engagement and purpose stability under sustained α variation</div>
+          <div class="measurement-body">As α shifts across leagues and across sessions within leagues, does player engagement remain stable, or does it degrade in patterned ways? Do players report reduced sense of contribution at high α, where the agent is doing most of the work, or at low α, where the agent is barely capable? Does engagement degradation lead, lag, or run parallel to performance degradation? This is the measurement that addresses question two directly. It draws on adapted self-determination theory scales (autonomy, competence, relatedness) administered across sessions, behavioral engagement signals (session length, return frequency, voluntary play beyond minimum, marketplace activity around the player's own agents), and within-subject comparison across α leagues. The same human coaching the same agent across three α conditions produces the cleanest available estimate of where the coaching-engagement relationship breaks down — and whether the breakdown is recoverable, persistent, or compounds over time.</div>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- HYPOTHESES -->
+  <section id="predicts">
+    <p class="section-label">Empirical Hypotheses</p>
+    <h2>What AFCL predicts</h2>
+    <p>Each of the five measurements has an empirical hypothesis attached. The instrument is designed so any of the hypotheses can be falsified by the data; this section names them so the falsifiability surface is explicit.</p>
+
+    <h3>On autonomy calibration</h3>
+    <p>AFCL predicts that performance under controlled α variation produces a non-monotonic curve: performance is poor at α near 0 (agent under-coached, baseline noisy), improves through a calibration band roughly between 0.3 and 0.5, and degrades at high α (human input introduces noise the agent's policy would have avoided). The optimal α is hypothesized to shift downward with coaching experience, as humans learn when their input adds value and when it does not.</p>
+
+    <h3>On mental model convergence</h3>
+    <p>AFCL predicts that mental model accuracy improves with experience, but the rate of improvement depends on α: high-α conditions accelerate model formation (the human is forced to engage with agent behavior more closely) and low-α conditions slow it (the human has fewer opportunities to test their predictions against agent decisions).</p>
+
+    <h3>On coaching style emergence</h3>
+    <p>AFCL predicts that distinct coaching styles cluster into a small number of stable strategies (likely three to five) and that stylistic differences are stable across α conditions but produce different performance profiles. Specifically, "interventionist" styles are predicted to underperform at low α and outperform at high α; "delegating" styles are predicted to do the opposite.</p>
+
+    <h3>On marketplace revealed preferences</h3>
+    <p>AFCL predicts that the same agent commands measurably different prices across the three α leagues, with the highest valuations in the calibration band where coaching efficiency is highest. Marketplace pricing under low-α conditions is predicted to track agent capability directly; pricing under high-α conditions is predicted to track perceived coachability.</p>
+
+    <h3>On engagement and purpose stability</h3>
+    <p>AFCL predicts that engagement remains stable under α variation in the short term, but degrades over sustained sessions specifically at the high end of the α range — not because high α is intrinsically disengaging but because sustained heavy coaching produces fatigue without proportional sense-of-contribution gain. The prediction that matters most for the broader thesis: at moderate α (the calibration band), engagement is hypothesized to remain stable or improve over time, supporting the proposition that calibrated human-AI coaching is sustainable work.</p>
+
+    <div class="callout">
+      If the data falsifies these predictions — particularly the engagement-stability hypothesis — the broader thesis that emerges in the program's longer-arc framing weakens substantially. AFCL is designed so the data answers the question regardless of which way it falls.
+    </div>
+  </section>
+
+  <!-- WHY PHILIPPINES / BPO -->
+  <section id="population">
+    <p class="section-label">Participant Population</p>
+    <h2>Why the Philippines, why BPO, why now</h2>
+
+    <p><strong>The macroeconomic stakes are sovereign-level, not sectoral.</strong></p>
+    <p>The Philippine BPO sector and overseas worker remittances together account for roughly 18% of GDP and underwrite the consumption economy that supports much of the rest. The country hosts the world's largest concentration of the workforce most directly exposed to AI substitution in knowledge work. AI's effect on BPO employment is not a sectoral question for the Philippines — it is a question of macroeconomic continuity. Philippine fiscal policy through 2035 depends materially on whether the BPO transition produces managed adaptation or rapid displacement. No comparable research site exists for empirical work on AI's labor-economic effects: the exposure is concentrated, the workforce is measurable, the institutional research infrastructure is in place, and the policy stakes are immediate rather than abstract.</p>
+
+    <p><strong>The Filipino BPO population is the population the second question is about.</strong></p>
+    <p>Question two — whether sustained AI assistance erodes the engagement that makes human coaching worth doing — is not an abstract question for this cohort. It is the operational question their next decade of work will answer either way. 1.5 million Filipino BPO workers are currently transitioning from executing tasks to managing agents that execute tasks. Whether that transition produces meaningful work or managed disengagement is the load-bearing question for Philippine economic policy through 2035. AFCL measures this question in the population it is about, using a format that population already understands, before the answer is locked in by deployment defaults nobody has measured.</p>
+
+    <div class="stat-row">
+      <div class="stat-card">
+        <div class="stat-value">1.5M</div>
+        <div class="stat-label">Filipino BPO workers directly exposed to AI-driven task automation</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">120</div>
+        <div class="stat-label">Target cohort across three leagues (power analysis for Cohen's d ≈ 0.5)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">~0</div>
+        <div class="stat-label">Learning threshold for Filipino participants: sabong is the native game format</div>
+      </div>
+    </div>
+
+    <h3>Sabong is the culturally native format for this population</h3>
+    <p>Any gamified research instrument has to choose a game. Choosing one with existing cultural continuity in the target population lowers the engagement threshold to near zero. Filipino participants do not need to learn what the game is — they only need to learn the platform. This is not a claim about cognitive transfer from the cultural format to LLM coaching. It is a simpler claim about engagement quality.</p>
+
+    <h3>The Philippines has a specific economic stake in the skill the game measures</h3>
+    <p>BPO work is transitioning from executing tasks to managing agents that execute tasks. The skill that transition requires is exactly what α measures: how much to let the agent decide, how much to intervene, when to override. A research instrument that studies this skill in a Filipino population, using a format that population already understands, is measuring a real future — not an abstract one.</p>
+
+    <div class="callout">
+      <strong>Institutional partners identified:</strong> De La Salle University and Ateneo de Manila University School of Social Sciences are the prospective IRB venues. University of the Philippines Diliman is identified for post-fellowship continuation. IRB review will be secured prior to any cohort enrollment.
+    </div>
+  </section>
+
+  <!-- ARCHITECTURE -->
+  <section id="architecture">
+    <p class="section-label">Technical Architecture</p>
+    <h2>A layered substrate that attests its own observations</h2>
+    <p>AFCL is built on a layered framework modeled on the OSI networking reference design. Each layer provides defined services to the layer above through clean interfaces. The architecture exists for a specific reason: empirical research on AI systems currently relies on researcher reputation and journal review for trust. As the deployments studied become higher-stakes, that substrate is insufficient.</p>
+    <p>Cryptographic attestation at source and deterministic replay shift the verification burden from reputation to mechanism. AFCL's research outputs are verifiable by construction, not by attribution.</p>
+
+    <div class="arch-stack">
+      <div class="arch-layer">
+        <div class="arch-num">L5</div>
+        <div class="arch-content">
+          <div class="arch-label">Application</div>
+          <div class="arch-desc">The game, the marketplace, and the α parameter. The research interface that participants interact with directly. All observable behavior at this layer is recorded and attested by L2–L4.</div>
+        </div>
+      </div>
+      <div class="arch-layer">
+        <div class="arch-num">L4</div>
+        <div class="arch-content">
+          <div class="arch-label">Verification &amp; Query</div>
+          <div class="arch-desc">Research query interface. Allows deterministic reconstruction of any session from attested primitives. Enables independent replication of findings from the ledger record without access to the application layer.</div>
+        </div>
+      </div>
+      <div class="arch-layer">
+        <div class="arch-num">L3</div>
+        <div class="arch-content">
+          <div class="arch-label">Distributed Ledger Anchoring</div>
+          <div class="arch-desc">Hedera Hashgraph anchoring of attested decision primitives. Provides deterministic replay: any session can be reconstructed exactly from the ledger record. Eliminates data provenance disputes.</div>
+        </div>
+      </div>
+      <div class="arch-layer">
+        <div class="arch-num">L2</div>
+        <div class="arch-content">
+          <div class="arch-label">Cryptographic Attestation</div>
+          <div class="arch-desc">Each decision primitive — human input vector <em>c</em>, agent state <em>s</em>, action <em>a</em>, and timestamp — is cryptographically signed at source before propagation. No post-hoc data manipulation is possible.</div>
+        </div>
+      </div>
+      <div class="arch-layer">
+        <div class="arch-num">L1</div>
+        <div class="arch-content">
+          <div class="arch-label">Physical Measurement</div>
+          <div class="arch-desc">Decision ticks at 30 Hz. Human input and agent state sampled at consistent intervals. The tick rate is held constant across all three leagues to eliminate timing artifacts from α comparisons.</div>
+        </div>
+      </div>
+    </div>
+
+    <p>This framework is one instance of a broader layered architecture for trust infrastructure that operates across physical infrastructure, financial instruments, carbon markets, and regulated services. AFCL is uniquely positioned as the only application that exercises the full framework in a single operational context at sufficient data density to expose inter-layer interaction failures — under conditions where exposing them has no physical cost.</p>
+    <p>Two US provisional patents filed April 2026 (patent agent: Steve Shattil) document the architectural substrate at a formal level.</p>
+  </section>
+
+  <!-- STUDY DESIGN -->
+  <section id="study">
+    <p class="section-label">Study Design</p>
+    <h2>Methodology and fellowship deliverables</h2>
+
+    <div class="design-grid">
+      <div class="design-item">
+        <div class="design-item-label">Cohort</div>
+        <div class="design-item-value">120 participants across three α leagues, recruited from Filipino gaming and BPO-adjacent communities</div>
+      </div>
+      <div class="design-item">
+        <div class="design-item-label">Power</div>
+        <div class="design-item-value">Designed to detect medium effect sizes (Cohen's d ≈ 0.5) on α-conditional performance differences</div>
+      </div>
+      <div class="design-item">
+        <div class="design-item-label">Controls</div>
+        <div class="design-item-value">Counterbalancing, order randomization, and washout protocols to separate α effects from learning transfer and fatigue</div>
+      </div>
+      <div class="design-item">
+        <div class="design-item-label">IRB</div>
+        <div class="design-item-value">Review through De La Salle University or Ateneo de Manila SSS prior to any cohort enrollment</div>
+      </div>
+      <div class="design-item">
+        <div class="design-item-label">Compensation</div>
+        <div class="design-item-value">Structured as game entry credit — separates engagement from outcome-contingent payment and gambling framing</div>
+      </div>
+      <div class="design-item">
+        <div class="design-item-label">MVP Stack</div>
+        <div class="design-item-value">SvelteKit / TypeScript front-end · Python data pipeline · Rust performance-critical components · Supabase/Postgres with RLS · Hedera attestation</div>
+      </div>
+    </div>
+
+    <h3>Six-month research timeline</h3>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-label">Month 1</div>
+        <div class="timeline-title">MVP completion &amp; IRB submission</div>
+        <div class="timeline-body">Finalize the α-weighted decision function, three-league structure, attestation infrastructure, and simplified marketplace. Submit IRB application to Philippine institutional partner.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-label">Month 2</div>
+        <div class="timeline-title">Pilot cohort &amp; instrument validation</div>
+        <div class="timeline-body">Run pilot cohort (20–30 participants) to validate measurement sensitivity and refine α-league counterbalancing. Preliminary analysis of performance and mental model convergence data.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-label">Month 3</div>
+        <div class="timeline-title">Full cohort enrollment</div>
+        <div class="timeline-body">Enroll remaining participants. Run all three leagues with full counterbalancing. Marketplace goes live for revealed-preference measurement.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-label">Months 4–6</div>
+        <div class="timeline-title">Analysis &amp; first paper</div>
+        <div class="timeline-body">Full analysis across all five measurements. Draft first paper on α-parameter findings. Establish AFCL as a replicable method with documented protocols for continuation beyond the grant cycle.</div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>Fallback scope.</strong> If MVP completion slips, the fellowship deliverable narrows to the two measurements with least marketplace dependency — performance under adversarial α and mental model convergence. Coaching style emergence and revealed-preference measurements defer to post-fellowship continuation. The instrument's core contribution — the α-controlled three-league design — is preserved in all scenarios.
+    </div>
+  </section>
+
+  <!-- RESEARCHER -->
+  <section id="researcher">
+    <p class="section-label">Researcher Background</p>
+    <h2>What I bring and what I'm looking for</h2>
+
+    <div class="bio-block">
+      <p>Control systems engineering, applied to safety-critical physical environments. Core formation at Edwards Air Force Base (advanced tracking systems), Groom Lake (classified data acquisition), and NASA Ames (Final Approach Spacing Tool — a neural network deployment into live terminal-area air traffic control). The problem across all of those environments was the same: how do you bound the behavior of a system that learns from data, in an operational context where being wrong has physical consequences?</p>
+      <p>Co-founder of a two-person company that received NASA SBIR Phase 2 and DOD/DARPA SBIR Phase 2 awards in 1999, with full engineering and operational responsibility for reducing inventive mathematics to tested hardware.</p>
+      <p>The past decade has been self-funded development of the architectural thesis this work instantiates: that AI safety for physical-world systems is better approached as a control engineering problem than as a preference-learning problem, and that the layered-architecture discipline control engineering developed over seventy years transfers to AI systems when those systems are properly instrumented. Two US provisional patents filed April 2026 capture that substrate. AFCL is one application of it.</p>
+      <p>What I am looking for: institutional partners willing to support empirical research at the scale this question requires. The Anthropic Economic Futures program's combination of research grants, longitudinal data infrastructure, and policy symposia is the closest existing match for the institutional support this work needs. The exchange is bidirectional. AFCL produces empirical evidence on questions the program's published framing identifies as central — work, meaning, and what the AI-enabled economy requires of human contribution — and the data infrastructure pillar gains a longitudinal research site in the country where those questions are most economically consequential. Parallel institutional anchoring through the Philippine Department of Science and Technology's Balik Scientist Program (under the Council for Industry, Energy, and Emerging Technology Research and Development) provides the domestic counterpart structure that makes sustained operation possible.</p>
+    </div>
+
+    <h3>Research alignment</h3>
+    <p>AFCL extends and complements an existing body of Anthropic-affiliated empirical work on human-AI interaction and the economic effects of AI deployment.</p>
+    <p><strong>Anthropic Economic Index.</strong> AFCL's longitudinal data on autonomy calibration, engagement stability, and revealed-preference dynamics in a Filipino BPO-adjacent cohort feeds directly into the Index's geographic-and-enterprise reporting. Philippine BPO is the highest-signal site for this measurement currently identifiable; no other comparable economy combines the workforce concentration, English fluency, institutional research infrastructure, and macroeconomic exposure necessary for the Index's longitudinal questions to land sharply.</p>
+    <p><strong>Skill formation under AI assistance</strong> (Tamkin, Shen, and collaborators). The learning-curve findings the α parameter will produce extend the existing skill formation literature into the human-AI agent coaching context, where the cognitive task is qualitatively different from coding-with-AI assistance.</p>
+    <p><strong>Reliance and trust calibration in language model interaction.</strong> AFCL's mental model convergence and coaching style measurements operationalize the reliance question in a sustained-engagement setting, producing data on how trust calibration evolves over hundreds of decision ticks rather than across short laboratory tasks.</p>
+    <p><strong>Societal impacts of AI deployment in labor markets.</strong> The BPO transition is not a generic labor-market question. It is the most empirically tractable instance of the broader question the program's framing names directly: what new capabilities emerge when humans work alongside AI systems, and which human skills remain valuable as AI advances.</p>
+
+    <h3>Continuity beyond the grant cycle</h3>
+    <p>AFCL continues after the initial six-month grant cycle through institutional anchors at De La Salle University, Ateneo de Manila University, and University of the Philippines Diliman, supplemented by Balik Scientist Program designation under DOST-PCIEERD and parallel funding pursued through NSF Future of Work at the Human-Technology Frontier and other multi-year vehicles. Six months is sufficient to complete the MVP, run the initial cohort, produce a first paper on the α findings, release the instrument under permissive licensing for replication, and establish the longitudinal data infrastructure for sustained operation. The substantive research program — understanding how human-AI collaboration configurations reshape value creation in Philippine BPO and the labor markets that depend on it — operates on a multi-year horizon. The first grant cycle establishes the foundation; the work it enables is what matters.</p>
+
+    <p style="margin-top: 1.5rem;"><strong>References available on request:</strong> Steve Shattil (NASA SBIR co-executor and patent agent for the filed provisional patents). Additional references from Philippine academic host institutions (DLSU, Ateneo, UP) and DOST-PCIEERD available once host institution arrangements are formalized.</p>
+  </section>
+
+</div>
+
+<footer>
+  <p>AFCL · Agentic Fowl with Coaching-in-the-Loop · Arnold Ray Kagaoan Alagar · April 2026</p>
+  <p style="margin-top: 0.5rem;"><a href="https://tressellate.dev">tressellate.dev</a> · arnold.alagar@gmail.com</p>
+</footer>
+
+</body>
+</html>
