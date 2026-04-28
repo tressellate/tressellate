@@ -1,8 +1,8 @@
 {
-    "name": "@tressellate/afcl",
+    "name": "@tressellate/accl",
     "version": "0.1.0",
     "private": true,
-    "description": "AFCL — Agentic Fowl with Coaching-in-the-Loop · Research instrument page (afcl.tressellate.dev)",
+    "description": "ACCL — Agentic Chicken with Coaching-in-the-Loop · Research instrument page (accl.tressellate.dev)",
     "scripts": {
         "dev": "npx serve .",
         "build": "echo 'No build step required for static HTML'"
